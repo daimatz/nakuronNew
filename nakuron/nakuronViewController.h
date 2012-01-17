@@ -14,6 +14,7 @@
 #import <OpenGLES/ES1/glext.h>
 #include<cstring>
 #include<vector>
+#include<algorithm>
 
 #define MAX_BOARD_WIDTH 32
 
@@ -26,6 +27,9 @@ using namespace std;
 #define YELLOW 4
 #define GREEN 5
 
+struct DrawState{
+  float sx,sy,gx,gy,cx,cy;
+};
 
 @interface nakuronViewController : UIViewController {
 @private
@@ -64,4 +68,5 @@ using namespace std;
 - (void)stopAnimation;
 - (void)drawMain;
 - (void)boardInitWithSize:(int)size colorNum:(int)colnum;
+- (void)dump;
 @end

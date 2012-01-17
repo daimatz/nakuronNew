@@ -43,6 +43,15 @@ enum {
 
 @synthesize animating, context, displayLink;
 
+-(void) dump{
+  for(int r=0;r<boardSize;r++){
+    for(int c=0;c<boardSize;c++){
+      fprintf(stderr,"%d,",pieces[r][c]);
+    }
+    fprintf(stderr,"\n");
+  }
+  NSLog(@"----------------------");
+}
 - (void)awakeFromNib
 {
   nakuron = self;
@@ -67,6 +76,7 @@ enum {
   
   //seed
   seed = arc4random() & 0x7FFFFFFF;
+  seed = 4;
   
   //texture読み込み
   piecenumToTexture.push_back(loadTexture(@"empty.png"));
@@ -78,7 +88,7 @@ enum {
   boardSizePx = 240.0;
   boardLeftLowerX = boardLeftLowerY = -120.0;
   //最初の盤面を作成
-  [self boardInitWithSize:32 colorNum:4];
+  [self boardInitWithSize:4 colorNum:4];
 }
 -(void)boardInitWithSize:(int)size colorNum:(int)colnum
 {
@@ -99,12 +109,6 @@ enum {
         else pieces[r][c] = 2+[hash randomInt:colnum];
       }
     }
-  }
-  for(int r=0;r<boardSize;r++){
-    for(int c=0;c<boardSize;c++){
-      fprintf(stderr,"%d,",pieces[r][c]);
-    }
-    fprintf(stderr,"\n");
   }
 }
 
@@ -196,6 +200,30 @@ enum {
 
 - (IBAction)upButton {
   NSLog(@"up");
+  [self dump];
+  for(int c=1;c < boardSize-1;c++){
+    //穴
+    if(colorNum+2 <= pieces[0][c] && pieces[0][c] <= colorNum*2+1){
+      //壁を探す
+      int wr=1;
+      while(pieces[wr][c]!=WALL && wr<boardSize-1) wr++;
+      //壁より前が全部落とす
+      for(int r=1;r<wr;r++) pieces[r][c]=EMPTY;
+    }
+    else{
+      //壁を探す
+      int wr=1;
+      while(pieces[wr][c]!=WALL && wr<boardSize-1) wr++;
+      //壁より前は壁まで落とす。
+      int pr=1,cr=1;
+      while(cr<wr){
+        while(cr<wr && pieces[cr][c]==EMPTY) cr++;
+        swap(pieces[pr][c],pieces[cr][c]);
+        pr++;
+      }
+    }
+  }
+  [self dump];
 }
 
 - (IBAction)rightButton {
