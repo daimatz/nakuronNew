@@ -1,0 +1,307 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		27C7ADA814C53564006CF983 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27C7ADA714C53564006CF983 /* UIKit.framework */; };
+		27C7ADAA14C53564006CF983 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27C7ADA914C53564006CF983 /* Foundation.framework */; };
+		27C7ADAC14C53564006CF983 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27C7ADAB14C53564006CF983 /* CoreGraphics.framework */; };
+		27C7ADAE14C53564006CF983 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27C7ADAD14C53564006CF983 /* QuartzCore.framework */; };
+		27C7ADB014C53564006CF983 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27C7ADAF14C53564006CF983 /* OpenGLES.framework */; };
+		27C7ADB614C53564006CF983 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 27C7ADB414C53564006CF983 /* InfoPlist.strings */; };
+		27C7ADB914C53564006CF983 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C7ADB814C53564006CF983 /* main.m */; };
+		27C7ADBC14C53564006CF983 /* nakuronAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C7ADBB14C53564006CF983 /* nakuronAppDelegate.m */; };
+		27C7ADBF14C53564006CF983 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27C7ADBD14C53564006CF983 /* MainWindow.xib */; };
+		27C7ADC114C53564006CF983 /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 27C7ADC014C53564006CF983 /* Shader.fsh */; };
+		27C7ADC314C53564006CF983 /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 27C7ADC214C53564006CF983 /* Shader.vsh */; };
+		27C7ADC614C53564006CF983 /* EAGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C7ADC514C53564006CF983 /* EAGLView.m */; };
+		27C7ADC914C53564006CF983 /* nakuronViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C7ADC814C53564006CF983 /* nakuronViewController.m */; };
+		27C7ADCC14C53564006CF983 /* nakuronViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27C7ADCA14C53564006CF983 /* nakuronViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		27C7ADA314C53564006CF983 /* nakuron.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = nakuron.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		27C7ADA714C53564006CF983 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		27C7ADA914C53564006CF983 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		27C7ADAB14C53564006CF983 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		27C7ADAD14C53564006CF983 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		27C7ADAF14C53564006CF983 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		27C7ADB314C53564006CF983 /* nakuron-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "nakuron-Info.plist"; sourceTree = "<group>"; };
+		27C7ADB514C53564006CF983 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		27C7ADB714C53564006CF983 /* nakuron-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "nakuron-Prefix.pch"; sourceTree = "<group>"; };
+		27C7ADB814C53564006CF983 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		27C7ADBA14C53564006CF983 /* nakuronAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = nakuronAppDelegate.h; sourceTree = "<group>"; };
+		27C7ADBB14C53564006CF983 /* nakuronAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = nakuronAppDelegate.m; sourceTree = "<group>"; };
+		27C7ADBE14C53564006CF983 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		27C7ADC014C53564006CF983 /* Shader.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.fsh; path = Shaders/Shader.fsh; sourceTree = "<group>"; };
+		27C7ADC214C53564006CF983 /* Shader.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.vsh; path = Shaders/Shader.vsh; sourceTree = "<group>"; };
+		27C7ADC414C53564006CF983 /* EAGLView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EAGLView.h; sourceTree = "<group>"; };
+		27C7ADC514C53564006CF983 /* EAGLView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EAGLView.m; sourceTree = "<group>"; };
+		27C7ADC714C53564006CF983 /* nakuronViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = nakuronViewController.h; sourceTree = "<group>"; };
+		27C7ADC814C53564006CF983 /* nakuronViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = nakuronViewController.m; sourceTree = "<group>"; };
+		27C7ADCB14C53564006CF983 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/nakuronViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		27C7ADA014C53564006CF983 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				27C7ADA814C53564006CF983 /* UIKit.framework in Frameworks */,
+				27C7ADAA14C53564006CF983 /* Foundation.framework in Frameworks */,
+				27C7ADAC14C53564006CF983 /* CoreGraphics.framework in Frameworks */,
+				27C7ADAE14C53564006CF983 /* QuartzCore.framework in Frameworks */,
+				27C7ADB014C53564006CF983 /* OpenGLES.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		27C7AD9814C53564006CF983 = {
+			isa = PBXGroup;
+			children = (
+				27C7ADB114C53564006CF983 /* nakuron */,
+				27C7ADA614C53564006CF983 /* Frameworks */,
+				27C7ADA414C53564006CF983 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		27C7ADA414C53564006CF983 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				27C7ADA314C53564006CF983 /* nakuron.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		27C7ADA614C53564006CF983 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				27C7ADA714C53564006CF983 /* UIKit.framework */,
+				27C7ADA914C53564006CF983 /* Foundation.framework */,
+				27C7ADAB14C53564006CF983 /* CoreGraphics.framework */,
+				27C7ADAD14C53564006CF983 /* QuartzCore.framework */,
+				27C7ADAF14C53564006CF983 /* OpenGLES.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		27C7ADB114C53564006CF983 /* nakuron */ = {
+			isa = PBXGroup;
+			children = (
+				27C7ADBA14C53564006CF983 /* nakuronAppDelegate.h */,
+				27C7ADBB14C53564006CF983 /* nakuronAppDelegate.m */,
+				27C7ADBD14C53564006CF983 /* MainWindow.xib */,
+				27C7ADC014C53564006CF983 /* Shader.fsh */,
+				27C7ADC214C53564006CF983 /* Shader.vsh */,
+				27C7ADC414C53564006CF983 /* EAGLView.h */,
+				27C7ADC514C53564006CF983 /* EAGLView.m */,
+				27C7ADC714C53564006CF983 /* nakuronViewController.h */,
+				27C7ADC814C53564006CF983 /* nakuronViewController.m */,
+				27C7ADCA14C53564006CF983 /* nakuronViewController.xib */,
+				27C7ADB214C53564006CF983 /* Supporting Files */,
+			);
+			path = nakuron;
+			sourceTree = "<group>";
+		};
+		27C7ADB214C53564006CF983 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				27C7ADB314C53564006CF983 /* nakuron-Info.plist */,
+				27C7ADB414C53564006CF983 /* InfoPlist.strings */,
+				27C7ADB714C53564006CF983 /* nakuron-Prefix.pch */,
+				27C7ADB814C53564006CF983 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		27C7ADA214C53564006CF983 /* nakuron */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 27C7ADCF14C53564006CF983 /* Build configuration list for PBXNativeTarget "nakuron" */;
+			buildPhases = (
+				27C7AD9F14C53564006CF983 /* Sources */,
+				27C7ADA014C53564006CF983 /* Frameworks */,
+				27C7ADA114C53564006CF983 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = nakuron;
+			productName = nakuron;
+			productReference = 27C7ADA314C53564006CF983 /* nakuron.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		27C7AD9A14C53564006CF983 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 27C7AD9D14C53564006CF983 /* Build configuration list for PBXProject "nakuron" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 27C7AD9814C53564006CF983;
+			productRefGroup = 27C7ADA414C53564006CF983 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				27C7ADA214C53564006CF983 /* nakuron */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		27C7ADA114C53564006CF983 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				27C7ADB614C53564006CF983 /* InfoPlist.strings in Resources */,
+				27C7ADBF14C53564006CF983 /* MainWindow.xib in Resources */,
+				27C7ADC114C53564006CF983 /* Shader.fsh in Resources */,
+				27C7ADC314C53564006CF983 /* Shader.vsh in Resources */,
+				27C7ADCC14C53564006CF983 /* nakuronViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		27C7AD9F14C53564006CF983 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				27C7ADB914C53564006CF983 /* main.m in Sources */,
+				27C7ADBC14C53564006CF983 /* nakuronAppDelegate.m in Sources */,
+				27C7ADC614C53564006CF983 /* EAGLView.m in Sources */,
+				27C7ADC914C53564006CF983 /* nakuronViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		27C7ADB414C53564006CF983 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				27C7ADB514C53564006CF983 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		27C7ADBD14C53564006CF983 /* MainWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				27C7ADBE14C53564006CF983 /* en */,
+			);
+			name = MainWindow.xib;
+			sourceTree = "<group>";
+		};
+		27C7ADCA14C53564006CF983 /* nakuronViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				27C7ADCB14C53564006CF983 /* en */,
+			);
+			name = nakuronViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		27C7ADCD14C53564006CF983 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		27C7ADCE14C53564006CF983 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		27C7ADD014C53564006CF983 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "nakuron/nakuron-Prefix.pch";
+				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
+				INFOPLIST_FILE = "nakuron/nakuron-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		27C7ADD114C53564006CF983 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "nakuron/nakuron-Prefix.pch";
+				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
+				INFOPLIST_FILE = "nakuron/nakuron-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		27C7AD9D14C53564006CF983 /* Build configuration list for PBXProject "nakuron" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				27C7ADCD14C53564006CF983 /* Debug */,
+				27C7ADCE14C53564006CF983 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		27C7ADCF14C53564006CF983 /* Build configuration list for PBXNativeTarget "nakuron" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				27C7ADD014C53564006CF983 /* Debug */,
+				27C7ADD114C53564006CF983 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 27C7AD9A14C53564006CF983 /* Project object */;
+}
