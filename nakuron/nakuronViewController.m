@@ -11,6 +11,8 @@
 #import "nakuronViewController.h"
 #import "EAGLView.h"
 
+nakuronViewController *nakuron;
+
 // Uniform index.
 enum {
     UNIFORM_TRANSLATE,
@@ -40,6 +42,7 @@ enum {
 
 - (void)awakeFromNib
 {
+  nakuron = self;
     EAGLContext *aContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
     
     if (!aContext) {
