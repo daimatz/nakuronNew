@@ -78,7 +78,9 @@ extern nakuronViewController *nakuron;
 }
 
 - (IBAction)difficultyChanging:(UISlider*)slider {
-  if (slider.value < 0.75) {
+  if (slider.value < 0) {
+    throw ProgrammingException("difficultySlider の値がおかしい");
+  } else if (slider.value < 0.75) {
     newDifficulty = DIFFICULTY_EASY;
     slider.value = 0;
   } else if (slider.value < 1.5) {
@@ -87,9 +89,11 @@ extern nakuronViewController *nakuron;
   } else if (slider.value < 2.25) {
     newDifficulty = DIFFICULTY_HARD;
     slider.value = 2;
-  } else {
+  } else if (slider.value <= 3) {
     newDifficulty = DIFFICULTY_VERY_HARD;
     slider.value = 3;
+  } else {
+    throw ProgrammingException("difficultySlider の値がおかしい");
   }
   
   NSString *str[4] = {@"Easy", @"Normal", @"Hard", @"Very Hard"};
