@@ -91,9 +91,9 @@ enum {
   }
 
   //最初の盤面を作成
-  [self boardInit:difficulty 
+  [self boardInit:DIFFICULTY_EASY 
           probNum:((arc4random() & 0x7FFFFFFF) % 101) 
-        holeRatio:80];
+        holeRatio:HOLE_RATIO];
 }
 
 - (void)boardInit:(Difficulty)d probNum:(int)p holeRatio:(int)r
@@ -101,7 +101,7 @@ enum {
   difficulty = d;
   boardSize = difficultyToBoardSize(difficulty);
   probNum = p;
-  seed = probNumToSeed(probNum);
+  int seed = probNumToSeed(probNum);
 
   cellSize = boardSizePx/boardSize;
 
@@ -245,9 +245,7 @@ enum {
   menuView = [[menuViewController alloc] initWithNibName:@"menuViewController" bundle:nil];
   menuView.view.bounds = menuView.view.frame = [UIScreen mainScreen].bounds;
   [self.view addSubview:menuView.view];
-//  menuView.newDifficulty = _difficulty;
-//  menuView.newProbNum = _probNum;
-//  [menuView initView];
+  [menuView initView:difficulty probNum:probNum];
 }
 
 - (void)startAnimation

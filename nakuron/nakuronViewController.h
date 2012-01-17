@@ -20,11 +20,6 @@
 #include<vector>
 #include<algorithm>
 
-const float boardSizePx = 240.0;
-const float boardLeftLowerX = -120.0;
-const float boardLeftLowerY = -120.0;
-const int colorNum = 4;
-
 @interface nakuronViewController : UIViewController {
 @private
   EAGLContext *context;
@@ -37,7 +32,6 @@ const int colorNum = 4;
   menuViewController *menuView;
 
   int probNum;
-  int seed;
   Difficulty difficulty;
   
   int boardSize;

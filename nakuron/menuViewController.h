@@ -25,4 +25,6 @@
 @property (retain, nonatomic) IBOutlet UISlider *difficultySlider;
 - (IBAction)difficultyChanging:(UISlider*)slider;
 
+- (void)initView:(Difficulty)d probNum:(int)p;
+
 @end

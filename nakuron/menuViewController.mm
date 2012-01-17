@@ -4,6 +4,9 @@
 //
 
 #import "menuViewController.h"
+#import "nakuronViewController.h"
+
+extern nakuronViewController *nakuron;
 
 @implementation menuViewController
 @synthesize probNumField;
@@ -59,7 +62,11 @@
 }
 
 - (IBAction)updateButton:(id)sender {
+  // newDifficulty はここで代入しなくてよい
   newProbNum = [probNumField.text intValue];
+  [nakuron boardInit:newDifficulty probNum:newProbNum holeRatio:HOLE_RATIO];
+  [self.view removeFromSuperview];
+  [self release];
 }
 
 - (IBAction)probNumMinusButton {
@@ -87,6 +94,21 @@
   
   NSString *str[4] = {@"Easy", @"Normal", @"Hard", @"Very Hard"};
   difficultyLabel.text = str[(int)newDifficulty];
+}
+
+- (void)initView:(Difficulty)d probNum:(int)p
+{
+  newDifficulty = d;
+  newProbNum = p;
+  probNumField.text = [NSString stringWithFormat:@"%d", newProbNum];
+  switch (d) {
+    case DIFFICULTY_EASY: difficultySlider.value = 0; break;
+    case DIFFICULTY_NORMAL: difficultySlider.value = 1; break;
+    case DIFFICULTY_HARD: difficultySlider.value = 2; break;
+    case DIFFICULTY_VERY_HARD: difficultySlider.value = 3; break;
+    default: throw ProgrammingException("[menuView initView] difficulty がおかしい");
+  }
+  [self difficultyChanging:difficultySlider];
 }
 
 - (void)dealloc {

@@ -7,6 +7,12 @@
 #include <cstring>
 
 const int MAX_BOARD_WIDTH = 32;
+const float boardSizePx = 240.0;
+const float boardLeftLowerX = -120.0;
+const float boardLeftLowerY = -120.0;
+const int colorNum = 4;
+
+const int HOLE_RATIO = 80;
 
 typedef enum {
   EMPTY,
