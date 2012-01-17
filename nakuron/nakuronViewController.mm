@@ -11,6 +11,7 @@
 #import "nakuronViewController.h"
 #import "EAGLView.h"
 #import "Lib.h"
+#import "graphicUtil.h"
 
 nakuronViewController *nakuron;
 
@@ -66,30 +67,41 @@ enum {
   //seed
   seed = arc4random() & 0x7FFFFFFF;
   
+  //texture読み込み
+  piecenumToTexture.push_back(loadTexture(@"empty.png"));
+  piecenumToTexture.push_back(loadTexture(@"wall.png"));
+  NSString *cs[] = {@"red", @"blue", @"yellow", @"green"};
+  for(int i=0;i<4;i++) piecenumToTexture.push_back(loadTexture([NSString stringWithFormat:@"b%@.png",cs[i]]));
+  for(int i=0;i<4;i++) piecenumToTexture.push_back(loadTexture([NSString stringWithFormat:@"h%@.png",cs[i]]));
+  //boardの大きさ
+  boardSize = 240.0;
+  boardLeftLowerX = boardLeftLowerY = -120.0;
+  //最初の盤面を作成
   [self boardInitWithSize:8 colorNum:4];
 }
 -(void)boardInitWithSize:(int)size colorNum:(int)colnum
 {
   colorNum = colnum;
   boardSize = size+2;
+  cellSize = boardSize/boardWidth;
   int hole = 80,wall = 20;
   NSLog(@"hoge");
   Xor128 *hash = [Xor128 xor128WithSeed:seed];
   for(int r=0;r<boardSize;r++){
     for(int c=0;c<boardSize;c++){
-      if((r==0 && c==0) || (r==boardSize-1 && c==boardSize-1)) pieces[r][c] = 0;
+      if((r==0 && c==0) || (r==boardSize-1 && c==boardSize-1)) pieces[r][c] = 1;
       else if(r==0 || c==0 || r==boardSize-1 || c==boardSize-1 ){
-        if([hash randomInt:100] < hole) pieces[r][c] = colnum+1+[hash randomInt:colnum];
-        else pieces[r][c]=0;
+        if([hash randomInt:100] < hole) pieces[r][c] = 1+colnum+1+[hash randomInt:colnum];
+        else pieces[r][c]=1;
       }
       else{
-        if([hash randomInt:100] < wall) pieces[r][c] = 0;
-        else pieces[r][c] = 1+[hash randomInt:colnum];
+        if([hash randomInt:100] < wall) pieces[r][c] = 1;
+        else pieces[r][c] = 2+[hash randomInt:colnum];
       }
     }
   }
-  for(int r=0;r<boardSize;r++){
-    for(int c=0;c<boardSize;c++){
+  for(int r=0;r<boardWidth;r++){
+    for(int c=0;c<boardWidth;c++){
       fprintf(stderr,"%d,",pieces[r][c]);
     }
     fprintf(stderr,"\n");
@@ -106,6 +118,8 @@ enum {
   // Tear down context.
   if ([EAGLContext currentContext] == context)
     [EAGLContext setCurrentContext:nil];
+  
+  //texture解放処理忘れないように
   
   [context release];
   
@@ -199,7 +213,7 @@ enum {
   glClear(GL_COLOR_BUFFER_BIT);
   
   glLoadIdentity();
-  glOrthof(-1.0f, 1.0f, -1.5f, 1.5f ,0.5f ,-0.5f);
+  glOrthof(-160.0f, 160.0f, -240.0f, 240.0f ,0.5f ,-0.5f);
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
   [self drawMain];
@@ -209,7 +223,14 @@ enum {
 
 -(void)drawMain
 {
-  
+  for(int r = 0; r < boardSize; r++) {
+    for (int c = 0; c < boardWidth; c++) {
+      GLuint texture = piecenumToTexture[pieces[r][c]];
+      float x = boardLeftLowerX + c*cellSize;
+      float y = boardLeftLowerY + boardWidth - (r+1)*cellSize;
+      drawTexture(x,y,cellSize,cellSize, texture,255,255,255,255);
+    }
+  }
 }
 
 - (BOOL)compileShader:(GLuint *)shader type:(GLenum)type file:(NSString *)file
