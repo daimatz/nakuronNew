@@ -29,6 +29,12 @@
 
 @property (readonly, nonatomic, getter=isAnimating) BOOL animating;
 @property (nonatomic) NSInteger animationFrameInterval;
+@property (retain, nonatomic) IBOutlet UIView *mapView;
+
+- (IBAction)rightButton;
+- (IBAction)downButton;
+- (IBAction)leftButton;
+- (IBAction)upButton;
 
 - (void)startAnimation;
 - (void)stopAnimation;
