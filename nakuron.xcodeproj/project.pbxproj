@@ -14,13 +14,14 @@
 		27C7ADB014C53564006CF983 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27C7ADAF14C53564006CF983 /* OpenGLES.framework */; };
 		27C7ADB614C53564006CF983 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 27C7ADB414C53564006CF983 /* InfoPlist.strings */; };
 		27C7ADB914C53564006CF983 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C7ADB814C53564006CF983 /* main.m */; };
-		27C7ADBC14C53564006CF983 /* nakuronAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C7ADBB14C53564006CF983 /* nakuronAppDelegate.m */; };
+		27C7ADBC14C53564006CF983 /* nakuronAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 27C7ADBB14C53564006CF983 /* nakuronAppDelegate.mm */; };
 		27C7ADBF14C53564006CF983 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27C7ADBD14C53564006CF983 /* MainWindow.xib */; };
 		27C7ADC114C53564006CF983 /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 27C7ADC014C53564006CF983 /* Shader.fsh */; };
 		27C7ADC314C53564006CF983 /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 27C7ADC214C53564006CF983 /* Shader.vsh */; };
-		27C7ADC614C53564006CF983 /* EAGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C7ADC514C53564006CF983 /* EAGLView.m */; };
-		27C7ADC914C53564006CF983 /* nakuronViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C7ADC814C53564006CF983 /* nakuronViewController.m */; };
+		27C7ADC614C53564006CF983 /* EAGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 27C7ADC514C53564006CF983 /* EAGLView.mm */; };
+		27C7ADC914C53564006CF983 /* nakuronViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 27C7ADC814C53564006CF983 /* nakuronViewController.mm */; };
 		27C7ADCC14C53564006CF983 /* nakuronViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27C7ADCA14C53564006CF983 /* nakuronViewController.xib */; };
+		27E36D6114C53A3E00004587 /* graphicUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = 27E36D6014C53A3E00004587 /* graphicUtil.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,15 +36,17 @@
 		27C7ADB714C53564006CF983 /* nakuron-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "nakuron-Prefix.pch"; sourceTree = "<group>"; };
 		27C7ADB814C53564006CF983 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		27C7ADBA14C53564006CF983 /* nakuronAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = nakuronAppDelegate.h; sourceTree = "<group>"; };
-		27C7ADBB14C53564006CF983 /* nakuronAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = nakuronAppDelegate.m; sourceTree = "<group>"; };
+		27C7ADBB14C53564006CF983 /* nakuronAppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = nakuronAppDelegate.mm; sourceTree = "<group>"; };
 		27C7ADBE14C53564006CF983 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
 		27C7ADC014C53564006CF983 /* Shader.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.fsh; path = Shaders/Shader.fsh; sourceTree = "<group>"; };
 		27C7ADC214C53564006CF983 /* Shader.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.vsh; path = Shaders/Shader.vsh; sourceTree = "<group>"; };
 		27C7ADC414C53564006CF983 /* EAGLView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EAGLView.h; sourceTree = "<group>"; };
-		27C7ADC514C53564006CF983 /* EAGLView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EAGLView.m; sourceTree = "<group>"; };
+		27C7ADC514C53564006CF983 /* EAGLView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = EAGLView.mm; sourceTree = "<group>"; };
 		27C7ADC714C53564006CF983 /* nakuronViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = nakuronViewController.h; sourceTree = "<group>"; };
-		27C7ADC814C53564006CF983 /* nakuronViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = nakuronViewController.m; sourceTree = "<group>"; };
+		27C7ADC814C53564006CF983 /* nakuronViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = nakuronViewController.mm; sourceTree = "<group>"; };
 		27C7ADCB14C53564006CF983 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/nakuronViewController.xib; sourceTree = "<group>"; };
+		27E36D5F14C53A3E00004587 /* graphicUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graphicUtil.h; sourceTree = "<group>"; };
+		27E36D6014C53A3E00004587 /* graphicUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = graphicUtil.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,15 +97,17 @@
 		27C7ADB114C53564006CF983 /* nakuron */ = {
 			isa = PBXGroup;
 			children = (
+				27E36D5F14C53A3E00004587 /* graphicUtil.h */,
+				27E36D6014C53A3E00004587 /* graphicUtil.mm */,
 				27C7ADBA14C53564006CF983 /* nakuronAppDelegate.h */,
-				27C7ADBB14C53564006CF983 /* nakuronAppDelegate.m */,
+				27C7ADBB14C53564006CF983 /* nakuronAppDelegate.mm */,
 				27C7ADBD14C53564006CF983 /* MainWindow.xib */,
 				27C7ADC014C53564006CF983 /* Shader.fsh */,
 				27C7ADC214C53564006CF983 /* Shader.vsh */,
 				27C7ADC414C53564006CF983 /* EAGLView.h */,
-				27C7ADC514C53564006CF983 /* EAGLView.m */,
+				27C7ADC514C53564006CF983 /* EAGLView.mm */,
 				27C7ADC714C53564006CF983 /* nakuronViewController.h */,
-				27C7ADC814C53564006CF983 /* nakuronViewController.m */,
+				27C7ADC814C53564006CF983 /* nakuronViewController.mm */,
 				27C7ADCA14C53564006CF983 /* nakuronViewController.xib */,
 				27C7ADB214C53564006CF983 /* Supporting Files */,
 			);
@@ -186,9 +191,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				27C7ADB914C53564006CF983 /* main.m in Sources */,
-				27C7ADBC14C53564006CF983 /* nakuronAppDelegate.m in Sources */,
-				27C7ADC614C53564006CF983 /* EAGLView.m in Sources */,
-				27C7ADC914C53564006CF983 /* nakuronViewController.m in Sources */,
+				27C7ADBC14C53564006CF983 /* nakuronAppDelegate.mm in Sources */,
+				27C7ADC614C53564006CF983 /* EAGLView.mm in Sources */,
+				27C7ADC914C53564006CF983 /* nakuronViewController.mm in Sources */,
+				27E36D6114C53A3E00004587 /* graphicUtil.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
