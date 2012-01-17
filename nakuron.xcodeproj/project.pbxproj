@@ -21,6 +21,7 @@
 		2388434014C53983009E24D2 /* hred.png in Resources */ = {isa = PBXBuildFile; fileRef = 2388433214C53983009E24D2 /* hred.png */; };
 		2388434114C53983009E24D2 /* hyellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 2388433314C53983009E24D2 /* hyellow.png */; };
 		2388434214C53983009E24D2 /* wall.png in Resources */ = {isa = PBXBuildFile; fileRef = 2388433414C53983009E24D2 /* wall.png */; };
+		27976F1A14C5494E007CA46C /* Lib.m in Sources */ = {isa = PBXBuildFile; fileRef = 27976F1914C5494E007CA46C /* Lib.m */; };
 		27C7ADA814C53564006CF983 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27C7ADA714C53564006CF983 /* UIKit.framework */; };
 		27C7ADAA14C53564006CF983 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27C7ADA914C53564006CF983 /* Foundation.framework */; };
 		27C7ADAC14C53564006CF983 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27C7ADAB14C53564006CF983 /* CoreGraphics.framework */; };
@@ -53,6 +54,8 @@
 		2388433214C53983009E24D2 /* hred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hred.png; sourceTree = "<group>"; };
 		2388433314C53983009E24D2 /* hyellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hyellow.png; sourceTree = "<group>"; };
 		2388433414C53983009E24D2 /* wall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wall.png; sourceTree = "<group>"; };
+		27976F1814C5494E007CA46C /* Lib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lib.h; sourceTree = "<group>"; };
+		27976F1914C5494E007CA46C /* Lib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Lib.m; sourceTree = "<group>"; };
 		27C7ADA314C53564006CF983 /* nakuron.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = nakuron.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27C7ADA714C53564006CF983 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		27C7ADA914C53564006CF983 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -157,6 +160,8 @@
 				27C7ADC514C53564006CF983 /* EAGLView.mm */,
 				27C7ADC714C53564006CF983 /* nakuronViewController.h */,
 				27C7ADC814C53564006CF983 /* nakuronViewController.mm */,
+				27976F1814C5494E007CA46C /* Lib.h */,
+				27976F1914C5494E007CA46C /* Lib.m */,
 				27C7ADCA14C53564006CF983 /* nakuronViewController.xib */,
 				2388434314C5398A009E24D2 /* resource */,
 				27C7ADB214C53564006CF983 /* Supporting Files */,
@@ -259,6 +264,7 @@
 				27C7ADC614C53564006CF983 /* EAGLView.mm in Sources */,
 				27C7ADC914C53564006CF983 /* nakuronViewController.mm in Sources */,
 				27E36D6114C53A3E00004587 /* graphicUtil.mm in Sources */,
+				27976F1A14C5494E007CA46C /* Lib.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,6 +10,7 @@
 
 #import "nakuronViewController.h"
 #import "EAGLView.h"
+#import "Lib.h"
 
 nakuronViewController *nakuron;
 
@@ -61,6 +62,38 @@ enum {
   animating = FALSE;
   animationFrameInterval = 1;
   self.displayLink = nil;
+  
+  //seed
+  seed = arc4random() & 0x7FFFFFFF;
+  
+  [self boardInitWithSize:8 colorNum:4];
+}
+-(void)boardInitWithSize:(int)size colorNum:(int)colnum
+{
+  colorNum = colnum;
+  boardSize = size+2;
+  int hole = 80,wall = 20;
+  NSLog(@"hoge");
+  Xor128 *hash = [Xor128 xor128WithSeed:seed];
+  for(int r=0;r<boardSize;r++){
+    for(int c=0;c<boardSize;c++){
+      if((r==0 && c==0) || (r==boardSize-1 && c==boardSize-1)) pieces[r][c] = 0;
+      else if(r==0 || c==0 || r==boardSize-1 || c==boardSize-1 ){
+        if([hash randomInt:100] < hole) pieces[r][c] = colnum+1+[hash randomInt:colnum];
+        else pieces[r][c]=0;
+      }
+      else{
+        if([hash randomInt:100] < wall) pieces[r][c] = 0;
+        else pieces[r][c] = 1+[hash randomInt:colnum];
+      }
+    }
+  }
+  for(int r=0;r<boardSize;r++){
+    for(int c=0;c<boardSize;c++){
+      fprintf(stderr,"%d,",pieces[r][c]);
+    }
+    fprintf(stderr,"\n");
+  }
 }
 
 - (void)dealloc
