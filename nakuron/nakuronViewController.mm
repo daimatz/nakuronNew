@@ -43,12 +43,9 @@ enum {
 - (void)awakeFromNib
 {
   nakuron = self;
-  EAGLContext *aContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
-  
-  if (!aContext) {
-    aContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
-  }
-  
+  //常にES1を使う
+  EAGLContext *aContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
+
   if (!aContext)
     NSLog(@"Failed to create ES context");
   else if (![EAGLContext setCurrentContext:aContext])
@@ -60,8 +57,6 @@ enum {
   [(EAGLView *)self.view setContext:context];
   [(EAGLView *)self.view setFramebuffer];
   
-  if ([context API] == kEAGLRenderingAPIOpenGLES2)
-    [self loadShaders];
   
   animating = FALSE;
   animationFrameInterval = 1;
@@ -167,65 +162,21 @@ enum {
 {
   [(EAGLView *)self.view setFramebuffer];
   
-  // Replace the implementation of this method to do your own custom drawing.
-  static const GLfloat squareVertices[] = {
-    -0.5f, -0.33f,
-    0.5f, -0.33f,
-    -0.5f,  0.33f,
-    0.5f,  0.33f,
-  };
-  
-  static const GLubyte squareColors[] = {
-    255, 255,   0, 255,
-    0,   255, 255, 255,
-    0,   0,   0,   0,
-    255,   0, 255, 255,
-  };
-  
-  static float transY = 0.0f;
-  
   glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT);
   
-  if ([context API] == kEAGLRenderingAPIOpenGLES2) {
-    // Use shader program.
-    glUseProgram(program);
-    
-    // Update uniform value.
-    glUniform1f(uniforms[UNIFORM_TRANSLATE], (GLfloat)transY);
-    transY += 0.075f;	
-    
-    // Update attribute values.
-    glVertexAttribPointer(ATTRIB_VERTEX, 2, GL_FLOAT, 0, 0, squareVertices);
-    glEnableVertexAttribArray(ATTRIB_VERTEX);
-    glVertexAttribPointer(ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, 1, 0, squareColors);
-    glEnableVertexAttribArray(ATTRIB_COLOR);
-    
-    // Validate program before drawing. This is a good check, but only really necessary in a debug build.
-    // DEBUG macro must be defined in your debug configurations if that's not already the case.
-#if defined(DEBUG)
-    if (![self validateProgram:program]) {
-      NSLog(@"Failed to validate program: %d", program);
-      return;
-    }
-#endif
-  } else {
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    glTranslatef(0.0f, (GLfloat)(sinf(transY)/2.0f), 0.0f);
-    transY += 0.075f;
-    
-    glVertexPointer(2, GL_FLOAT, 0, squareVertices);
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glColorPointer(4, GL_UNSIGNED_BYTE, 0, squareColors);
-    glEnableClientState(GL_COLOR_ARRAY);
-  }
-  
-  glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+  glLoadIdentity();
+  glOrthof(-1.0f, 1.0f, -1.5f, 1.5f ,0.5f ,-0.5f);
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
+  [self drawMain];
   
   [(EAGLView *)self.view presentFramebuffer];
+}
+
+-(void)drawMain
+{
+  
 }
 
 - (BOOL)compileShader:(GLuint *)shader type:(GLenum)type file:(NSString *)file

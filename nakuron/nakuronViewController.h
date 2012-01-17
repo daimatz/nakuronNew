@@ -12,8 +12,8 @@
 
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
-#import <OpenGLES/ES2/gl.h>
-#import <OpenGLES/ES2/glext.h>
+
+#define MAX_BOARD_WIDTH 32
 
 @interface nakuronViewController : UIViewController {
 @private
@@ -23,6 +23,8 @@
   BOOL animating;
   NSInteger animationFrameInterval;
   CADisplayLink *displayLink;
+  
+  int pieces[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2];
 }
 
 @property (readonly, nonatomic, getter=isAnimating) BOOL animating;
@@ -30,5 +32,6 @@
 
 - (void)startAnimation;
 - (void)stopAnimation;
+- (void)drawMain;
 
 @end
