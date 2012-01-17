@@ -13,6 +13,8 @@
 #import "Lib.h"
 #import "graphicUtil.h"
 
+using namespace std;
+
 nakuronViewController *nakuron;
 
 // Uniform index.
@@ -39,7 +41,6 @@ enum {
 @end
 
 @implementation nakuronViewController
-@synthesize mapView;
 
 @synthesize animating, context, displayLink;
 
@@ -69,40 +70,45 @@ enum {
   seed = arc4random() & 0x7FFFFFFF;
   
   //texture読み込み
-  piecenumToTexture.push_back(loadTexture(@"empty.png"));
-  piecenumToTexture.push_back(loadTexture(@"wall.png"));
-  NSString *cs[] = {@"red", @"blue", @"yellow", @"green"};
-  for(int i=0;i<4;i++) piecenumToTexture.push_back(loadTexture([NSString stringWithFormat:@"b%@.png",cs[i]]));
-  for(int i=0;i<4;i++) piecenumToTexture.push_back(loadTexture([NSString stringWithFormat:@"h%@.png",cs[i]]));
+  piecenumToTexture.insert(make_pair(PieceData(EMPTY, WHITE),loadTexture(@"empty.png")));
+  piecenumToTexture.insert(make_pair(PieceData(WALL, BLACK), loadTexture(@"wall.png")));
+  NSString *cs[] = {@"red", @"green", @"blue", @"yellow"};
+  Color s[] = {RED, GREEN, BLUE, YELLOW};
+  for(int i=0;i<4;i++) {
+    piecenumToTexture.insert(make_pair(PieceData(BALL, s[i]), loadTexture([NSString stringWithFormat:@"b%@.png",cs[i]])));
+    piecenumToTexture.insert(make_pair(PieceData(HOLE, s[i]), loadTexture([NSString stringWithFormat:@"h%@.png",cs[i]])));
+  }
   //boardの大きさ
   boardSizePx = 240.0;
   boardLeftLowerX = boardLeftLowerY = -120.0;
   //最初の盤面を作成
-  [self boardInitWithSize:32 colorNum:4];
+  [self boardInitWithSize:32 colorNum:4 holeRatio:80];
 }
--(void)boardInitWithSize:(int)size colorNum:(int)colnum
+-(void)boardInitWithSize:(int)size colorNum:(int)colnum holeRatio:(int)hole
 {
   colorNum = colnum;
   boardSize = size+2;
   cellSize = boardSizePx/boardSize;
-  int hole = 80,wall = 20;
-  Xor128 *hash = [Xor128 xor128WithSeed:seed];
+
+  int wall = 100 - hole;
+  Xor128 hash(seed);
   for(int r=0;r<boardSize;r++){
     for(int c=0;c<boardSize;c++){
-      if((r==0 && c==0) || (r==boardSize-1 && c==boardSize-1)) pieces[r][c] = WALL;
+      if((r==0 && c==0) || (r==boardSize-1 && c==boardSize-1)) pieces[r][c] = PieceData(WALL, BLACK);
       else if(r==0 || c==0 || r==boardSize-1 || c==boardSize-1 ){
-        if([hash randomInt:100] < hole) pieces[r][c] = 1+colnum+1+[hash randomInt:colnum];
-        else pieces[r][c]=WALL;
-      }
-      else{
-        if([hash randomInt:100] < wall) pieces[r][c] = 1;
-        else pieces[r][c] = 2+[hash randomInt:colnum];
+        pieces[r][c] = (hash.randomInt(100) < hole) 
+                       ? PieceData(HOLE, intToColor(hash.randomInt(colnum)))
+                       : PieceData(WALL, BLACK);
+      } else{
+        pieces[r][c] = (hash.randomInt(100) < wall)
+                       ? PieceData(WALL, BLACK)
+                       : PieceData(BALL, intToColor(hash.randomInt(colnum)));
       }
     }
   }
   for(int r=0;r<boardSize;r++){
     for(int c=0;c<boardSize;c++){
-      fprintf(stderr,"%d,",pieces[r][c]);
+      fprintf(stderr,"%d,", colorToInt(pieces[r][c].color));
     }
     fprintf(stderr,"\n");
   }
@@ -123,7 +129,6 @@ enum {
   
   [context release];
   
-  [mapView release];
   [super dealloc];
 }
 
@@ -151,7 +156,6 @@ enum {
 
 - (void)viewDidUnload
 {
-  [self setMapView:nil];
 	[super viewDidUnload];
 	
   if (program) {
