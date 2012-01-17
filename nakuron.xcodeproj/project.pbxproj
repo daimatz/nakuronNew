@@ -145,6 +145,9 @@
 /* Begin PBXProject section */
 		27C7AD9A14C53564006CF983 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
 			buildConfigurationList = 27C7AD9D14C53564006CF983 /* Build configuration list for PBXProject "nakuron" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
@@ -260,6 +263,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nakuron/nakuron-Prefix.pch";
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "nakuron/nakuron-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -274,6 +278,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nakuron/nakuron-Prefix.pch";
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "nakuron/nakuron-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VALIDATE_PRODUCT = YES;
@@ -300,6 +305,7 @@
 				27C7ADD114C53564006CF983 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
