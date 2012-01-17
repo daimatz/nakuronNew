@@ -39,6 +39,7 @@ enum {
 @end
 
 @implementation nakuronViewController
+@synthesize mapView;
 
 @synthesize animating, context, displayLink;
 
@@ -123,6 +124,7 @@ enum {
   
   [context release];
   
+  [mapView release];
   [super dealloc];
 }
 
@@ -150,6 +152,7 @@ enum {
 
 - (void)viewDidUnload
 {
+  [self setMapView:nil];
 	[super viewDidUnload];
 	
   if (program) {
@@ -182,6 +185,22 @@ enum {
       [self startAnimation];
     }
   }
+}
+
+- (IBAction)downButton {
+  NSLog(@"down");
+}
+
+- (IBAction)leftButton {
+  NSLog(@"left");
+}
+
+- (IBAction)upButton {
+  NSLog(@"up");
+}
+
+- (IBAction)rightButton {
+  NSLog(@"right");
 }
 
 - (void)startAnimation
