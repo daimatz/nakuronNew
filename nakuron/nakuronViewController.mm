@@ -230,6 +230,16 @@ enum {
   NSLog(@"right");
 }
 
+- (IBAction)menuButton {
+  NSLog(@"menu");
+  menuView = [[menuViewController alloc] initWithNibName:@"menuViewController" bundle:nil];
+  menuView.view.bounds = menuView.view.frame = [UIScreen mainScreen].bounds;
+  [self.view addSubview:menuView.view];
+//  menuView.newDifficulty = _difficulty;
+//  menuView.newProbNum = _probNum;
+//  [menuView initView];
+}
+
 - (void)startAnimation
 {
   if (!animating) {
