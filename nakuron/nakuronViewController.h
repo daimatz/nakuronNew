@@ -12,6 +12,9 @@
 
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
+
+#import "menuViewController.h"
+
 #include<cstring>
 #include<vector>
 
@@ -27,7 +30,9 @@ using namespace std;
   BOOL animating;
   NSInteger animationFrameInterval;
   CADisplayLink *displayLink;
-  
+
+  menuViewController *menuView;
+
   int seed;
   
   //壁 1
@@ -51,6 +56,8 @@ using namespace std;
 - (IBAction)downButton;
 - (IBAction)leftButton;
 - (IBAction)upButton;
+
+- (IBAction)menuButton;
 
 - (void)startAnimation;
 - (void)stopAnimation;
