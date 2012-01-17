@@ -20,6 +20,11 @@
 #include<vector>
 #include<algorithm>
 
+const float boardSizePx = 240.0;
+const float boardLeftLowerX = -120.0;
+const float boardLeftLowerY = -120.0;
+const int colorNum = 4;
+
 @interface nakuronViewController : UIViewController {
 @private
   EAGLContext *context;
@@ -31,17 +36,14 @@
 
   menuViewController *menuView;
 
+  int probNum;
   int seed;
+  Difficulty difficulty;
   
-  //壁 1
-  //空 0
-  //色1...色n 1 ~ n+1
-  //色壁1...色壁n n+2 ~ 2*n-1
-  PieceData pieces[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2];
   int boardSize;
-  int colorNum;
+  PieceData pieces[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2];
 
-  float boardLeftLowerX,boardLeftLowerY,cellSize,boardSizePx;
+  float cellSize;
   
   std::map<PieceData, GLuint> piecenumToTexture;
   
@@ -61,5 +63,5 @@
 - (void)stopAnimation;
 - (void)drawMain;
 - (void)dump;
--(void)boardInitWithSize:(int)size colorNum:(int)colnum holeRatio:(int)hole;
+-(void)boardInit:(Difficulty)d probNum:(int)p holeRatio:(int)r;
 @end

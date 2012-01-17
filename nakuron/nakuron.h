@@ -34,6 +34,8 @@ typedef enum {
 int pieceToInt(Piece p);
 int colorToInt(Color c);
 Color intToColor(int i);
+int probNumToSeed(int p);
+int difficultyToBoardSize(Difficulty d);
 
 struct PieceData {
   Piece piece;

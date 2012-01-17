@@ -36,6 +36,22 @@ Color intToColor(int i) {
   }
 }
 
+int probNumToSeed(int p) {
+  return 4;
+}
+
+int difficultyToBoardSize(Difficulty d) {
+  int b;
+  switch (d) {
+    case DIFFICULTY_EASY: b = 4; break;
+    case DIFFICULTY_NORMAL: b = 8; break;
+    case DIFFICULTY_HARD: b = 16; break;
+    case DIFFICULTY_VERY_HARD: b = 32; break;
+    default: throw ProgrammingException("difficulty おかしい");
+  }
+  return b+2;
+}
+
 ProgrammingException::ProgrammingException(const string& mes) {
 
 }
