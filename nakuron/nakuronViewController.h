@@ -17,12 +17,12 @@
 
 @interface nakuronViewController : UIViewController {
 @private
-    EAGLContext *context;
-    GLuint program;
-    
-    BOOL animating;
-    NSInteger animationFrameInterval;
-    CADisplayLink *displayLink;
+  EAGLContext *context;
+  GLuint program;
+  
+  BOOL animating;
+  NSInteger animationFrameInterval;
+  CADisplayLink *displayLink;
 }
 
 @property (readonly, nonatomic, getter=isAnimating) BOOL animating;

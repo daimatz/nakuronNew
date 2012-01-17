@@ -23,7 +23,7 @@
 {
   // Override point for customization after application launch.
   self.window.rootViewController = self.viewController;
-    return YES;
+  return YES;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -72,7 +72,7 @@
 {
   [_window release];
   [_viewController release];
-    [super dealloc];
+  [super dealloc];
 }
 
 @end
