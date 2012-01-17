@@ -75,25 +75,24 @@ enum {
   for(int i=0;i<4;i++) piecenumToTexture.push_back(loadTexture([NSString stringWithFormat:@"b%@.png",cs[i]]));
   for(int i=0;i<4;i++) piecenumToTexture.push_back(loadTexture([NSString stringWithFormat:@"h%@.png",cs[i]]));
   //boardの大きさ
-  boardSize = 240.0;
+  boardSizePx = 240.0;
   boardLeftLowerX = boardLeftLowerY = -120.0;
   //最初の盤面を作成
-  [self boardInitWithSize:8 colorNum:4];
+  [self boardInitWithSize:32 colorNum:4];
 }
 -(void)boardInitWithSize:(int)size colorNum:(int)colnum
 {
   colorNum = colnum;
   boardSize = size+2;
-  cellSize = boardSize/boardWidth;
+  cellSize = boardSizePx/boardSize;
   int hole = 80,wall = 20;
-  NSLog(@"hoge");
   Xor128 *hash = [Xor128 xor128WithSeed:seed];
   for(int r=0;r<boardSize;r++){
     for(int c=0;c<boardSize;c++){
-      if((r==0 && c==0) || (r==boardSize-1 && c==boardSize-1)) pieces[r][c] = 1;
+      if((r==0 && c==0) || (r==boardSize-1 && c==boardSize-1)) pieces[r][c] = WALL;
       else if(r==0 || c==0 || r==boardSize-1 || c==boardSize-1 ){
         if([hash randomInt:100] < hole) pieces[r][c] = 1+colnum+1+[hash randomInt:colnum];
-        else pieces[r][c]=1;
+        else pieces[r][c]=WALL;
       }
       else{
         if([hash randomInt:100] < wall) pieces[r][c] = 1;
@@ -101,8 +100,8 @@ enum {
       }
     }
   }
-  for(int r=0;r<boardWidth;r++){
-    for(int c=0;c<boardWidth;c++){
+  for(int r=0;r<boardSize;r++){
+    for(int c=0;c<boardSize;c++){
       fprintf(stderr,"%d,",pieces[r][c]);
     }
     fprintf(stderr,"\n");
@@ -241,10 +240,12 @@ enum {
   glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT);
   
+  glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
   glOrthof(-160.0f, 160.0f, -240.0f, 240.0f ,0.5f ,-0.5f);
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
+  //drawTexture(0.0, 0.0,20.0, 20.0,piecenumToTexture[1], 255, 255, 255, 255);
   [self drawMain];
   
   [(EAGLView *)self.view presentFramebuffer];
@@ -252,14 +253,17 @@ enum {
 
 -(void)drawMain
 {
+  static bool first = true;
   for(int r = 0; r < boardSize; r++) {
-    for (int c = 0; c < boardWidth; c++) {
+    for (int c = 0; c < boardSize; c++) {
       GLuint texture = piecenumToTexture[pieces[r][c]];
-      float x = boardLeftLowerX + c*cellSize;
-      float y = boardLeftLowerY + boardWidth - (r+1)*cellSize;
+      float x = boardLeftLowerX + c*cellSize+cellSize/2;
+      float y = boardLeftLowerY + boardSizePx - (r+1)*cellSize+cellSize/2;
+      //if(first) NSLog(@"%f %f",x,y);
       drawTexture(x,y,cellSize,cellSize, texture,255,255,255,255);
     }
   }
+  first = false;
 }
 
 - (BOOL)compileShader:(GLuint *)shader type:(GLenum)type file:(NSString *)file
