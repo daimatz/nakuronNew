@@ -15,24 +15,10 @@
 
 #import "menuViewController.h"
 
+#include "nakuron.h"
 #include<cstring>
 #include<vector>
 #include<algorithm>
-
-#define MAX_BOARD_WIDTH 32
-
-using namespace std;
-
-#define EMPTY 0
-#define WALL 1
-#define RED 2
-#define BLUE 3
-#define YELLOW 4
-#define GREEN 5
-
-struct DrawState{
-  float sx,sy,gx,gy,cx,cy;
-};
 
 @interface nakuronViewController : UIViewController {
 @private
@@ -51,18 +37,18 @@ struct DrawState{
   //空 0
   //色1...色n 1 ~ n+1
   //色壁1...色壁n n+2 ~ 2*n-1
-  int pieces[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2];
+  PieceData pieces[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2];
   int boardSize;
   int colorNum;
+
   float boardLeftLowerX,boardLeftLowerY,cellSize,boardSizePx;
   
-  vector<GLint> piecenumToTexture;
+  std::map<PieceData, GLuint> piecenumToTexture;
   
 }
 
 @property (readonly, nonatomic, getter=isAnimating) BOOL animating;
 @property (nonatomic) NSInteger animationFrameInterval;
-@property (retain, nonatomic) IBOutlet UIView *mapView;
 
 - (IBAction)rightButton;
 - (IBAction)downButton;
@@ -74,6 +60,6 @@ struct DrawState{
 - (void)startAnimation;
 - (void)stopAnimation;
 - (void)drawMain;
-- (void)boardInitWithSize:(int)size colorNum:(int)colnum;
 - (void)dump;
+-(void)boardInitWithSize:(int)size colorNum:(int)colnum holeRatio:(int)hole;
 @end
