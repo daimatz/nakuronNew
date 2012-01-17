@@ -10,7 +10,6 @@
 
 #import "nakuronViewController.h"
 #import "EAGLView.h"
-#import "Lib.h"
 #import "graphicUtil.h"
 
 using namespace std;
