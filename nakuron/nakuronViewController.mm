@@ -56,7 +56,7 @@ enum {
 - (void)awakeFromNib
 {
   nakuron = self;
-
+  
   //常にES1を使う
   EAGLContext *aContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
 

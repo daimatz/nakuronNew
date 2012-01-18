@@ -52,6 +52,35 @@ int difficultyToBoardSize(Difficulty d) {
   return b+2;
 }
 
+string NSStringToString(NSString* ns) {
+  return string([ns UTF8String]);
+}
+
+NSString* stringToNSString(string s) {
+  return [NSString stringWithFormat:@"%s", s.c_str()];
+}
+
+vector<string> string_split(string s, string c) {
+  vector<string> ret;
+  for( int i=0, n; i <= s.length(); i=n+1 ){
+    n = s.find_first_of( c, i );
+    if( n == string::npos ) n = s.length();
+    string tmp = s.substr( i, n-i );
+    ret.push_back(tmp);
+  }
+  return ret;
+}
+
+string string_join(vector<string> ss, string c) {
+  string ret;
+  for (int i = 0; i < (int)ss.size(); i++) {
+    ret += ss[i];
+    if (i != (int)ss.size() - 1)
+      ret += c;
+  }
+  return ret;
+}
+
 ProgrammingException::ProgrammingException(const string& mes) {
 
 }
