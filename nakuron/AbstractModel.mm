@@ -8,6 +8,12 @@
 
 using namespace std;
 
+void AbstractRecords::init(int n, std::string fs[][2]) {
+  for (int i = 0; i < n; i++) {
+    fields.push_back(pair<string, string>(fs[i][0], fs[i][1]));
+  }
+}
+
 AbstractModel::AbstractModel() {
   NSLog(@"AbstractModel::AbstractModel()");
   ud = [NSUserDefaults standardUserDefaults];

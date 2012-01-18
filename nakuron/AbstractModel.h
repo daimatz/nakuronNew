@@ -5,6 +5,22 @@
 
 #include "nakuron.h"
 
+//struct kvtype {
+//  std::string keyType;
+//  std::string valueType;
+//  kvtype(std::string kt, std::string vt) {
+//    keyType = kt; valueType = vt;
+//  }
+//};
+typedef std::pair<std::string, std::string> kvtype;
+
+class AbstractRecords {
+public:
+  void init(int n, std::string fs[][2]);
+private:
+  std::vector<std::pair<std::string, std::string> > fields;
+};
+
 class AbstractModel {
 public:
   AbstractModel();
