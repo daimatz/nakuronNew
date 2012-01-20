@@ -16,9 +16,9 @@
 #import "menuViewController.h"
 
 #include "nakuron.h"
-#include<cstring>
-#include<vector>
-#include<algorithm>
+#include <cstring>
+#include <vector>
+#include <algorithm>
 
 @interface nakuronViewController : UIViewController {
 @private

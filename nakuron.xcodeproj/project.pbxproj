@@ -7,9 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2333569414C75A7800729060 /* HistoryModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2333569314C75A7800729060 /* HistoryModel.mm */; };
 		2333569914C75AD200729060 /* AbstractModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2333569814C75AD200729060 /* AbstractModel.mm */; };
 		235074E714C5738A003EE0C1 /* nakuron.mm in Sources */ = {isa = PBXBuildFile; fileRef = 235074E614C5738A003EE0C1 /* nakuron.mm */; };
+		238F72FA14C9C4CE00CAC3EB /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 238F72F914C9C4CE00CAC3EB /* libsqlite3.0.dylib */; };
+		238F732A14C9C6F700CAC3EB /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 238F732514C9C6F700CAC3EB /* FMDatabase.m */; };
+		238F732B14C9C6F700CAC3EB /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 238F732714C9C6F700CAC3EB /* FMDatabaseAdditions.m */; };
+		238F732C14C9C6F700CAC3EB /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 238F732914C9C6F700CAC3EB /* FMResultSet.m */; };
 		23915A9214C9C18100C925B8 /* arrow-down.png in Resources */ = {isa = PBXBuildFile; fileRef = 23915A8414C9C18100C925B8 /* arrow-down.png */; };
 		23915A9314C9C18100C925B8 /* arrow-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 23915A8514C9C18100C925B8 /* arrow-left.png */; };
 		23915A9414C9C18100C925B8 /* arrow-right.png in Resources */ = {isa = PBXBuildFile; fileRef = 23915A8614C9C18100C925B8 /* arrow-right.png */; };
@@ -44,11 +47,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2333569214C75A7800729060 /* HistoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryModel.h; sourceTree = "<group>"; };
-		2333569314C75A7800729060 /* HistoryModel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HistoryModel.mm; sourceTree = "<group>"; };
 		2333569714C75AD200729060 /* AbstractModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractModel.h; sourceTree = "<group>"; };
 		2333569814C75AD200729060 /* AbstractModel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AbstractModel.mm; sourceTree = "<group>"; };
 		235074E614C5738A003EE0C1 /* nakuron.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = nakuron.mm; sourceTree = "<group>"; };
+		238F72F914C9C4CE00CAC3EB /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
+		238F732414C9C6F700CAC3EB /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
+		238F732514C9C6F700CAC3EB /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
+		238F732614C9C6F700CAC3EB /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		238F732714C9C6F700CAC3EB /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		238F732814C9C6F700CAC3EB /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
+		238F732914C9C6F700CAC3EB /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
 		23915A8414C9C18100C925B8 /* arrow-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-down.png"; sourceTree = "<group>"; };
 		23915A8514C9C18100C925B8 /* arrow-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-left.png"; sourceTree = "<group>"; };
 		23915A8614C9C18100C925B8 /* arrow-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-right.png"; sourceTree = "<group>"; };
@@ -96,6 +104,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				238F72FA14C9C4CE00CAC3EB /* libsqlite3.0.dylib in Frameworks */,
 				27C7ADA814C53564006CF983 /* UIKit.framework in Frameworks */,
 				27C7ADAA14C53564006CF983 /* Foundation.framework in Frameworks */,
 				27C7ADAC14C53564006CF983 /* CoreGraphics.framework in Frameworks */,
@@ -110,8 +119,6 @@
 		2333569614C75A7D00729060 /* model */ = {
 			isa = PBXGroup;
 			children = (
-				2333569214C75A7800729060 /* HistoryModel.h */,
-				2333569314C75A7800729060 /* HistoryModel.mm */,
 				2333569714C75AD200729060 /* AbstractModel.h */,
 				2333569814C75AD200729060 /* AbstractModel.mm */,
 			);
@@ -121,6 +128,7 @@
 		2333569A14C7617600729060 /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				238F72F914C9C4CE00CAC3EB /* libsqlite3.0.dylib */,
 				27E36D5F14C53A3E00004587 /* graphicUtil.h */,
 				27E36D6014C53A3E00004587 /* graphicUtil.mm */,
 				27C7ADC414C53564006CF983 /* EAGLView.h */,
@@ -129,6 +137,19 @@
 				27C7ADC214C53564006CF983 /* Shader.vsh */,
 			);
 			name = lib;
+			sourceTree = "<group>";
+		};
+		238F732314C9C6F700CAC3EB /* fmdb */ = {
+			isa = PBXGroup;
+			children = (
+				238F732414C9C6F700CAC3EB /* FMDatabase.h */,
+				238F732514C9C6F700CAC3EB /* FMDatabase.m */,
+				238F732614C9C6F700CAC3EB /* FMDatabaseAdditions.h */,
+				238F732714C9C6F700CAC3EB /* FMDatabaseAdditions.m */,
+				238F732814C9C6F700CAC3EB /* FMResultSet.h */,
+				238F732914C9C6F700CAC3EB /* FMResultSet.m */,
+			);
+			path = fmdb;
 			sourceTree = "<group>";
 		};
 		23915A8314C9C18100C925B8 /* resource */ = {
@@ -195,6 +216,7 @@
 				23EBF02A14C55F9B006876D4 /* menuViewController.h */,
 				23EBF02B14C55F9B006876D4 /* menuViewController.mm */,
 				23EBF02C14C55F9B006876D4 /* menuViewController.xib */,
+				238F732314C9C6F700CAC3EB /* fmdb */,
 				2333569A14C7617600729060 /* lib */,
 				2333569614C75A7D00729060 /* model */,
 				27C7ADB214C53564006CF983 /* Supporting Files */,
@@ -301,8 +323,10 @@
 				27E36D6114C53A3E00004587 /* graphicUtil.mm in Sources */,
 				23EBF02D14C55F9B006876D4 /* menuViewController.mm in Sources */,
 				235074E714C5738A003EE0C1 /* nakuron.mm in Sources */,
-				2333569414C75A7800729060 /* HistoryModel.mm in Sources */,
 				2333569914C75AD200729060 /* AbstractModel.mm in Sources */,
+				238F732A14C9C6F700CAC3EB /* FMDatabase.m in Sources */,
+				238F732B14C9C6F700CAC3EB /* FMDatabaseAdditions.m in Sources */,
+				238F732C14C9C6F700CAC3EB /* FMResultSet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

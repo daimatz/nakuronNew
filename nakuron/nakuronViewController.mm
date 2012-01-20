@@ -56,7 +56,10 @@ enum {
 - (void)awakeFromNib
 {
   nakuron = self;
-  
+
+  string db_filepath = documentDir()+"/"+DB_BASENAME;
+  NSLog(@"%@", stringToNSString(db_filepath));
+
   //常にES1を使う
   EAGLContext *aContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
 
@@ -65,8 +68,8 @@ enum {
   else if (![EAGLContext setCurrentContext:aContext])
     NSLog(@"Failed to set ES context current");
 
-	self.context = aContext;
-	[aContext release];
+  self.context = aContext;
+  [aContext release];
 
   [(EAGLView *)self.view setContext:context];
   [(EAGLView *)self.view setFramebuffer];
@@ -74,10 +77,10 @@ enum {
   animating = FALSE;
   animationFrameInterval = 1;
   self.displayLink = nil;
-  
+
   //seed
   //seed = arc4random() & 0x7FFFFFFF;
-  
+
   //texture読み込み
   piecenumToTexture.insert(make_pair(PieceData(EMPTY, WHITE),loadTexture(@"empty.png")));
   piecenumToTexture.insert(make_pair(PieceData(WALL, BLACK), loadTexture(@"wall.png")));
@@ -91,8 +94,8 @@ enum {
   }
 
   //最初の盤面を作成
-  [self boardInit:DIFFICULTY_EASY 
-          probNum:((arc4random() & 0x7FFFFFFF) % 101) 
+  [self boardInit:DIFFICULTY_EASY
+          probNum:((arc4random() & 0x7FFFFFFF) % 101)
         holeRatio:HOLE_RATIO];
 }
 
@@ -112,7 +115,7 @@ enum {
     for(int c=0;c<boardSize;c++){
       if((r==0 && c==0) || (r==boardSize-1 && c==boardSize-1)) pieces[r][c] = PieceData(WALL, BLACK);
       else if(r==0 || c==0 || r==boardSize-1 || c==boardSize-1 ){
-        pieces[r][c] = (hash.randomInt(100) < hole) 
+        pieces[r][c] = (hash.randomInt(100) < hole)
                        ? PieceData(HOLE, intToColor(hash.randomInt(colorNum)))
                        : PieceData(WALL, BLACK);
       } else{
@@ -130,15 +133,15 @@ enum {
     glDeleteProgram(program);
     program = 0;
   }
-  
+
   // Tear down context.
   if ([EAGLContext currentContext] == context)
     [EAGLContext setCurrentContext:nil];
-  
+
   //texture解放処理忘れないように
-  
+
   [context release];
-  
+
   [super dealloc];
 }
 
@@ -146,28 +149,28 @@ enum {
 {
   // Releases the view if it doesn't have a superview.
   [super didReceiveMemoryWarning];
-  
+
   // Release any cached data, images, etc. that aren't in use.
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
   [self startAnimation];
-  
+
   [super viewWillAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
   [self stopAnimation];
-  
+
   [super viewWillDisappear:animated];
 }
 
 - (void)viewDidUnload
 {
-	[super viewDidUnload];
-	
+  [super viewDidUnload];
+
   if (program) {
     glDeleteProgram(program);
     program = 0;
@@ -176,7 +179,7 @@ enum {
   // Tear down context.
   if ([EAGLContext currentContext] == context)
     [EAGLContext setCurrentContext:nil];
-	self.context = nil;	
+  self.context = nil;
 }
 
 - (NSInteger)animationFrameInterval
@@ -187,12 +190,12 @@ enum {
 - (void)setAnimationFrameInterval:(NSInteger)frameInterval
 {
   /*
-	 Frame interval defines how many display frames must pass between each time the display link fires.
-	 The display link will only fire 30 times a second when the frame internal is two on a display that refreshes 60 times a second. The default frame interval setting of one will fire 60 times a second when the display refreshes at 60 times a second. A frame interval setting of less than one results in undefined behavior.
-	 */
+   Frame interval defines how many display frames must pass between each time the display link fires.
+   The display link will only fire 30 times a second when the frame internal is two on a display that refreshes 60 times a second. The default frame interval setting of one will fire 60 times a second when the display refreshes at 60 times a second. A frame interval setting of less than one results in undefined behavior.
+   */
   if (frameInterval >= 1) {
     animationFrameInterval = frameInterval;
-    
+
     if (animating) {
       [self stopAnimation];
       [self startAnimation];
@@ -255,7 +258,7 @@ enum {
     [aDisplayLink setFrameInterval:animationFrameInterval];
     [aDisplayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     self.displayLink = aDisplayLink;
-    
+
     animating = TRUE;
   }
 }
@@ -272,10 +275,10 @@ enum {
 - (void)drawFrame
 {
   [(EAGLView *)self.view setFramebuffer];
-  
+
   glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT);
-  
+
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
   glOrthof(-160.0f, 160.0f, -240.0f, 240.0f ,0.5f ,-0.5f);
@@ -283,7 +286,7 @@ enum {
   glLoadIdentity();
   //drawTexture(0.0, 0.0,20.0, 20.0,piecenumToTexture[1], 255, 255, 255, 255);
   [self drawMain];
-  
+
   [(EAGLView *)self.view presentFramebuffer];
 }
 
@@ -306,18 +309,18 @@ enum {
 {
   GLint status;
   const GLchar *source;
-  
+
   source = (GLchar *)[[NSString stringWithContentsOfFile:file encoding:NSUTF8StringEncoding error:nil] UTF8String];
   if (!source)
   {
     NSLog(@"Failed to load vertex shader");
     return FALSE;
   }
-  
+
   *shader = glCreateShader(type);
   glShaderSource(*shader, 1, &source, NULL);
   glCompileShader(*shader);
-  
+
 #if defined(DEBUG)
   GLint logLength;
   glGetShaderiv(*shader, GL_INFO_LOG_LENGTH, &logLength);
@@ -329,23 +332,23 @@ enum {
     free(log);
   }
 #endif
-  
+
   glGetShaderiv(*shader, GL_COMPILE_STATUS, &status);
   if (status == 0)
   {
     glDeleteShader(*shader);
     return FALSE;
   }
-  
+
   return TRUE;
 }
 
 - (BOOL)linkProgram:(GLuint)prog
 {
   GLint status;
-  
+
   glLinkProgram(prog);
-  
+
 #if defined(DEBUG)
   GLint logLength;
   glGetProgramiv(prog, GL_INFO_LOG_LENGTH, &logLength);
@@ -357,18 +360,18 @@ enum {
     free(log);
   }
 #endif
-  
+
   glGetProgramiv(prog, GL_LINK_STATUS, &status);
   if (status == 0)
     return FALSE;
-  
+
   return TRUE;
 }
 
 - (BOOL)validateProgram:(GLuint)prog
 {
   GLint logLength, status;
-  
+
   glValidateProgram(prog);
   glGetProgramiv(prog, GL_INFO_LOG_LENGTH, &logLength);
   if (logLength > 0)
@@ -378,11 +381,11 @@ enum {
     NSLog(@"Program validate log:\n%s", log);
     free(log);
   }
-  
+
   glGetProgramiv(prog, GL_VALIDATE_STATUS, &status);
   if (status == 0)
     return FALSE;
-  
+
   return TRUE;
 }
 
@@ -390,10 +393,10 @@ enum {
 {
   GLuint vertShader, fragShader;
   NSString *vertShaderPathname, *fragShaderPathname;
-  
+
   // Create shader program.
   program = glCreateProgram();
-  
+
   // Create and compile vertex shader.
   vertShaderPathname = [[NSBundle mainBundle] pathForResource:@"Shader" ofType:@"vsh"];
   if (![self compileShader:&vertShader type:GL_VERTEX_SHADER file:vertShaderPathname])
@@ -401,7 +404,7 @@ enum {
     NSLog(@"Failed to compile vertex shader");
     return FALSE;
   }
-  
+
   // Create and compile fragment shader.
   fragShaderPathname = [[NSBundle mainBundle] pathForResource:@"Shader" ofType:@"fsh"];
   if (![self compileShader:&fragShader type:GL_FRAGMENT_SHADER file:fragShaderPathname])
@@ -409,23 +412,23 @@ enum {
     NSLog(@"Failed to compile fragment shader");
     return FALSE;
   }
-  
+
   // Attach vertex shader to program.
   glAttachShader(program, vertShader);
-  
+
   // Attach fragment shader to program.
   glAttachShader(program, fragShader);
-  
+
   // Bind attribute locations.
   // This needs to be done prior to linking.
   glBindAttribLocation(program, ATTRIB_VERTEX, "position");
   glBindAttribLocation(program, ATTRIB_COLOR, "color");
-  
+
   // Link program.
   if (![self linkProgram:program])
   {
     NSLog(@"Failed to link program: %d", program);
-    
+
     if (vertShader)
     {
       glDeleteShader(vertShader);
@@ -441,19 +444,19 @@ enum {
       glDeleteProgram(program);
       program = 0;
     }
-    
+
     return FALSE;
   }
-  
+
   // Get uniform locations.
   uniforms[UNIFORM_TRANSLATE] = glGetUniformLocation(program, "translate");
-  
+
   // Release vertex and fragment shaders.
   if (vertShader)
     glDeleteShader(vertShader);
   if (fragShader)
     glDeleteShader(fragShader);
-  
+
   return TRUE;
 }
 

@@ -52,6 +52,12 @@ int difficultyToBoardSize(Difficulty d) {
   return b+2;
 }
 
+string intToString(int n) {
+  char buf[32];
+  sprintf(buf, "%d", n);
+  return string(buf);
+}
+
 string NSStringToString(NSString* ns) {
   return string([ns UTF8String]);
 }
@@ -79,6 +85,16 @@ string string_join(vector<string> ss, string c) {
       ret += c;
   }
   return ret;
+}
+
+string documentDir() {
+  static string path;
+  if (path == "") {
+    NSArray* writePashs;
+    writePashs = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    path = NSStringToString([writePashs objectAtIndex:0]);
+  }
+  return path;
 }
 
 ProgrammingException::ProgrammingException(const string& mes) {
