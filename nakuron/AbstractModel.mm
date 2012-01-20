@@ -1,8 +1,3 @@
-//
-//  AbstractModel.m
-//  nakuron
-//
-
 #import "AbstractModel.h"
 #include <stdio.h>
 
@@ -17,6 +12,7 @@ using namespace std;
 //}
 FindClause::FindClause() {
   // return FindClause(""); // できない
+  _dnf = true;
   _table = _where = _order = _group = _having = "";
   _where_and.clear();
   _where_or.clear();
@@ -28,22 +24,30 @@ FindClause *FindClause::cnf() {
       || !_order.empty() || !_group.empty() || !_having.empty()) {
     throw ProgrammingException("cnf()は最初に呼ぶ");
   }
-  dnf = false;
+  _dnf = false;
   return this;
 }
+FindClause *FindClause::dnf() {
+  if (!_where.empty() || !_where_or.empty()
+      || !_order.empty() || !_group.empty() || !_having.empty()) {
+    throw ProgrammingException("cnf()は最初に呼ぶ");
+  }
+  _dnf = true;
+  return this;
+}  
 FindClause *FindClause::where(string k, string o, string v) {
-  if (!_where.empty()) _where += " AND ";
+  if (!_where.empty()) _where += _dnf ? " AND " : " OR ";
   _where += "`"+k+"` "+o+" '"+v+"'";
   return this;
 }
 FindClause *FindClause::where_or(string k, string o, string v) {
-  if (dnf) _where_or.push_back("("+_where+") OR ");
+  if (_dnf) _where_or.push_back("("+_where+") OR ");
   else throw ProgrammingException("CNFではwhere_orは呼ばない");
   _where = "`"+k+"` "+o+" '"+v+"'";
   return this;
 }
 FindClause *FindClause::where_and(string k, string o, string v) {
-  if (!dnf) _where_and.push_back("("+_where+") AND ");
+  if (!_dnf) _where_and.push_back("("+_where+") AND ");
   else throw ProgrammingException("DNFではwhere_andは呼ばない");
   _where = "`"+k+"` "+o+" '"+v+"'";
   return this;
@@ -63,7 +67,7 @@ string FindClause::clause() {
   if (!_table.empty()) ret += "SELECT * FROM `"+_table+"`";
   if (!_where.empty()) {
     ret += " WHERE ";
-    if (dnf) {
+    if (_dnf) {
       for (int i = 0; i < (int)_where_or.size(); i++) {
         ret += _where_or[i];
       }

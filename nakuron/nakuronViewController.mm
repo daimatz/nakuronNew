@@ -11,6 +11,7 @@
 #import "nakuronViewController.h"
 #import "EAGLView.h"
 #import "graphicUtil.h"
+#include "HistoryModel.h"
 
 using namespace std;
 
@@ -56,9 +57,6 @@ enum {
 - (void)awakeFromNib
 {
   nakuron = self;
-
-  string db_filepath = documentDir()+"/"+DB_BASENAME;
-  NSLog(@"%@", stringToNSString(db_filepath));
 
   //常にES1を使う
   EAGLContext *aContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];

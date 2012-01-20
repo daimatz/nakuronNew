@@ -27,6 +27,8 @@
 		23915A9D14C9C18100C925B8 /* hred.png in Resources */ = {isa = PBXBuildFile; fileRef = 23915A8F14C9C18100C925B8 /* hred.png */; };
 		23915A9E14C9C18100C925B8 /* hyellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 23915A9014C9C18100C925B8 /* hyellow.png */; };
 		23915A9F14C9C18100C925B8 /* wall.png in Resources */ = {isa = PBXBuildFile; fileRef = 23915A9114C9C18100C925B8 /* wall.png */; };
+		239FD02614C9FF9900C3DBCD /* HistoryModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 239FD02514C9FF9900C3DBCD /* HistoryModel.mm */; };
+		239FD02B14CA09EA00C3DBCD /* ModelTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 239FD02A14CA09EA00C3DBCD /* ModelTest.mm */; };
 		23EBF02D14C55F9B006876D4 /* menuViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 23EBF02B14C55F9B006876D4 /* menuViewController.mm */; };
 		23EBF02E14C55F9B006876D4 /* menuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23EBF02C14C55F9B006876D4 /* menuViewController.xib */; };
 		27C7ADA814C53564006CF983 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27C7ADA714C53564006CF983 /* UIKit.framework */; };
@@ -71,6 +73,10 @@
 		23915A8F14C9C18100C925B8 /* hred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hred.png; sourceTree = "<group>"; };
 		23915A9014C9C18100C925B8 /* hyellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hyellow.png; sourceTree = "<group>"; };
 		23915A9114C9C18100C925B8 /* wall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wall.png; sourceTree = "<group>"; };
+		239FD02414C9FF9900C3DBCD /* HistoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryModel.h; sourceTree = "<group>"; };
+		239FD02514C9FF9900C3DBCD /* HistoryModel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HistoryModel.mm; sourceTree = "<group>"; };
+		239FD02914CA09EA00C3DBCD /* ModelTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ModelTest.h; path = test/ModelTest.h; sourceTree = "<group>"; };
+		239FD02A14CA09EA00C3DBCD /* ModelTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ModelTest.mm; path = test/ModelTest.mm; sourceTree = "<group>"; };
 		23EBF02A14C55F9B006876D4 /* menuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = menuViewController.h; sourceTree = "<group>"; };
 		23EBF02B14C55F9B006876D4 /* menuViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = menuViewController.mm; sourceTree = "<group>"; };
 		23EBF02C14C55F9B006876D4 /* menuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = menuViewController.xib; sourceTree = "<group>"; };
@@ -121,6 +127,8 @@
 			children = (
 				2333569714C75AD200729060 /* AbstractModel.h */,
 				2333569814C75AD200729060 /* AbstractModel.mm */,
+				239FD02414C9FF9900C3DBCD /* HistoryModel.h */,
+				239FD02514C9FF9900C3DBCD /* HistoryModel.mm */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -173,6 +181,15 @@
 			path = resource;
 			sourceTree = "<group>";
 		};
+		239FD02814CA09B300C3DBCD /* test */ = {
+			isa = PBXGroup;
+			children = (
+				239FD02914CA09EA00C3DBCD /* ModelTest.h */,
+				239FD02A14CA09EA00C3DBCD /* ModelTest.mm */,
+			);
+			name = test;
+			sourceTree = "<group>";
+		};
 		27C7AD9814C53564006CF983 = {
 			isa = PBXGroup;
 			children = (
@@ -216,6 +233,7 @@
 				23EBF02A14C55F9B006876D4 /* menuViewController.h */,
 				23EBF02B14C55F9B006876D4 /* menuViewController.mm */,
 				23EBF02C14C55F9B006876D4 /* menuViewController.xib */,
+				239FD02814CA09B300C3DBCD /* test */,
 				238F732314C9C6F700CAC3EB /* fmdb */,
 				2333569A14C7617600729060 /* lib */,
 				2333569614C75A7D00729060 /* model */,
@@ -327,6 +345,8 @@
 				238F732A14C9C6F700CAC3EB /* FMDatabase.m in Sources */,
 				238F732B14C9C6F700CAC3EB /* FMDatabaseAdditions.m in Sources */,
 				238F732C14C9C6F700CAC3EB /* FMResultSet.m in Sources */,
+				239FD02614C9FF9900C3DBCD /* HistoryModel.mm in Sources */,
+				239FD02B14CA09EA00C3DBCD /* ModelTest.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

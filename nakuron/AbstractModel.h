@@ -1,7 +1,4 @@
-//
-//  AbstractModel.h
-//  nakuron
-//
+#pragma once
 
 #include "nakuron.h"
 
@@ -10,7 +7,7 @@ typedef std::map<std::string, std::string> KeyValue;
 
 // find節。コンストラクタでテーブル名を指定。
 // CNFはandでつなげる形、DNFはorでつなげる形。デフォルトはDNF
-// FindClause fc = new FindClause("table");
+// FindClause fc = new FindClause();
 // fc->cnf()->where("id","=","1")
 //          ->where("date","=","2012-01-21 00:00:00")
 //          ->where_or("date","=","2012-01-22 00:00:00");
@@ -19,7 +16,7 @@ typedef std::map<std::string, std::string> KeyValue;
 // という形式のfind節を生成する
 class FindClause {
 private:
-  bool dnf;
+  bool _dnf;
   std::string _table;
   std::string _where;
   std::vector<std::string> _where_and, _where_or;
@@ -29,6 +26,7 @@ public:
   //FindClause(std::string _table); // SELECT 文
   FindClause(); // UPDATE, DELETE 文
   FindClause *cnf();
+  FindClause *dnf();
   FindClause *where(std::string key, std::string op, std::string value);
   FindClause *where_or(std::string key, std::string op, std::string value);
   FindClause *where_and(std::string key, std::string op, std::string value);
