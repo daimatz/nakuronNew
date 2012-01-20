@@ -20,7 +20,7 @@ FindClause::FindClause() {
 
 }
 FindClause *FindClause::cnf() {
-  if (!_where.empty() || !_where_or.empty()
+  if (!_where.empty() || !_where_or.empty() || !_where_and.empty()
       || !_order.empty() || !_group.empty() || !_having.empty()) {
     throw ProgrammingException("cnf()は最初に呼ぶ");
   }
@@ -28,9 +28,9 @@ FindClause *FindClause::cnf() {
   return this;
 }
 FindClause *FindClause::dnf() {
-  if (!_where.empty() || !_where_or.empty()
+  if (!_where.empty() || !_where_or.empty() || !_where_and.empty()
       || !_order.empty() || !_group.empty() || !_having.empty()) {
-    throw ProgrammingException("cnf()は最初に呼ぶ");
+    throw ProgrammingException("dnf()は最初に呼ぶ");
   }
   _dnf = true;
   return this;
