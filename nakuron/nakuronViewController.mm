@@ -54,9 +54,11 @@ enum {
   NSLog(@"----------------------");
 }
 
+#include "ModelTest.h"
 - (void)awakeFromNib
 {
   nakuron = self;
+  ModelTest::test();
 
   //常にES1を使う
   EAGLContext *aContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];

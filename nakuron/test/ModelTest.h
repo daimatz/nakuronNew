@@ -4,5 +4,6 @@
 #include "HistoryModel.h"
 
 class ModelTest {
-  void test();
+public:
+  static void test();
 };

@@ -47,7 +47,6 @@ public:
 protected:
   FMResultSet *executeQuery(std::string query, bool noTransaction = false);
   bool executeUpdate(std::string query, bool noTransaction = false);
-  FMDatabase *db;
   std::vector<std::string> fields;
   std::string primary;
   std::string table;

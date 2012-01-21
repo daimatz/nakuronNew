@@ -53,7 +53,11 @@ FindClause *FindClause::where_and(string k, string o, string v) {
   return this;
 }
 FindClause *FindClause::order(string key, string ord) {
-  if (ord != "asc" && ord != "desc") {
+  if (ord[0] == 'a' || ord[0] == 'A') {
+    ord = "ASC";
+  } else if (ord[0] == 'd' || ord[0] == 'D') {
+    ord = "DESC";
+  } else {
     throw ProgrammingException("orderの指定がおかしい");
   }
   _order = " ORDER BY `"+key+"` "+ord;
@@ -90,9 +94,15 @@ string FindClause::clause() {
   return ret;
 }
 
+FMDatabase *_db = NULL;
+
 AbstractModel::AbstractModel() {
-  NSString *path = stringToNSString(documentDir()+"/"+DB_BASENAME);
-  db = [FMDatabase databaseWithPath:path];
+  if (_db == NULL) {
+    NSLog(@"FMDatabase instanced");
+    NSString *path = stringToNSString(documentDir()+"/"+DB_BASENAME);
+    NSLog(@"DB filepath = %@", path);
+    _db = [FMDatabase databaseWithPath:path];
+  }
 }
 
 AbstractModel::~AbstractModel() {
@@ -121,18 +131,24 @@ vector<KeyValue> AbstractModel::findAll(FindClause *fc) {
 FMResultSet *AbstractModel::executeQuery(string query, bool noTransaction) {
   if (noTransaction) query += " (no transaction)";
   debug(query);
-  if (!noTransaction) [db beginTransaction];
-  FMResultSet *ret = [db executeQuery:stringToNSString(query)];
-  if (!noTransaction) [db commit];
+  if (!noTransaction) [_db beginTransaction];
+  FMResultSet *ret = [_db executeQuery:stringToNSString(query)];
+  if (!noTransaction) [_db commit];
   return ret;
 }
 
 bool AbstractModel::executeUpdate(string query, bool noTransaction) {
+  if (![_db open]) {
+    throw ProgrammingException("DB open failed");
+  }
   if (noTransaction) query += " (no transaction)";
   debug(query);
-  if (!noTransaction) [db beginTransaction];
-  bool ret = [db executeUpdate:stringToNSString(query)];
-  if (!noTransaction) [db commit];
+  if (!noTransaction) [_db beginTransaction];
+  bool ret = [_db executeUpdate:stringToNSString(query)];
+  if (!noTransaction) [_db commit];
+  if (![_db close]) {
+    throw ProgrammingException("DB close failed");
+  }
   return ret;
 }
 
