@@ -56,6 +56,7 @@ private:
 
   std::string whereString(AbstractModel *mdl);
   std::string addWhereString(const std::vector<Where> &where, AbstractModel *mdl);
+  static std::string typeFunctionMap(const std::string &t);
 };
 
 class AbstractModel {

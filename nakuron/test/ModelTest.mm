@@ -11,7 +11,7 @@ void ModelTest::test() {
   KeyValue kv;
   kv["probNum"] = "1";
   kv["step"] = "10";
-  kv["created"] = "2012-01-21 05:10:01";
+  kv["created"] = "2012-01-22 00:00:00";
   kv["time"] = "101";
   mdl.insert(kv);
  
@@ -36,7 +36,7 @@ void ModelTest::test() {
   mdl.remove(fc);
 
   fc = auto_ptr<FindClause>(new FindClause());
-  fc->where("id", "<=", "2")->where("time",">=","102")->where_or("id", "=", "3")->order("id","desc");
+  fc->where("created", "<=", "2012-01-22")->order("id","desc");
 
   vector<KeyValue> v = mdl.findAll(fc);
   for (int i = 0; i < (int)v.size(); i++) {

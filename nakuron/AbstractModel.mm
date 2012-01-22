@@ -4,6 +4,11 @@
 
 using namespace std;
 
+string FindClause::typeFunctionMap(const string &t) {
+  if (t == "datetime") return "datetime";
+  return "";
+}
+
 FindClause::FindClause() {
   // return FindClause(""); // できない
   NSLog(@"constructed FindClause");
@@ -103,9 +108,9 @@ string FindClause::addWhereString(const vector<Where> &where, AbstractModel *mdl
     // 見ようとしているキーが存在するか
     if ((mdl->fields).count(where[i].key) > 0) {
       string func;
-      // そのキーの型は
-      if (mdl->fields[where[i].key] == "datetime") func = "datetime";
-      else func = "";
+      // そのキーの型の値に対してSQLiteの関数を通す
+      func = typeFunctionMap(mdl->fields[where[i].key]);
+
       if (!ret.empty()) ret += _dnf ? " AND " : " OR ";
       if (func.empty()) {
         ret += "`"+where[i].key+"`"+where[i].op+"'"+where[i].value+"'";
@@ -181,40 +186,19 @@ bool AbstractModel::remove(auto_ptr<FindClause> fc) {
   return executeUpdate(query);
 }
 
-bool AbstractModel::query(const std::string &q) {
-  int i = 0;
-  while (q[i] == ' ' || q[i] == '\t' || q[i] == '\n')
-    i++;
-  string st = q.substr(i, string("SELECT").size());
-  std::transform(st.begin(), st.end(), st.begin(), ::toupper);
-  
-  // SELECT 文かどうかで変える
-  if (st == "SELECT") {
-    executeQuery(q);
-  } else {
-    executeUpdate(q);
-  }
-  
-  return [_db lastErrorCode] == 0 ? true : false;
-}
-
 // いちいち close しているので大量に呼ばれると遅い気がする
 vector<KeyValue> AbstractModel::executeQuery(const string &query, bool no_transaction) {
   if (![_db open]) {
     throw ProgrammingException("DB open failed");
   }
-  if (no_transaction)
   debug(query+(no_transaction?" (no transaction)":""));
   if (!no_transaction) [_db beginTransaction];
   FMResultSet *rs = [_db executeQuery:stringToNSString(query)];
   if (!no_transaction) [_db commit];
-
   vector<KeyValue> ret = fetch(rs);
-
   if (![_db close]) {
     throw ProgrammingException("DB close failed");
   }
-  
   return ret;
 }
 
@@ -249,6 +233,25 @@ vector<KeyValue> AbstractModel::fetch(FMResultSet *rs) {
   }
   NSLog(@"%d columns found.", (int)ret.size());
   return ret;
+}
+
+bool AbstractModel::query(const std::string &q) {
+  int i = 0;
+  while (q[i] == ' ' || q[i] == '\t' || q[i] == '\n')
+    i++;
+  string st = q.substr(i, string("SELECT").size());
+  std::transform(st.begin(), st.end(), st.begin(), ::toupper);
+  
+  // SELECT 文かどうかで変える
+  if (st == "SELECT") {
+    debug(q);
+    executeQuery(q);
+  } else {
+    debug(q);
+    executeUpdate(q);
+  }
+  
+  return [_db lastErrorCode] == 0 ? true : false;
 }
 
 void AbstractModel::debug(const string &query) {
