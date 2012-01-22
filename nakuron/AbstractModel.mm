@@ -6,6 +6,7 @@ using namespace std;
 
 FindClause::FindClause() {
   // return FindClause(""); // できない
+  NSLog(@"constructed FindClause");
   _dnf = true;
   _where.clear();
   _where_and.clear();
@@ -14,41 +15,41 @@ FindClause::FindClause() {
   _limit = 0;
 
 }
-FindClause FindClause::cnf() {
+FindClause *FindClause::cnf() {
   if (!_where.empty() || !_where_or.empty() || !_where_and.empty()
       || !_order.empty() || !_group.empty() || !_having.empty()) {
     throw ProgrammingException("cnf()は最初に呼ぶ");
   }
   _dnf = false;
-  return *this;
+  return this;
 }
-FindClause FindClause::dnf() {
+FindClause *FindClause::dnf() {
   if (!_where.empty() || !_where_or.empty() || !_where_and.empty()
       || !_order.empty() || !_group.empty() || !_having.empty()) {
     throw ProgrammingException("dnf()は最初に呼ぶ");
   }
   _dnf = true;
-  return *this;
+  return this;
 }  
-FindClause FindClause::where(string k, string o, string v) {
+FindClause *FindClause::where(const string &k, const string &o, const string &v) {
   _where.push_back(Where(k,o,v));
-  return *this;
+  return this;
 }
-FindClause FindClause::where_or(string k, string o, string v) {
+FindClause *FindClause::where_or(const string &k, const string &o, const string &v) {
   if (_dnf) _where_or.push_back(_where);
   else throw ProgrammingException("CNFではwhere_orは呼ばない");
   _where.clear();
   where(k, o, v);
-  return *this;
+  return this;
 }
-FindClause FindClause::where_and(string k, string o, string v) {
+FindClause *FindClause::where_and(const string &k, const string &o, const string &v) {
   if (!_dnf) _where_and.push_back(_where);
   else throw ProgrammingException("DNFではwhere_andは呼ばない");
   _where.clear();
   where(k, o, v);
-  return *this;
+  return this;
 }
-FindClause FindClause::order(string key, string ord) {
+FindClause *FindClause::order(const string &key, string ord) {
   if (ord[0] == 'a' || ord[0] == 'A') {
     ord = "ASC";
   } else if (ord[0] == 'd' || ord[0] == 'D') {
@@ -57,11 +58,11 @@ FindClause FindClause::order(string key, string ord) {
     throw ProgrammingException("orderの指定がおかしい");
   }
   _order = " ORDER BY `"+key+"` "+ord;
-  return *this;
+  return this;
 }
-FindClause FindClause::limit(int l) { _limit = l; return *this;}
-FindClause FindClause::group(string g) { _group = g; return *this;}
-FindClause FindClause::having(string h) { _having = h; return *this;}
+FindClause *FindClause::limit(int l) { _limit = l; return this;}
+FindClause *FindClause::group(const string &g) { _group = g; return this;}
+FindClause *FindClause::having(const string &h) { _having = h; return this;}
 string FindClause::selectString(AbstractModel *mdl) {
   string ret;
   ret += whereString(mdl);
@@ -96,7 +97,7 @@ string FindClause::whereString(AbstractModel *mdl) {
   }
   return ret;
 }
-string FindClause::addWhereString(vector<Where> &where, AbstractModel *mdl) {
+string FindClause::addWhereString(const vector<Where> &where, AbstractModel *mdl) {
   string ret;
   for (int i = 0; i < (int)where.size(); i++) {
     // 見ようとしているキーが存在するか
@@ -133,19 +134,20 @@ AbstractModel::~AbstractModel() {
 }
 
 vector<KeyValue> AbstractModel::get(int key) {
-  FindClause fc = FindClause().where(primary, "=", intToString(key));
+  auto_ptr<FindClause> fc(new FindClause());
+  fc->where(primary, "=", intToString(key));
   vector<KeyValue> ret = find(fc);
   return ret;
 }
 
-vector<KeyValue> AbstractModel::find(FindClause fc) {
-  fc = fc.limit(1);
+vector<KeyValue> AbstractModel::find(auto_ptr<FindClause> fc) {
+  fc->limit(1);
   return findAll(fc);
 }
 
-vector<KeyValue> AbstractModel::findAll(FindClause fc) {
+vector<KeyValue> AbstractModel::findAll(auto_ptr<FindClause> fc) {
   string q = "SELECT * FROM `"+table+"` ";
-  q += fc.selectString(this);
+  q += fc->selectString(this);
   return executeQuery(q);
 }
 
@@ -162,7 +164,7 @@ bool AbstractModel::insert(KeyValue kv) {
   return executeUpdate(query);
 }
 
-bool AbstractModel::update(KeyValue kv, FindClause fc) {
+bool AbstractModel::update(KeyValue kv, auto_ptr<FindClause> fc) {
   string query = "UPDATE `"+table+"` SET ", kvs;
   KeyValue::iterator it = kv.begin();
   while (true) {
@@ -170,16 +172,16 @@ bool AbstractModel::update(KeyValue kv, FindClause fc) {
     if (++it == kv.end()) break;
     kvs += ", ";
   }
-  query += kvs+fc.updateString(this);
+  query += kvs+fc->updateString(this);
   return executeUpdate(query);
 }
 
-bool AbstractModel::remove(FindClause fc) {
-  string query = "DELETE FROM `"+table+"`"+fc.updateString(this);
+bool AbstractModel::remove(auto_ptr<FindClause> fc) {
+  string query = "DELETE FROM `"+table+"`"+fc->updateString(this);
   return executeUpdate(query);
 }
 
-bool AbstractModel::query(std::string q) {
+bool AbstractModel::query(const std::string &q) {
   int i = 0;
   while (q[i] == ' ' || q[i] == '\t' || q[i] == '\n')
     i++;
@@ -197,12 +199,12 @@ bool AbstractModel::query(std::string q) {
 }
 
 // いちいち close しているので大量に呼ばれると遅い気がする
-vector<KeyValue> AbstractModel::executeQuery(string query, bool no_transaction) {
+vector<KeyValue> AbstractModel::executeQuery(const string &query, bool no_transaction) {
   if (![_db open]) {
     throw ProgrammingException("DB open failed");
   }
-  if (no_transaction) query += " (no transaction)";
-  debug(query);
+  if (no_transaction)
+  debug(query+(no_transaction?" (no transaction)":""));
   if (!no_transaction) [_db beginTransaction];
   FMResultSet *rs = [_db executeQuery:stringToNSString(query)];
   if (!no_transaction) [_db commit];
@@ -216,12 +218,11 @@ vector<KeyValue> AbstractModel::executeQuery(string query, bool no_transaction) 
   return ret;
 }
 
-bool AbstractModel::executeUpdate(string query, bool no_transaction) {
+bool AbstractModel::executeUpdate(const string &query, bool no_transaction) {
   if (![_db open]) {
     throw ProgrammingException("DB open failed");
   }
-  if (no_transaction) query += " (no transaction)";
-  debug(query);
+  debug(query+(no_transaction?" (no transaction)":""));
   if (!no_transaction) [_db beginTransaction];
   bool ret = [_db executeUpdate:stringToNSString(query)];
   if (!no_transaction) [_db commit];
@@ -250,6 +251,6 @@ vector<KeyValue> AbstractModel::fetch(FMResultSet *rs) {
   return ret;
 }
 
-void AbstractModel::debug(string query) {
+void AbstractModel::debug(const string &query) {
   NSLog(@"query = %s", query.c_str());
 }

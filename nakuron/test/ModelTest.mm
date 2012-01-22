@@ -27,16 +27,18 @@ void ModelTest::test() {
   kv["time"] = "103";
   mdl.insert(kv);
 
-  FindClause fc1;
-  fc1 = fc1.where("id", "<=", "2").where("time",">=","102").where_or("id", "=", "3");
-  mdl.update(kv, fc1);
+  auto_ptr<FindClause> fc = auto_ptr<FindClause>(new FindClause());
+  fc->where("id", "<=", "2")->where("time",">=","102")->where_or("id", "=", "3")->order("id","desc");
+  mdl.update(kv, fc);
   
-  FindClause fc2 = FindClause().cnf().where("id", "<=", "2").where("time",">=","102").where_and("id", "=", "3");
-  mdl.remove(fc2);
-  
-  fc1 = fc1.order("id","desc");
+  fc = auto_ptr<FindClause>(new FindClause());
+  fc->cnf()->where("id", "<=", "2")->where("time",">=","102")->where_and("id", "=", "3");
+  mdl.remove(fc);
 
-  vector<KeyValue> v = mdl.findAll(fc1);
+  fc = auto_ptr<FindClause>(new FindClause());
+  fc->where("id", "<=", "2")->where("time",">=","102")->where_or("id", "=", "3")->order("id","desc");
+
+  vector<KeyValue> v = mdl.findAll(fc);
   for (int i = 0; i < (int)v.size(); i++) {
     NSLog(@"%s", v[i]["created"].c_str());
   }
