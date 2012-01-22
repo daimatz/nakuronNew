@@ -23,8 +23,7 @@ private:
   std::string _order, _group, _having;
   int _limit;
 public:
-  //FindClause(std::string _table); // SELECT 文
-  FindClause(); // UPDATE, DELETE 文
+  FindClause();
   FindClause *cnf();
   FindClause *dnf();
   FindClause *where(std::string key, std::string op, std::string value);
@@ -34,7 +33,7 @@ public:
   FindClause *limit(int _limit);
   FindClause *group(std::string _group);
   FindClause *having(std::string _having);
-  std::string clause();
+  std::string clause(bool where_only);
 };
 
 class AbstractModel {
@@ -44,9 +43,13 @@ public:
   std::vector<KeyValue> get(int key);
   std::vector<KeyValue> find(FindClause *fc);
   std::vector<KeyValue> findAll(FindClause *fc);
+  bool insert(KeyValue kv);
+  bool update(KeyValue kv, FindClause *fc);
+  bool remove(FindClause *fc); // delete は予約語だから使えない(´･_･`)
+  bool query(std::string q);
 protected:
-  FMResultSet *executeQuery(std::string query, bool noTransaction = false);
-  bool executeUpdate(std::string query, bool noTransaction = false);
+  std::vector<KeyValue> executeQuery(std::string query, bool no_transaction = false);
+  bool executeUpdate(std::string query, bool no_transaction = false);
   std::vector<std::string> fields;
   std::string primary;
   std::string table;

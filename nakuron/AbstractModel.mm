@@ -1,5 +1,6 @@
 #import "AbstractModel.h"
 #include <stdio.h>
+#include <algorithm>
 
 using namespace std;
 
@@ -66,7 +67,7 @@ FindClause *FindClause::order(string key, string ord) {
 FindClause *FindClause::limit(int l) { _limit = l; return this;}
 FindClause *FindClause::group(string g) { _group = g; return this;}
 FindClause *FindClause::having(string h) { _having = h; return this;}
-string FindClause::clause() {
+string FindClause::clause(bool where_only) {
   string ret;
   if (!_table.empty()) ret += "SELECT * FROM `"+_table+"`";
   if (!_where.empty()) {
@@ -86,10 +87,12 @@ string FindClause::clause() {
       throw ProgrammingException("_whereはemptyなのに_where_orか_where_andがemptyでない");
     }
   }
-  if (!_order.empty()) ret += _order;
-  if (_limit != 0) ret += " LIMIT "+intToString(_limit);
-  if (!_group.empty()) ret += " GROUP BY `"+_group+"`";
-  if (!_having.empty()) ret += " HAVING "+_having;
+  if (!where_only) {
+    if (!_order.empty()) ret += _order;
+    if (_limit != 0) ret += " LIMIT "+intToString(_limit);
+    if (!_group.empty()) ret += " GROUP BY `"+_group+"`";
+    if (!_having.empty()) ret += " HAVING "+_having;
+  }
   ret += ";";
   return ret;
 }
@@ -123,29 +126,86 @@ vector<KeyValue> AbstractModel::find(FindClause *fc) {
 
 vector<KeyValue> AbstractModel::findAll(FindClause *fc) {
   string q = "SELECT * FROM `"+table+"` ";
-  q += fc->clause();
-  FMResultSet *rs = executeQuery(q);
-  return fetch(rs);
+  q += fc->clause(false);
+  return executeQuery(q);
 }
 
-FMResultSet *AbstractModel::executeQuery(string query, bool noTransaction) {
-  if (noTransaction) query += " (no transaction)";
-  debug(query);
-  if (!noTransaction) [_db beginTransaction];
-  FMResultSet *ret = [_db executeQuery:stringToNSString(query)];
-  if (!noTransaction) [_db commit];
-  return ret;
+bool AbstractModel::insert(KeyValue kv) {
+  string query = "INSERT INTO `"+table+"` ", ks, vs;
+  KeyValue::iterator it = kv.begin();
+  while (true) {
+    ks += "`"+it->first+"`";
+    vs += "'"+it->second+"'";
+    if (++it == kv.end()) break;
+    ks += ", "; vs += ", ";
+  }
+  query += "("+ks+") VALUES ("+vs+");";
+  return executeUpdate(query);
 }
 
-bool AbstractModel::executeUpdate(string query, bool noTransaction) {
+bool AbstractModel::update(KeyValue kv, FindClause *fc) {
+  string query = "UPDATE `"+table+"` SET ", kvs;
+  KeyValue::iterator it = kv.begin();
+  while (true) {
+    kvs += "`"+it->first+"`='"+it->second+"'";
+    if (++it == kv.end()) break;
+    kvs += ", ";
+  }
+  query += kvs+fc->clause(true);
+  return executeUpdate(query);
+}
+
+bool AbstractModel::remove(FindClause *fc) {
+  string query = "DELETE FROM `"+table+"`"+fc->clause(true);
+  return executeUpdate(query);
+}
+
+bool AbstractModel::query(std::string q) {
+  int i = 0;
+  while (q[i] == ' ' || q[i] == '\t' || q[i] == '\n')
+    i++;
+  string st = q.substr(i, string("SELECT").size());
+  std::transform(st.begin(), st.end(), st.begin(), ::toupper);
+  
+  // SELECT 文かどうかで変える
+  if (st == "SELECT") {
+    executeQuery(q);
+  } else {
+    executeUpdate(q);
+  }
+  
+  return [_db lastErrorCode] == 0 ? true : false;
+}
+
+// いちいち close しているので大量に呼ばれると遅い気がする
+vector<KeyValue> AbstractModel::executeQuery(string query, bool no_transaction) {
   if (![_db open]) {
     throw ProgrammingException("DB open failed");
   }
-  if (noTransaction) query += " (no transaction)";
+  if (no_transaction) query += " (no transaction)";
   debug(query);
-  if (!noTransaction) [_db beginTransaction];
+  if (!no_transaction) [_db beginTransaction];
+  FMResultSet *rs = [_db executeQuery:stringToNSString(query)];
+  if (!no_transaction) [_db commit];
+
+  vector<KeyValue> ret = fetch(rs);
+
+  if (![_db close]) {
+    throw ProgrammingException("DB close failed");
+  }
+  
+  return ret;
+}
+
+bool AbstractModel::executeUpdate(string query, bool no_transaction) {
+  if (![_db open]) {
+    throw ProgrammingException("DB open failed");
+  }
+  if (no_transaction) query += " (no transaction)";
+  debug(query);
+  if (!no_transaction) [_db beginTransaction];
   bool ret = [_db executeUpdate:stringToNSString(query)];
-  if (!noTransaction) [_db commit];
+  if (!no_transaction) [_db commit];
   if (![_db close]) {
     throw ProgrammingException("DB close failed");
   }
