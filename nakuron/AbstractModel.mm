@@ -4,56 +4,51 @@
 
 using namespace std;
 
-//FindClause::FindClause(string t) {
-//  _table = t;
-//  _where = _order = _group = _having = "";
-//  _where_and.clear();
-//  _where_or.clear();
-//  _limit = 0;
-//}
 FindClause::FindClause() {
   // return FindClause(""); // できない
   _dnf = true;
-  _table = _where = _order = _group = _having = "";
+  _where.clear();
   _where_and.clear();
   _where_or.clear();
+  _order = _group = _having = "";
   _limit = 0;
 
 }
-FindClause *FindClause::cnf() {
+FindClause FindClause::cnf() {
   if (!_where.empty() || !_where_or.empty() || !_where_and.empty()
       || !_order.empty() || !_group.empty() || !_having.empty()) {
     throw ProgrammingException("cnf()は最初に呼ぶ");
   }
   _dnf = false;
-  return this;
+  return *this;
 }
-FindClause *FindClause::dnf() {
+FindClause FindClause::dnf() {
   if (!_where.empty() || !_where_or.empty() || !_where_and.empty()
       || !_order.empty() || !_group.empty() || !_having.empty()) {
     throw ProgrammingException("dnf()は最初に呼ぶ");
   }
   _dnf = true;
-  return this;
+  return *this;
 }  
-FindClause *FindClause::where(string k, string o, string v) {
-  if (!_where.empty()) _where += _dnf ? " AND " : " OR ";
-  _where += "`"+k+"` "+o+" '"+v+"'";
-  return this;
+FindClause FindClause::where(string k, string o, string v) {
+  _where.push_back(Where(k,o,v));
+  return *this;
 }
-FindClause *FindClause::where_or(string k, string o, string v) {
-  if (_dnf) _where_or.push_back("("+_where+") OR ");
+FindClause FindClause::where_or(string k, string o, string v) {
+  if (_dnf) _where_or.push_back(_where);
   else throw ProgrammingException("CNFではwhere_orは呼ばない");
-  _where = "`"+k+"` "+o+" '"+v+"'";
-  return this;
+  _where.clear();
+  where(k, o, v);
+  return *this;
 }
-FindClause *FindClause::where_and(string k, string o, string v) {
-  if (!_dnf) _where_and.push_back("("+_where+") AND ");
+FindClause FindClause::where_and(string k, string o, string v) {
+  if (!_dnf) _where_and.push_back(_where);
   else throw ProgrammingException("DNFではwhere_andは呼ばない");
-  _where = "`"+k+"` "+o+" '"+v+"'";
-  return this;
+  _where.clear();
+  where(k, o, v);
+  return *this;
 }
-FindClause *FindClause::order(string key, string ord) {
+FindClause FindClause::order(string key, string ord) {
   if (ord[0] == 'a' || ord[0] == 'A') {
     ord = "ASC";
   } else if (ord[0] == 'd' || ord[0] == 'D') {
@@ -62,39 +57,65 @@ FindClause *FindClause::order(string key, string ord) {
     throw ProgrammingException("orderの指定がおかしい");
   }
   _order = " ORDER BY `"+key+"` "+ord;
-  return this;
+  return *this;
 }
-FindClause *FindClause::limit(int l) { _limit = l; return this;}
-FindClause *FindClause::group(string g) { _group = g; return this;}
-FindClause *FindClause::having(string h) { _having = h; return this;}
-string FindClause::clause(bool where_only) {
+FindClause FindClause::limit(int l) { _limit = l; return *this;}
+FindClause FindClause::group(string g) { _group = g; return *this;}
+FindClause FindClause::having(string h) { _having = h; return *this;}
+string FindClause::selectString(AbstractModel *mdl) {
   string ret;
-  if (!_table.empty()) ret += "SELECT * FROM `"+_table+"`";
+  ret += whereString(mdl);
+  if (!_order.empty()) ret += _order;
+  if (_limit != 0) ret += " LIMIT "+intToString(_limit);
+  if (!_group.empty()) ret += " GROUP BY `"+_group+"`";
+  if (!_having.empty()) ret += " HAVING "+_having;
+  ret += ";";
+  return ret;
+}
+string FindClause::updateString(AbstractModel *mdl) {
+  return whereString(mdl)+";";
+}
+string FindClause::whereString(AbstractModel *mdl) {
+  string ret;
   if (!_where.empty()) {
     ret += " WHERE ";
     if (_dnf) {
       for (int i = 0; i < (int)_where_or.size(); i++) {
-        ret += _where_or[i];
+        ret += addWhereString(_where_or[i], mdl) + " OR ";
       }
     } else {
       for (int i = 0; i < (int)_where_and.size(); i++) {
-        ret += _where_and[i];
+        ret += addWhereString(_where_and[i], mdl) + " AND ";
       }
     }
-    ret += _where;
+    ret += addWhereString(_where, mdl);
   } else {
     if (!_where_or.empty() || !_where_and.empty()) {
       throw ProgrammingException("_whereはemptyなのに_where_orか_where_andがemptyでない");
     }
   }
-  if (!where_only) {
-    if (!_order.empty()) ret += _order;
-    if (_limit != 0) ret += " LIMIT "+intToString(_limit);
-    if (!_group.empty()) ret += " GROUP BY `"+_group+"`";
-    if (!_having.empty()) ret += " HAVING "+_having;
-  }
-  ret += ";";
   return ret;
+}
+string FindClause::addWhereString(vector<Where> &where, AbstractModel *mdl) {
+  string ret;
+  for (int i = 0; i < (int)where.size(); i++) {
+    // 見ようとしているキーが存在するか
+    if ((mdl->fields).count(where[i].key) > 0) {
+      string func;
+      // そのキーの型は
+      if (mdl->fields[where[i].key] == "datetime") func = "datetime";
+      else func = "";
+      if (!ret.empty()) ret += _dnf ? " AND " : " OR ";
+      if (func.empty()) {
+        ret += "`"+where[i].key+"`"+where[i].op+"'"+where[i].value+"'";
+      } else {
+        ret += func+"(`"+where[i].key+"`)"+where[i].op+func+"('"+where[i].value+"')";
+      }
+    } else {
+      throw ProgrammingException(mdl->table+"には"+where[i].key+"というキーは存在しない");
+    }
+  }
+  return "("+ret+")";
 }
 
 FMDatabase *_db = NULL;
@@ -112,21 +133,19 @@ AbstractModel::~AbstractModel() {
 }
 
 vector<KeyValue> AbstractModel::get(int key) {
-  FindClause *fc = new FindClause();
-  fc = fc->where(primary, "=", intToString(key));
+  FindClause fc = FindClause().where(primary, "=", intToString(key));
   vector<KeyValue> ret = find(fc);
-  delete fc;
   return ret;
 }
 
-vector<KeyValue> AbstractModel::find(FindClause *fc) {
-  fc = fc->limit(1);
+vector<KeyValue> AbstractModel::find(FindClause fc) {
+  fc = fc.limit(1);
   return findAll(fc);
 }
 
-vector<KeyValue> AbstractModel::findAll(FindClause *fc) {
+vector<KeyValue> AbstractModel::findAll(FindClause fc) {
   string q = "SELECT * FROM `"+table+"` ";
-  q += fc->clause(false);
+  q += fc.selectString(this);
   return executeQuery(q);
 }
 
@@ -143,7 +162,7 @@ bool AbstractModel::insert(KeyValue kv) {
   return executeUpdate(query);
 }
 
-bool AbstractModel::update(KeyValue kv, FindClause *fc) {
+bool AbstractModel::update(KeyValue kv, FindClause fc) {
   string query = "UPDATE `"+table+"` SET ", kvs;
   KeyValue::iterator it = kv.begin();
   while (true) {
@@ -151,12 +170,12 @@ bool AbstractModel::update(KeyValue kv, FindClause *fc) {
     if (++it == kv.end()) break;
     kvs += ", ";
   }
-  query += kvs+fc->clause(true);
+  query += kvs+fc.updateString(this);
   return executeUpdate(query);
 }
 
-bool AbstractModel::remove(FindClause *fc) {
-  string query = "DELETE FROM `"+table+"`"+fc->clause(true);
+bool AbstractModel::remove(FindClause fc) {
+  string query = "DELETE FROM `"+table+"`"+fc.updateString(this);
   return executeUpdate(query);
 }
 
@@ -217,13 +236,17 @@ vector<KeyValue> AbstractModel::fetch(FMResultSet *rs) {
   while ([rs next]) {
     // とりあえず一旦全部 string として読む
     KeyValue kv;
-    for (int i = 0; i < (int)fields.size(); i++) {
-      string key = fields[i];
+    //for (int i = 0; i < (int)fields.size(); i++) {
+    for (ValueType::iterator it = fields.begin();
+         it != fields.end();
+         it++) {
+      string key = it->first;
       string value = NSStringToString([rs stringForColumn:stringToNSString(key)]);
       kv.insert(KeyValue::value_type(key, value));
     }
     ret.push_back(kv);
   }
+  NSLog(@"%d columns found.", (int)ret.size());
   return ret;
 }
 
