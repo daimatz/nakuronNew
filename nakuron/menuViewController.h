@@ -5,12 +5,14 @@
 
 #import <UIKit/UIKit.h>
 #include "nakuron.h"
+#include "historyViewController.h"
 
 @interface menuViewController : UIViewController
 {
 @private
   Difficulty newDifficulty;
   int newProbNum;
+  historyViewController *historyView;
 }
 
 
@@ -24,6 +26,7 @@
 @property (retain, nonatomic) IBOutlet UILabel *difficultyLabel;
 @property (retain, nonatomic) IBOutlet UISlider *difficultySlider;
 - (IBAction)difficultyChanging:(UISlider*)slider;
+- (IBAction)historyButton;
 
 - (void)initView:(Difficulty)d probNum:(int)p;
 

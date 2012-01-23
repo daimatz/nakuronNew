@@ -39,6 +39,9 @@
 
   float cellSize;
   
+  std::vector<Direction> step;
+  int score;
+  
   std::map<PieceData, GLuint> piecenumToTexture;
   
 }

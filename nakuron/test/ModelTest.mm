@@ -27,7 +27,7 @@ void ModelTest::test() {
   kv["time"] = "103";
   mdl.insert(kv);
 
-  auto_ptr<FindClause> fc = auto_ptr<FindClause>(new FindClause());
+  auto_ptr<FindClause> fc(new FindClause());
   fc->where("id", "<=", "2")->where("time",">=","102")->where_or("id", "=", "3")->order("id","desc");
   mdl.update(kv, fc);
   

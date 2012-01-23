@@ -9,6 +9,7 @@
 extern nakuronViewController *nakuron;
 
 @implementation menuViewController
+
 @synthesize probNumField;
 @synthesize difficultyLabel;
 @synthesize difficultySlider;
@@ -98,6 +99,13 @@ extern nakuronViewController *nakuron;
   
   NSString *str[4] = {@"Easy", @"Normal", @"Hard", @"Very Hard"};
   difficultyLabel.text = str[(int)newDifficulty];
+}
+
+- (IBAction)historyButton {
+  NSLog(@"history");
+  historyView = [[historyViewController alloc] initWithNibName:@"historyViewController" bundle:nil];
+  historyView.view.bounds = historyView.view.frame = [UIScreen mainScreen].bounds;
+  [self.view addSubview:historyView.view];
 }
 
 - (void)initView:(Difficulty)d probNum:(int)p

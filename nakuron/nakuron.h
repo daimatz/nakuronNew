@@ -46,6 +46,13 @@ typedef enum {
   DIFFICULTY_VERY_HARD = 3,
 } Difficulty;
 
+typedef enum {
+  UP,
+  LEFT,
+  DOWN,
+  RIGHT,
+} Direction;
+
 int pieceToInt(Piece p);
 int colorToInt(Color c);
 Color intToColor(int i);

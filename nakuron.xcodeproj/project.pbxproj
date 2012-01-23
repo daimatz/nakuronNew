@@ -29,6 +29,8 @@
 		23915A9F14C9C18100C925B8 /* wall.png in Resources */ = {isa = PBXBuildFile; fileRef = 23915A9114C9C18100C925B8 /* wall.png */; };
 		239FD02614C9FF9900C3DBCD /* HistoryModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 239FD02514C9FF9900C3DBCD /* HistoryModel.mm */; };
 		239FD02B14CA09EA00C3DBCD /* ModelTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 239FD02A14CA09EA00C3DBCD /* ModelTest.mm */; };
+		23BDF82A14CDCCAD00402EF2 /* historyViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF82814CDCCAD00402EF2 /* historyViewController.mm */; };
+		23BDF82B14CDCCAD00402EF2 /* historyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23BDF82914CDCCAD00402EF2 /* historyViewController.xib */; };
 		23EBF02D14C55F9B006876D4 /* menuViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 23EBF02B14C55F9B006876D4 /* menuViewController.mm */; };
 		23EBF02E14C55F9B006876D4 /* menuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23EBF02C14C55F9B006876D4 /* menuViewController.xib */; };
 		27C7ADA814C53564006CF983 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27C7ADA714C53564006CF983 /* UIKit.framework */; };
@@ -77,6 +79,9 @@
 		239FD02514C9FF9900C3DBCD /* HistoryModel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HistoryModel.mm; sourceTree = "<group>"; };
 		239FD02914CA09EA00C3DBCD /* ModelTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ModelTest.h; path = test/ModelTest.h; sourceTree = "<group>"; };
 		239FD02A14CA09EA00C3DBCD /* ModelTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ModelTest.mm; path = test/ModelTest.mm; sourceTree = "<group>"; };
+		23BDF82714CDCCAD00402EF2 /* historyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = historyViewController.h; sourceTree = "<group>"; };
+		23BDF82814CDCCAD00402EF2 /* historyViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = historyViewController.mm; sourceTree = "<group>"; };
+		23BDF82914CDCCAD00402EF2 /* historyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = historyViewController.xib; sourceTree = "<group>"; };
 		23EBF02A14C55F9B006876D4 /* menuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = menuViewController.h; sourceTree = "<group>"; };
 		23EBF02B14C55F9B006876D4 /* menuViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = menuViewController.mm; sourceTree = "<group>"; };
 		23EBF02C14C55F9B006876D4 /* menuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = menuViewController.xib; sourceTree = "<group>"; };
@@ -233,6 +238,9 @@
 				23EBF02A14C55F9B006876D4 /* menuViewController.h */,
 				23EBF02B14C55F9B006876D4 /* menuViewController.mm */,
 				23EBF02C14C55F9B006876D4 /* menuViewController.xib */,
+				23BDF82714CDCCAD00402EF2 /* historyViewController.h */,
+				23BDF82814CDCCAD00402EF2 /* historyViewController.mm */,
+				23BDF82914CDCCAD00402EF2 /* historyViewController.xib */,
 				239FD02814CA09B300C3DBCD /* test */,
 				238F732314C9C6F700CAC3EB /* fmdb */,
 				2333569A14C7617600729060 /* lib */,
@@ -324,6 +332,7 @@
 				23915A9D14C9C18100C925B8 /* hred.png in Resources */,
 				23915A9E14C9C18100C925B8 /* hyellow.png in Resources */,
 				23915A9F14C9C18100C925B8 /* wall.png in Resources */,
+				23BDF82B14CDCCAD00402EF2 /* historyViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,6 +356,7 @@
 				238F732C14C9C6F700CAC3EB /* FMResultSet.m in Sources */,
 				239FD02614C9FF9900C3DBCD /* HistoryModel.mm in Sources */,
 				239FD02B14CA09EA00C3DBCD /* ModelTest.mm in Sources */,
+				23BDF82A14CDCCAD00402EF2 /* historyViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

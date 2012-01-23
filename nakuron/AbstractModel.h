@@ -67,6 +67,7 @@ public:
   std::vector<KeyValue> get(int key);  
   std::vector<KeyValue> find(std::auto_ptr<FindClause> fc);
   std::vector<KeyValue> findAll(std::auto_ptr<FindClause> fc);
+  std::vector<KeyValue> findAll();
   bool insert(KeyValue kv);
   bool update(KeyValue kv, std::auto_ptr<FindClause> fc);
   bool remove(std::auto_ptr<FindClause> fc); // delete は予約語だから使えない(´･_･`)
@@ -78,6 +79,7 @@ protected:
   ValueType fields;
   std::string primary;
   std::string table;
+  FMDatabase *_db;
 private:
   std::vector<KeyValue> fetch(FMResultSet *rs);
   void debug(const std::string &query);

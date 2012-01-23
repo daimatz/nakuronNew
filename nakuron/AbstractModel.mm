@@ -124,18 +124,15 @@ string FindClause::addWhereString(const vector<Where> &where, AbstractModel *mdl
   return "("+ret+")";
 }
 
-FMDatabase *_db = NULL;
-
 AbstractModel::AbstractModel() {
-  if (_db == NULL) {
-    NSLog(@"FMDatabase instanced");
-    NSString *path = stringToNSString(documentDir()+"/"+DB_BASENAME);
-    NSLog(@"DB filepath = %@", path);
-    _db = [FMDatabase databaseWithPath:path];
-  }
+  NSLog(@"constructed Model");
+  NSString *path = stringToNSString(documentDir()+"/"+DB_BASENAME);
+  NSLog(@"DB filepath = %@", path);
+  _db = [FMDatabase databaseWithPath:path];
 }
 
 AbstractModel::~AbstractModel() {
+  NSLog(@"destructed Model");
 }
 
 vector<KeyValue> AbstractModel::get(int key) {
@@ -154,6 +151,10 @@ vector<KeyValue> AbstractModel::findAll(auto_ptr<FindClause> fc) {
   string q = "SELECT * FROM `"+table+"` ";
   q += fc->selectString(this);
   return executeQuery(q);
+}
+
+vector<KeyValue> AbstractModel::findAll() {
+  return executeQuery("SELECT * FROM `"+table+"`;");
 }
 
 bool AbstractModel::insert(KeyValue kv) {
