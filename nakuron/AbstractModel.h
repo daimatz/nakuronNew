@@ -64,6 +64,7 @@ class AbstractModel {
 public:
   AbstractModel();
   virtual ~AbstractModel();
+  void init();
   std::vector<KeyValue> get(int key);  
   std::vector<KeyValue> find(std::auto_ptr<FindClause> fc);
   std::vector<KeyValue> findAll(std::auto_ptr<FindClause> fc);

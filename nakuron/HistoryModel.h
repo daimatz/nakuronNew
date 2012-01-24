@@ -12,5 +12,6 @@ public:
     fields["step"] = "int";
     fields["created"] = "datetime";
     fields["time"] = "int";
+    init();
   }
 };

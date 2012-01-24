@@ -7,6 +7,7 @@ using namespace std;
 extern nakuronViewController *nakuron;
 
 @implementation historyViewController
+@synthesize probNumLabel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -33,11 +34,19 @@ extern nakuronViewController *nakuron;
 
   HistoryModel hmdl;
   vector<KeyValue> histories;
-  histories = hmdl.findAll();
+  auto_ptr<FindClause> fc(new FindClause());
+  fc->order("id","desc");
+  histories = hmdl.findAll(fc);
+  if (histories.empty()) {
+    probNumLabel.text = @"No histories";
+  } else {
+    probNumLabel.text = stringToNSString(histories[0]["probNum"]);
+  }
 }
 
 - (void)viewDidUnload
 {
+  [self setProbNumLabel:nil];
   [super viewDidUnload];
   // Release any retained subviews of the main view.
   // e.g. self.myOutlet = nil;
@@ -60,4 +69,8 @@ extern nakuronViewController *nakuron;
   [self release];
 }
 
+- (void)dealloc {
+  [probNumLabel release];
+  [super dealloc];
+}
 @end

@@ -9,5 +9,6 @@
 }
 - (IBAction)backButton:(id)sender;
 - (IBAction)playButton:(id)sender;
+@property (retain, nonatomic) IBOutlet UILabel *probNumLabel;
 
 @end

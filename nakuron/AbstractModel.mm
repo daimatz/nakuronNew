@@ -135,6 +135,26 @@ AbstractModel::~AbstractModel() {
   NSLog(@"destructed Model");
 }
 
+void AbstractModel::init() {
+  if (fields.empty() || primary.empty() || table.empty()) {
+    throw ProgrammingException("fields, primary, table のどれかを上書きしていない");
+  }
+  
+  string query = "CREATE TABLE IF NOT EXISTS `"+table+"` (";
+  ValueType::iterator it = fields.begin();
+  while (true) {
+    string t = "`"+(it->first)+"` ";
+    if (it->second == "int") t += "INTEGER";
+    else if (it->second == "datetime") t += "STRING";
+    if (it->first == primary) t += " PRIMARY KEY AUTOINCREMENT";
+    query += t;
+    if (++it == fields.end()) break;
+    query += ", ";
+  }
+  query += ");";
+  executeUpdate(query);
+}
+
 vector<KeyValue> AbstractModel::get(int key) {
   auto_ptr<FindClause> fc(new FindClause());
   fc->where(primary, "=", intToString(key));
