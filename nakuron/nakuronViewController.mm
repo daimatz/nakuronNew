@@ -15,8 +15,6 @@
 
 using namespace std;
 
-nakuronViewController *nakuron;
-
 // Uniform index.
 enum {
   UNIFORM_TRANSLATE,
@@ -57,7 +55,6 @@ enum {
 //#include "ModelTest.h"
 - (void)awakeFromNib
 {
-  nakuron = self;
   //ModelTest::test();
 
   //常にES1を使う
@@ -251,7 +248,7 @@ enum {
   menuView = [[menuViewController alloc] initWithNibName:@"menuViewController" bundle:nil];
   menuView.view.bounds = menuView.view.frame = [UIScreen mainScreen].bounds;
   [self.view addSubview:menuView.view];
-  [menuView initView:difficulty probNum:probNum];
+  [menuView setParameters:self difficulty:difficulty probNum:probNum];
 }
 
 - (void)startAnimation

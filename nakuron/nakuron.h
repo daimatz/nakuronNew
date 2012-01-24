@@ -5,6 +5,7 @@
 #include <map>
 #include <vector>
 #include <cstring>
+#include <cstdlib>
 
 // SQLite3を扱うためのライブラリ
 // トップレベルの ▼nakuron -> TARGETS -> nakuron -> Build Phases -> Link Binary With Libraries
@@ -40,10 +41,10 @@ typedef enum {
 } Color;
 
 typedef enum {
-  DIFFICULTY_EASY = 0,
-  DIFFICULTY_NORMAL = 1,
-  DIFFICULTY_HARD = 2,
-  DIFFICULTY_VERY_HARD = 3,
+  DIFFICULTY_EASY,
+  DIFFICULTY_NORMAL,
+  DIFFICULTY_HARD,
+  DIFFICULTY_VERY_HARD,
 } Difficulty;
 
 typedef enum {
@@ -56,6 +57,8 @@ typedef enum {
 int pieceToInt(Piece p);
 int colorToInt(Color c);
 Color intToColor(int i);
+int difficultyToInt(Difficulty d);
+Difficulty intToDifficulty(int i);
 int probNumToSeed(int p);
 int difficultyToBoardSize(Difficulty d);
 

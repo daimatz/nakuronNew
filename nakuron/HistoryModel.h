@@ -9,7 +9,8 @@ public:
     primary = "id";
     fields["id"] = "int";
     fields["probNum"] = "int";
-    fields["step"] = "int";
+    fields["difficulty"] = "int";
+    fields["score"] = "int";
     fields["created"] = "datetime";
     fields["time"] = "int";
     init();

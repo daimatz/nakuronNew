@@ -6,8 +6,6 @@
 #import "menuViewController.h"
 #import "nakuronViewController.h"
 
-extern nakuronViewController *nakuron;
-
 @implementation menuViewController
 
 @synthesize probNumField;
@@ -65,7 +63,7 @@ extern nakuronViewController *nakuron;
 - (IBAction)updateButton:(id)sender {
   // newDifficulty はここで代入しなくてよい
   newProbNum = [probNumField.text intValue];
-  [nakuron boardInit:newDifficulty probNum:newProbNum holeRatio:HOLE_RATIO];
+  [superViewController boardInit:newDifficulty probNum:newProbNum holeRatio:HOLE_RATIO];
   [self.view removeFromSuperview];
   [self release];
 }
@@ -106,10 +104,12 @@ extern nakuronViewController *nakuron;
   historyView = [[historyViewController alloc] initWithNibName:@"historyViewController" bundle:nil];
   historyView.view.bounds = historyView.view.frame = [UIScreen mainScreen].bounds;
   [self.view addSubview:historyView.view];
+  [historyView setParameters:self nakuron:superViewController];
 }
 
-- (void)initView:(Difficulty)d probNum:(int)p
+- (void)setParameters:(nakuronViewController *)n difficulty:(Difficulty)d probNum:(int)p
 {
+  superViewController = n;
   newDifficulty = d;
   newProbNum = p;
   probNumField.text = [NSString stringWithFormat:@"%d", newProbNum];

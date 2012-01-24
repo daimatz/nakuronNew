@@ -36,6 +36,26 @@ Color intToColor(int i) {
   }
 }
 
+int difficultyToInt(Difficulty d) {
+  switch (d) {
+    case DIFFICULTY_EASY: return 0;
+    case DIFFICULTY_NORMAL: return 1;
+    case DIFFICULTY_HARD: return 2;
+    case DIFFICULTY_VERY_HARD: return 3;
+    default: throw ProgrammingException("difficultyToInt(d) おかしい");
+  }
+}
+
+Difficulty intToDifficulty(int i) {
+  switch (i) {
+    case 0: return DIFFICULTY_EASY;
+    case 1: return DIFFICULTY_NORMAL;
+    case 2: return DIFFICULTY_HARD;
+    case 3: return DIFFICULTY_VERY_HARD;
+    default: throw ProgrammingException("intToDifficulty(d) おかしい");
+  }
+}
+
 int probNumToSeed(int p) {
   return 4;
 }
@@ -47,7 +67,7 @@ int difficultyToBoardSize(Difficulty d) {
     case DIFFICULTY_NORMAL: b = 8; break;
     case DIFFICULTY_HARD: b = 16; break;
     case DIFFICULTY_VERY_HARD: b = 32; break;
-    default: throw ProgrammingException("difficulty おかしい");
+    default: throw ProgrammingException("difficultyToBoardSize(d) おかしい");
   }
   return b+2;
 }

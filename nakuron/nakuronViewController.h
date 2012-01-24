@@ -61,4 +61,5 @@
 - (void)drawMain;
 - (void)dump;
 -(void)boardInit:(Difficulty)d probNum:(int)p holeRatio:(int)r;
+
 @end
