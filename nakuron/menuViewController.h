@@ -5,6 +5,7 @@
 
 #import <UIKit/UIKit.h>
 #import "historyViewController.h"
+#import "twitterViewController.h"
 #include "nakuron.h"
 
 @class nakuronViewController;
@@ -14,9 +15,10 @@
 @private
   Difficulty newDifficulty;
   int newProbNum;
-  historyViewController *historyView;
+  historyViewController *historyVC;
+  twitterViewController *twitterVC;
 
-  nakuronViewController *superViewController;
+  nakuronViewController *superVC;
 }
 
 
@@ -31,6 +33,7 @@
 @property (retain, nonatomic) IBOutlet UISlider *difficultySlider;
 - (IBAction)difficultyChanging:(UISlider*)slider;
 - (IBAction)historyButton;
+- (IBAction)twitterButton;
 
 - (void)setParameters:(nakuronViewController*)n difficulty:(Difficulty)d probNum:(int)p;
 

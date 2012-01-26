@@ -11,8 +11,8 @@
   int current;
   std::vector<KeyValue> histories;
   
-  menuViewController *superViewController;
-  nakuronViewController *nakuron;
+  menuViewController *superVC;
+  nakuronViewController *nakuronVC;
 }
 - (IBAction)backButton:(id)sender;
 - (IBAction)playButton:(id)sender;

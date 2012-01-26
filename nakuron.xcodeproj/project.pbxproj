@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		23148D5014D14BBE00AC4E70 /* twitterViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 23148D4E14D14BBE00AC4E70 /* twitterViewController.mm */; };
+		23148D5114D14BBE00AC4E70 /* twitterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23148D4F14D14BBE00AC4E70 /* twitterViewController.xib */; };
 		2333569914C75AD200729060 /* AbstractModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2333569814C75AD200729060 /* AbstractModel.mm */; };
 		235074E714C5738A003EE0C1 /* nakuron.mm in Sources */ = {isa = PBXBuildFile; fileRef = 235074E614C5738A003EE0C1 /* nakuron.mm */; };
 		238F72FA14C9C4CE00CAC3EB /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 238F72F914C9C4CE00CAC3EB /* libsqlite3.0.dylib */; };
@@ -51,6 +53,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		23148D4D14D14BBE00AC4E70 /* twitterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = twitterViewController.h; sourceTree = "<group>"; };
+		23148D4E14D14BBE00AC4E70 /* twitterViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = twitterViewController.mm; sourceTree = "<group>"; };
+		23148D4F14D14BBE00AC4E70 /* twitterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = twitterViewController.xib; sourceTree = "<group>"; };
 		2333569714C75AD200729060 /* AbstractModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractModel.h; sourceTree = "<group>"; };
 		2333569814C75AD200729060 /* AbstractModel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AbstractModel.mm; sourceTree = "<group>"; };
 		235074E614C5738A003EE0C1 /* nakuron.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = nakuron.mm; sourceTree = "<group>"; };
@@ -238,6 +243,9 @@
 				23EBF02A14C55F9B006876D4 /* menuViewController.h */,
 				23EBF02B14C55F9B006876D4 /* menuViewController.mm */,
 				23EBF02C14C55F9B006876D4 /* menuViewController.xib */,
+				23148D4D14D14BBE00AC4E70 /* twitterViewController.h */,
+				23148D4E14D14BBE00AC4E70 /* twitterViewController.mm */,
+				23148D4F14D14BBE00AC4E70 /* twitterViewController.xib */,
 				23BDF82714CDCCAD00402EF2 /* historyViewController.h */,
 				23BDF82814CDCCAD00402EF2 /* historyViewController.mm */,
 				23BDF82914CDCCAD00402EF2 /* historyViewController.xib */,
@@ -333,6 +341,7 @@
 				23915A9E14C9C18100C925B8 /* hyellow.png in Resources */,
 				23915A9F14C9C18100C925B8 /* wall.png in Resources */,
 				23BDF82B14CDCCAD00402EF2 /* historyViewController.xib in Resources */,
+				23148D5114D14BBE00AC4E70 /* twitterViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -357,6 +366,7 @@
 				239FD02614C9FF9900C3DBCD /* HistoryModel.mm in Sources */,
 				239FD02B14CA09EA00C3DBCD /* ModelTest.mm in Sources */,
 				23BDF82A14CDCCAD00402EF2 /* historyViewController.mm in Sources */,
+				23148D5014D14BBE00AC4E70 /* twitterViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

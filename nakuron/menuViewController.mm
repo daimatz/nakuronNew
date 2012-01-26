@@ -63,7 +63,7 @@
 - (IBAction)updateButton:(id)sender {
   // newDifficulty はここで代入しなくてよい
   newProbNum = [probNumField.text intValue];
-  [superViewController boardInit:newDifficulty probNum:newProbNum holeRatio:HOLE_RATIO];
+  [superVC boardInit:newDifficulty probNum:newProbNum holeRatio:HOLE_RATIO];
   [self.view removeFromSuperview];
   [self release];
 }
@@ -101,15 +101,22 @@
 
 - (IBAction)historyButton {
   NSLog(@"history");
-  historyView = [[historyViewController alloc] initWithNibName:@"historyViewController" bundle:nil];
-  historyView.view.bounds = historyView.view.frame = [UIScreen mainScreen].bounds;
-  [self.view addSubview:historyView.view];
-  [historyView setParameters:self nakuron:superViewController];
+  historyVC = [[historyViewController alloc] initWithNibName:@"historyViewController" bundle:nil];
+  historyVC.view.bounds = historyVC.view.frame = [UIScreen mainScreen].bounds;
+  [self.view addSubview:historyVC.view];
+  [historyVC setParameters:self nakuron:superVC];
+}
+
+- (IBAction)twitterButton {
+  NSLog(@"twitter");
+  twitterVC = [[twitterViewController alloc] initWithNibName:@"twitterViewController" bundle:nil];
+  twitterVC.view.bounds = twitterVC.view.frame = [UIScreen mainScreen].bounds;
+  [self.view addSubview:twitterVC.view];
 }
 
 - (void)setParameters:(nakuronViewController *)n difficulty:(Difficulty)d probNum:(int)p
 {
-  superViewController = n;
+  superVC = n;
   newDifficulty = d;
   newProbNum = p;
   probNumField.text = [NSString stringWithFormat:@"%d", newProbNum];

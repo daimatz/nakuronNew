@@ -111,18 +111,18 @@ using namespace std;
       NSLog(@"Play probNum: %d", current);
       int probNum = atoi(histories[current]["probNum"].c_str());
       Difficulty difficulty = intToDifficulty(atoi(histories[current]["difficulty"].c_str()));
-      [nakuron boardInit:difficulty probNum:probNum holeRatio:HOLE_RATIO];
+      [nakuronVC boardInit:difficulty probNum:probNum holeRatio:HOLE_RATIO];
       [self.view removeFromSuperview];
+      [superVC cancelButton:nil];
       [self release];
-      [superViewController cancelButton:nil];
     }
   }
 }
 
 - (void)setParameters:(menuViewController *)m nakuron:(nakuronViewController*)n;
 {
-  superViewController = m;
-  nakuron = n;
+  superVC = m;
+  nakuronVC = n;
 }
 
 - (void)dealloc {
