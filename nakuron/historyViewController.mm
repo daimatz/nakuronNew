@@ -5,6 +5,7 @@
 using namespace std;
 
 @implementation historyViewController
+@synthesize difficultyLabel;
 @synthesize probNumLabel;
 @synthesize datetimeLabel;
 @synthesize scoreLabel;
@@ -31,10 +32,11 @@ using namespace std;
 - (void)updateShowing:(int)num
 {
   if (histories.empty()) {
-    probNumLabel.text = datetimeLabel.text = scoreLabel.text = @"No histories";
+    difficultyLabel.text = probNumLabel.text = datetimeLabel.text = scoreLabel.text = @"No histories";
   } else {
     current = num % histories.size();
     NSLog(@"current: %d", current);
+    difficultyLabel.text = stringToNSString(histories[current]["difficulty"]);
     probNumLabel.text = stringToNSString(histories[current]["probNum"]);
     datetimeLabel.text = stringToNSString(histories[current]["created"]);
     scoreLabel.text = stringToNSString(histories[current]["score"]);
@@ -60,6 +62,7 @@ using namespace std;
   [self setProbNumLabel:nil];
   [self setDatetimeLabel:nil];
   [self setScoreLabel:nil];
+  [self setDifficultyLabel:nil];
   [super viewDidUnload];
   // Release any retained subviews of the main view.
   // e.g. self.myOutlet = nil;
@@ -126,6 +129,7 @@ using namespace std;
   [probNumLabel release];
   [datetimeLabel release];
   [scoreLabel release];
+  [difficultyLabel release];
   [super dealloc];
 }
 - (IBAction)rightButton {

@@ -16,6 +16,7 @@
 }
 - (IBAction)backButton:(id)sender;
 - (IBAction)playButton:(id)sender;
+@property (retain, nonatomic) IBOutlet UILabel *difficultyLabel;
 @property (retain, nonatomic) IBOutlet UILabel *probNumLabel;
 @property (retain, nonatomic) IBOutlet UILabel *datetimeLabel;
 @property (retain, nonatomic) IBOutlet UILabel *scoreLabel;
