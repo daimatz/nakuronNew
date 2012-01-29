@@ -14,6 +14,11 @@
 #include "FMDatabaseAdditions.h"
 #include "FMResultSet.h"
 
+const float EPS = 1e-6;
+
+const int MIN_PROBNUM = 1;
+const int MAX_PROBNUM = 100;
+
 const int MAX_BOARD_WIDTH = 32;
 const float boardSizePx = 240.0;
 const float boardLeftLowerX = -120.0;
@@ -60,6 +65,7 @@ std::string pieceToStr(Piece p);
 std::string colorToStr(Color c);
 Color intToColor(int i);
 int difficultyToInt(Difficulty d);
+std::string difficultyToString(Difficulty d);
 Difficulty intToDifficulty(int i);
 int probNumToSeed(int p);
 int difficultyToBoardSize(Difficulty d);
