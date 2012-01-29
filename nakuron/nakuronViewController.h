@@ -33,10 +33,6 @@
 
   int seed;
   
-  //壁 1
-  //空 0
-  //色1...色n 1 ~ n+1
-  //色壁1...色壁n n+2 ~ 2*n-1
   PieceData pieces[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2];
   int boardSize;
   int colorNum;

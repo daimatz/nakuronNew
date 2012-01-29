@@ -33,6 +33,8 @@ typedef enum {
 
 int pieceToInt(Piece p);
 int colorToInt(Color c);
+std::string pieceToStr(Piece p);
+std::string colorToStr(Color c);
 Color intToColor(int i);
 
 struct PieceData {

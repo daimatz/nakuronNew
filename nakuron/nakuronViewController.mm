@@ -46,7 +46,7 @@ enum {
 -(void) dump{
   for(int r=0;r<boardSize;r++){
     for(int c=0;c<boardSize;c++){
-      fprintf(stderr,"%d,",colorToInt(pieces[r][c].color));
+      fprintf(stderr,"%2s %6s,",pieceToStr(pieces[r][c].piece).c_str(),colorToStr(pieces[r][c].color).c_str());
     }
     fprintf(stderr,"\n");
   }
@@ -91,7 +91,7 @@ enum {
   boardSizePx = 240.0;
   boardLeftLowerX = boardLeftLowerY = -120.0;
   //最初の盤面を作成
-  [self boardInitWithSize:32 colorNum:4 holeRatio:80];
+  [self boardInitWithSize:4 colorNum:4 holeRatio:80];
 }
 -(void)boardInitWithSize:(int)size colorNum:(int)colnum holeRatio:(int)hole
 {
@@ -195,42 +195,136 @@ enum {
 
 - (IBAction)downButton {
   NSLog(@"down");
+  [self dump];
+  for(int c=1;c < boardSize-1;c++){
+    //穴の場合
+    if(pieces[boardSize-1][c].piece == HOLE){
+      //壁を探す
+      int wr=boardSize-2;
+      while(pieces[wr][c].piece!=WALL && wr>0) wr--;
+      //壁より前が全部落とす
+      for(int r=boardSize-2;r>wr;r--) pieces[r][c]=PieceData(EMPTY,WHITE);
+    }
+    //壁の場合
+    else{
+      //壁を探す
+      int wr=boardSize-2;
+      while(pieces[wr][c].piece!=WALL && wr>0) wr--;
+      //壁がない
+      if(wr==0) continue;
+      //壁より前は壁まで落とす。
+      //prはemptyか自分自身
+      //crは初めてBALLがでてくる場所
+      int pr=boardSize-2,cr=boardSize-2;
+      while(cr>wr){
+        while(cr>wr && pieces[cr][c].piece==EMPTY) cr--;
+        swap(pieces[pr][c],pieces[cr][c]);
+        cr--;
+        pr--;
+      }
+    }
+  }
+  [self dump];
 }
 
 - (IBAction)leftButton {
   NSLog(@"left");
+  for(int r=1;r < boardSize-1;r++){
+    //穴の場合
+    if(pieces[r][0].piece == HOLE){
+      //壁を探す
+      int wc=1;
+      while(pieces[r][wc].piece!=WALL && wc<boardSize-1) wc++;
+      //壁より前が全部落とす
+      for(int c=1;c<wc;c++) pieces[r][c]=PieceData(EMPTY,WHITE);
+    }
+    //壁の場合
+    else{
+      //壁を探す
+      int wc=1;
+      while(pieces[r][wc].piece!=WALL && wc<boardSize-1) wc++;
+      //壁がない
+      if(wc==boardSize-1) continue;
+      //壁より前は壁まで落とす。
+      //prはemptyか自分自身
+      //crは初めてBALLがでてくる場所
+      int pc=1,cc=1;
+      while(cc<wc){
+        while(cc<wc && pieces[r][cc].piece==EMPTY) cc++;
+        swap(pieces[r][pc],pieces[r][cc]);
+        cc++;
+        pc++;
+      }
+    }
+  }
 }
 
 - (IBAction)upButton {
   NSLog(@"up");
   [self dump];
-  /*for(int c=1;c < boardSize-1;c++){
-    //穴
-    if(colorNum+2 <= pieces[0][c] && pieces[0][c] <= colorNum*2+1){
+  for(int c=1;c < boardSize-1;c++){
+    //穴の場合
+    if(pieces[0][c].piece == HOLE){
       //壁を探す
       int wr=1;
-      while(pieces[wr][c]!=WALL && wr<boardSize-1) wr++;
+      while(pieces[wr][c].piece!=WALL && wr<boardSize-1) wr++;
       //壁より前が全部落とす
-      for(int r=1;r<wr;r++) pieces[r][c]=EMPTY;
+      for(int r=1;r<wr;r++) pieces[r][c]=PieceData(EMPTY,WHITE);
     }
+    //壁の場合
     else{
       //壁を探す
       int wr=1;
-      while(pieces[wr][c]!=WALL && wr<boardSize-1) wr++;
+      while(pieces[wr][c].piece!=WALL && wr<boardSize-1) wr++;
+      //壁がない
+      if(wr==boardSize-1) continue;
       //壁より前は壁まで落とす。
+      //prはemptyか自分自身
+      //crは初めてBALLがでてくる場所
       int pr=1,cr=1;
       while(cr<wr){
-        while(cr<wr && pieces[cr][c]==EMPTY) cr++;
+        while(cr<wr && pieces[cr][c].piece==EMPTY) cr++;
         swap(pieces[pr][c],pieces[cr][c]);
+        cr++;
         pr++;
       }
     }
-  }*/
+  }
   [self dump];
 }
 
 - (IBAction)rightButton {
   NSLog(@"right");
+  [self dump];
+  for(int r=1;r < boardSize-1;r++){
+    //穴の場合
+    if(pieces[r][boardSize-1].piece == HOLE){
+      //壁を探す
+      int wc=boardSize-2;
+      while(pieces[r][wc].piece!=WALL && wc>0) wc--;
+      //壁より前が全部落とす
+      for(int c=boardSize-2;c>wc;c--) pieces[r][c]=PieceData(EMPTY,WHITE);
+    }
+    //壁の場合
+    else{
+      //壁を探す
+      int wc=boardSize-2;
+      while(pieces[r][wc].piece!=WALL && wc>0) wc--;
+      //壁がない
+      if(wc==0) continue;
+      //壁より前は壁まで落とす。
+      //prはemptyか自分自身
+      //crは初めてBALLがでてくる場所
+      int pc=boardSize-2,cc=boardSize-2;
+      while(cc>wc){
+        while(cc>wc && pieces[r][cc].piece==EMPTY) cc--;
+        swap(pieces[r][pc],pieces[r][cc]);
+        cc--;
+        pc--;
+      }
+    }
+  }
+  [self dump];
 }
 
 - (IBAction)menuButton {

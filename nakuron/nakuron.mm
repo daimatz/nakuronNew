@@ -23,6 +23,26 @@ int colorToInt(Color c) {
     default: throw ProgrammingException("Color おかしい");
   }
 }
+string pieceToStr(Piece p){
+  switch(p){
+    case EMPTY: return "E";
+    case WALL: return "W";
+    case HOLE: return "H";
+    case BALL: return "B";
+    default: throw ProgrammingException("Piece おかしい");
+  }
+}
+string colorToStr(Color c){
+  switch (c) {
+    case RED: return "Red";
+    case GREEN: return "Green";
+    case BLUE: return "Blue";
+    case YELLOW: return "Yellow";
+    case BLACK: return "Black";
+    case WHITE: return "White";
+    default: throw ProgrammingException("Color おかしい");
+  }
+}
 
 Color intToColor(int i) {
   switch (i) {
