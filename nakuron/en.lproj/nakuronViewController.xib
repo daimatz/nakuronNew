@@ -45,10 +45,7 @@
 						<string key="NSFrame">{{15, 220}, {40, 40}}</string>
 						<reference key="NSSuperview" ref="184854543"/>
 						<reference key="NSWindow"/>
-<<<<<<< HEAD
-=======
 						<string key="NSReuseIdentifierKey">_NS:225</string>
->>>>>>> 8a943cd53aad7f30e6c9852b8a67d985444469f1
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
