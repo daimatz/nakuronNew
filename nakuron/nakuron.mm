@@ -66,6 +66,11 @@ int difficultyToInt(Difficulty d) {
   }
 }
 
+string difficultyToString(Difficulty d) {
+  string str[4] = {"Easy", "Normal", "Hard", "Very Hard"};
+  return str[difficultyToInt(d)];
+}
+
 Difficulty intToDifficulty(int i) {
   switch (i) {
     case 0: return DIFFICULTY_EASY;
@@ -77,7 +82,7 @@ Difficulty intToDifficulty(int i) {
 }
 
 int probNumToSeed(int p) {
-  return 4;
+  return (p % MAX_PROBNUM) + 1;
 }
 
 int difficultyToBoardSize(Difficulty d) {

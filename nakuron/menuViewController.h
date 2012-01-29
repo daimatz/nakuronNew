@@ -28,6 +28,8 @@
 - (IBAction)probNumMinusButton;
 - (IBAction)probNumPlusButton;
 @property (retain, nonatomic) IBOutlet UITextField *probNumField;
+- (IBAction)probNumFieldEndEdit:(id)sender;
+- (IBAction)backgroundTap:(id)sender; // 背景をタップしてキーボードを隠す
 
 @property (retain, nonatomic) IBOutlet UILabel *difficultyLabel;
 @property (retain, nonatomic) IBOutlet UISlider *difficultySlider;

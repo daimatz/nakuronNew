@@ -35,6 +35,9 @@
 {
   [super viewDidLoad];
 
+  // キーボードは数字、アクション設定
+  probNumField.keyboardType = UIKeyboardTypeNumberPad;
+
   // スライド中もイベント通知
   difficultySlider.continuous = YES;
 }
@@ -68,16 +71,30 @@
   [self release];
 }
 
+- (IBAction)probNumFieldEndEdit:(id)sender {
+  [probNumField resignFirstResponder];
+}
+
 - (IBAction)probNumMinusButton {
-  probNumField.text = [NSString stringWithFormat:@"%d", [probNumField.text intValue]-1];
+  int newVal = [probNumField.text intValue]-1;
+  if (newVal < MIN_PROBNUM) newVal = MIN_PROBNUM;
+  probNumField.text = [NSString stringWithFormat:@"%d", newVal];
 }
 
 - (IBAction)probNumPlusButton {
-  probNumField.text = [NSString stringWithFormat:@"%d", [probNumField.text intValue]+1];
+  int newVal = [probNumField.text intValue]+1;
+  if (newVal > MAX_PROBNUM) newVal = MAX_PROBNUM;
+  probNumField.text = [NSString stringWithFormat:@"%d", newVal];
+}
+
+// 背景をタップしてキーボードを隠す。
+// IBで一番下の UIView を UIControl に変更してイベント追加
+- (IBAction)backgroundTap:(id)sender {
+  [probNumField resignFirstResponder];
 }
 
 - (IBAction)difficultyChanging:(UISlider*)slider {
-  if (slider.value < 0) {
+  if (slider.value < 0-EPS) {
     throw ProgrammingException("difficultySlider の値がおかしい");
   } else if (slider.value < 0.75) {
     newDifficulty = DIFFICULTY_EASY;
@@ -88,15 +105,14 @@
   } else if (slider.value < 2.25) {
     newDifficulty = DIFFICULTY_HARD;
     slider.value = 2;
-  } else if (slider.value <= 3) {
+  } else if (slider.value <= 3+EPS) {
     newDifficulty = DIFFICULTY_VERY_HARD;
     slider.value = 3;
   } else {
     throw ProgrammingException("difficultySlider の値がおかしい");
   }
   
-  NSString *str[4] = {@"Easy", @"Normal", @"Hard", @"Very Hard"};
-  difficultyLabel.text = str[(int)newDifficulty];
+  difficultyLabel.text = stringToNSString(difficultyToString(newDifficulty));
 }
 
 - (IBAction)historyButton {

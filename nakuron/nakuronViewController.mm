@@ -82,9 +82,6 @@ enum {
   animationFrameInterval = 1;
   self.displayLink = nil;
 
-  //seed
-  //seed = arc4random() & 0x7FFFFFFF;
-
   //texture読み込み
   piecenumToTexture.insert(make_pair(PieceData(EMPTY, WHITE),loadTexture(@"empty.png")));
   piecenumToTexture.insert(make_pair(PieceData(WALL, BLACK), loadTexture(@"wall.png")));
@@ -100,7 +97,7 @@ enum {
   ballMoveFlag = false;
   //最初の盤面を作成
   [self boardInit:DIFFICULTY_EASY
-          probNum:((arc4random() & 0x7FFFFFFF) % 101)
+          probNum:(((arc4random() & 0x7FFFFFFF) % MAX_PROBNUM) + MIN_PROBNUM)
         holeRatio:HOLE_RATIO];
 }
 
@@ -109,13 +106,16 @@ enum {
   difficulty = d;
   boardSize = difficultyToBoardSize(difficulty);
   probNum = p;
-  int seed = probNumToSeed(probNum);
+  if (probNum < MIN_PROBNUM) probNum = MIN_PROBNUM;
+  else if (probNum > MAX_PROBNUM) probNum = MAX_PROBNUM;
+
+  NSLog(@"difficulty = %d, boardSize = %d, probNum = %d", d, boardSize, probNum);
 
   cellSize = boardSizePx/boardSize;
 
   int hole = r;
   int wall = 100 - hole;
-  Xor128 hash(seed);
+  Xor128 hash(probNum);
   for(int r=0;r<boardSize;r++){
     for(int c=0;c<boardSize;c++){
       if((r==0 && c==0) || (r==boardSize-1 && c==boardSize-1)) pieces[r][c] = PieceData(WALL, BLACK);
