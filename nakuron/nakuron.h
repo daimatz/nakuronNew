@@ -74,7 +74,6 @@ std::string string_join(std::vector<std::string> ss, std::string c);
 // ドキュメントディレクトリのパスを std::string で得る
 // ここにDBファイルとか置く
 std::string documentDir();
-
 struct PieceData {
   Piece piece;
   Color color;

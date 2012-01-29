@@ -51,6 +51,13 @@ enum {
   }
   NSLog(@"----------------------");
 }
+-(void) printTargetCoord{
+  for(int r=0;r<boardSize;r++){
+    for(int c=0;c<boardSize;c++){
+      fprintf(stderr,"(%f,%f),",real(targetCoord[r][c]),imag(targetCoord[r][c]));
+    }
+  }
+}
 
 //#include "ModelTest.h"
 - (void)awakeFromNib
@@ -89,7 +96,8 @@ enum {
     piecenumToTexture.insert(make_pair(PieceData(BALL, s[i]), loadTexture([NSString stringWithFormat:@"b%@.png",cs[i]])));
     piecenumToTexture.insert(make_pair(PieceData(HOLE, s[i]), loadTexture([NSString stringWithFormat:@"h%@.png",cs[i]])));
   }
-
+  //最初はballは移動してないので
+  ballMoveFlag = false;
   //最初の盤面を作成
   [self boardInit:DIFFICULTY_EASY
           probNum:((arc4random() & 0x7FFFFFFF) % 101)
@@ -202,10 +210,23 @@ enum {
     }
   }
 }
-
+-(void)targetCoordInit{
+  for(int r=0;r<boardSize;r++){
+    for(int c=0;c<boardSize;c++){
+      float x = boardLeftLowerX + c*cellSize+cellSize/2;
+      float y = boardLeftLowerY + boardSizePx - (r+1)*cellSize+cellSize/2;
+      targetCoord[r][c]=complex<float>(x,y);
+    }
+  }
+}
+-(std::complex<float>)getCoordRC:(int)r C:(int)c{
+  return complex<float>(boardLeftLowerX + c*cellSize+cellSize/2,
+                        boardLeftLowerY+boardSizePx-(r+1)*cellSize+cellSize/2);
+}
 - (IBAction)downButton {
-  NSLog(@"down");
-  [self dump];
+  //NSLog(@"down");
+  //[self dump];
+  [self targetCoordInit];
   for(int c=1;c < boardSize-1;c++){
     //穴の場合
     if(pieces[boardSize-1][c].piece == HOLE){
@@ -213,7 +234,10 @@ enum {
       int wr=boardSize-2;
       while(pieces[wr][c].piece!=WALL && wr>0) wr--;
       //壁より前が全部落とす
-      for(int r=boardSize-2;r>wr;r--) pieces[r][c]=PieceData(EMPTY,WHITE);
+      for(int r=boardSize-2;r>wr;r--) {
+        pieces[r][c]=PieceData(EMPTY,WHITE);
+        targetCoord[r][c] = [self getCoordRC:boardSize-2 C:c];
+      }
     }
     //壁の場合
     else{
@@ -229,16 +253,19 @@ enum {
       while(cr>wr){
         while(cr>wr && pieces[cr][c].piece==EMPTY) cr--;
         swap(pieces[pr][c],pieces[cr][c]);
+        targetCoord[cr][c] = [self getCoordRC:pr C:c];
         cr--;
         pr--;
       }
     }
   }
-  [self dump];
+  //[self dump];
+  [self printTargetCoord];
 }
 
 - (IBAction)leftButton {
-  NSLog(@"left");
+  //NSLog(@"left");
+  [self targetCoordInit];
   for(int r=1;r < boardSize-1;r++){
     //穴の場合
     if(pieces[r][0].piece == HOLE){
@@ -246,7 +273,10 @@ enum {
       int wc=1;
       while(pieces[r][wc].piece!=WALL && wc<boardSize-1) wc++;
       //壁より前が全部落とす
-      for(int c=1;c<wc;c++) pieces[r][c]=PieceData(EMPTY,WHITE);
+      for(int c=1;c<wc;c++){ 
+        pieces[r][c]=PieceData(EMPTY,WHITE);
+        targetCoord[r][c] = [self getCoordRC:r C:0];
+      }
     }
     //壁の場合
     else{
@@ -262,6 +292,7 @@ enum {
       while(cc<wc){
         while(cc<wc && pieces[r][cc].piece==EMPTY) cc++;
         swap(pieces[r][pc],pieces[r][cc]);
+        targetCoord[r][pc] = [self getCoordRC:r C:cc];
         cc++;
         pc++;
       }
@@ -270,8 +301,9 @@ enum {
 }
 
 - (IBAction)upButton {
-  NSLog(@"up");
-  [self dump];
+  //NSLog(@"up");
+  //[self dump];
+  [self targetCoordInit];
   for(int c=1;c < boardSize-1;c++){
     //穴の場合
     if(pieces[0][c].piece == HOLE){
@@ -279,7 +311,10 @@ enum {
       int wr=1;
       while(pieces[wr][c].piece!=WALL && wr<boardSize-1) wr++;
       //壁より前が全部落とす
-      for(int r=1;r<wr;r++) pieces[r][c]=PieceData(EMPTY,WHITE);
+      for(int r=1;r<wr;r++) {
+        pieces[r][c]=PieceData(EMPTY,WHITE);
+        targetCoord[r][c] = [self getCoordRC:0 C:c];
+      }
     }
     //壁の場合
     else{
@@ -295,17 +330,19 @@ enum {
       while(cr<wr){
         while(cr<wr && pieces[cr][c].piece==EMPTY) cr++;
         swap(pieces[pr][c],pieces[cr][c]);
+        targetCoord[cr][c] = [self getCoordRC:pr C:c];
         cr++;
         pr++;
       }
     }
   }
-  [self dump];
+  //[self dump];
 }
 
 - (IBAction)rightButton {
-  NSLog(@"right");
-  [self dump];
+  //NSLog(@"right");
+  //[self dump];
+  [self targetCoordInit];
   for(int r=1;r < boardSize-1;r++){
     //穴の場合
     if(pieces[r][boardSize-1].piece == HOLE){
@@ -313,7 +350,10 @@ enum {
       int wc=boardSize-2;
       while(pieces[r][wc].piece!=WALL && wc>0) wc--;
       //壁より前が全部落とす
-      for(int c=boardSize-2;c>wc;c--) pieces[r][c]=PieceData(EMPTY,WHITE);
+      for(int c=boardSize-2;c>wc;c--){ 
+        pieces[r][c]=PieceData(EMPTY,WHITE);
+        targetCoord[r][c] = [self getCoordRC:r C:boardSize-2];
+      }
     }
     //壁の場合
     else{
@@ -329,12 +369,13 @@ enum {
       while(cc>wc){
         while(cc>wc && pieces[r][cc].piece==EMPTY) cc--;
         swap(pieces[r][pc],pieces[r][cc]);
+        targetCoord[r][pc] = [self getCoordRC:r C:cc];
         cc--;
         pc--;
       }
     }
   }
-  [self dump];
+  //[self dump];
 }
 
 - (IBAction)menuButton {
@@ -386,17 +427,20 @@ enum {
 
 -(void)drawMain
 {
-  static bool first = true;
-  for(int r = 0; r < boardSize; r++) {
-    for (int c = 0; c < boardSize; c++) {
-      GLuint texture = piecenumToTexture[pieces[r][c]];
-      float x = boardLeftLowerX + c*cellSize+cellSize/2;
-      float y = boardLeftLowerY + boardSizePx - (r+1)*cellSize+cellSize/2;
-      //if(first) NSLog(@"%f %f",x,y);
-      drawTexture(x,y,cellSize,cellSize, texture,255,255,255,255);
+  if(ballMoveFlag){
+    
+  }
+  else{
+    for(int r = 0; r < boardSize; r++) {
+      for (int c = 0; c < boardSize; c++) {
+        GLuint texture = piecenumToTexture[pieces[r][c]];
+        float x = boardLeftLowerX + c*cellSize+cellSize/2;
+        float y = boardLeftLowerY + boardSizePx - (r+1)*cellSize+cellSize/2;
+        //if(first) NSLog(@"%f %f",x,y);
+        drawTexture(x,y,cellSize,cellSize, texture,255,255,255,255);
+      }
     }
   }
-  first = false;
 }
 
 - (BOOL)compileShader:(GLuint *)shader type:(GLenum)type file:(NSString *)file

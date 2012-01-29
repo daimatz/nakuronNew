@@ -19,6 +19,7 @@
 #include <cstring>
 #include <vector>
 #include <algorithm>
+#include <complex>
 
 @interface nakuronViewController : UIViewController {
 @private
@@ -36,6 +37,10 @@
   
   int boardSize;
   PieceData pieces[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2];
+  std::complex<float> targetCoord[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2];
+  std::complex<float> curCoord[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2];
+
+  bool ballMoveFlag;
 
   float cellSize;
   
@@ -60,6 +65,9 @@
 - (void)stopAnimation;
 - (void)drawMain;
 - (void)dump;
+- (void)targetCoordInit;
+- (void)printTargetCoord;
+- (std::complex<float>)getCoordRC:(int)r C:(int)c;
 -(void)boardInit:(Difficulty)d probNum:(int)p holeRatio:(int)r;
 
 @end
