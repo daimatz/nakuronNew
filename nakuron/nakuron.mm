@@ -56,6 +56,87 @@ Color intToColor(int i) {
   }
 }
 
+int difficultyToInt(Difficulty d) {
+  switch (d) {
+    case DIFFICULTY_EASY: return 0;
+    case DIFFICULTY_NORMAL: return 1;
+    case DIFFICULTY_HARD: return 2;
+    case DIFFICULTY_VERY_HARD: return 3;
+    default: throw ProgrammingException("difficultyToInt(d) おかしい");
+  }
+}
+
+Difficulty intToDifficulty(int i) {
+  switch (i) {
+    case 0: return DIFFICULTY_EASY;
+    case 1: return DIFFICULTY_NORMAL;
+    case 2: return DIFFICULTY_HARD;
+    case 3: return DIFFICULTY_VERY_HARD;
+    default: throw ProgrammingException("intToDifficulty(d) おかしい");
+  }
+}
+
+int probNumToSeed(int p) {
+  return 4;
+}
+
+int difficultyToBoardSize(Difficulty d) {
+  int b;
+  switch (d) {
+    case DIFFICULTY_EASY: b = 4; break;
+    case DIFFICULTY_NORMAL: b = 8; break;
+    case DIFFICULTY_HARD: b = 16; break;
+    case DIFFICULTY_VERY_HARD: b = 32; break;
+    default: throw ProgrammingException("difficultyToBoardSize(d) おかしい");
+  }
+  return b+2;
+}
+
+string intToString(int n) {
+  char buf[32];
+  sprintf(buf, "%d", n);
+  return string(buf);
+}
+
+string NSStringToString(NSString* ns) {
+  return string([ns UTF8String]);
+}
+
+NSString* stringToNSString(string s) {
+  return [NSString stringWithFormat:@"%s", s.c_str()];
+}
+
+vector<string> string_split(string s, string c) {
+  vector<string> ret;
+  for( int i=0, n; i <= s.length(); i=n+1 ){
+    n = s.find_first_of( c, i );
+    if( n == string::npos ) n = s.length();
+    string tmp = s.substr( i, n-i );
+    ret.push_back(tmp);
+  }
+  return ret;
+}
+
+string string_join(vector<string> ss, string c) {
+  string ret;
+  for (int i = 0; i < (int)ss.size(); i++) {
+    ret += ss[i];
+    if (i != (int)ss.size() - 1)
+      ret += c;
+  }
+  return ret;
+}
+
+string documentDir() {
+  static string path;
+  if (path == "") {
+    NSArray* writePashs;
+    writePashs = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    path = NSStringToString([writePashs objectAtIndex:0]);
+  }
+  return path;
+}
+
 ProgrammingException::ProgrammingException(const string& mes) {
 
 }

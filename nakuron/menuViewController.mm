@@ -4,8 +4,10 @@
 //
 
 #import "menuViewController.h"
+#import "nakuronViewController.h"
 
 @implementation menuViewController
+
 @synthesize probNumField;
 @synthesize difficultyLabel;
 @synthesize difficultySlider;
@@ -59,7 +61,11 @@
 }
 
 - (IBAction)updateButton:(id)sender {
+  // newDifficulty はここで代入しなくてよい
   newProbNum = [probNumField.text intValue];
+  [superVC boardInit:newDifficulty probNum:newProbNum holeRatio:HOLE_RATIO];
+  [self.view removeFromSuperview];
+  [self release];
 }
 
 - (IBAction)probNumMinusButton {
@@ -71,7 +77,9 @@
 }
 
 - (IBAction)difficultyChanging:(UISlider*)slider {
-  if (slider.value < 0.75) {
+  if (slider.value < 0) {
+    throw ProgrammingException("difficultySlider の値がおかしい");
+  } else if (slider.value < 0.75) {
     newDifficulty = DIFFICULTY_EASY;
     slider.value = 0;
   } else if (slider.value < 1.5) {
@@ -80,13 +88,46 @@
   } else if (slider.value < 2.25) {
     newDifficulty = DIFFICULTY_HARD;
     slider.value = 2;
-  } else {
+  } else if (slider.value <= 3) {
     newDifficulty = DIFFICULTY_VERY_HARD;
     slider.value = 3;
+  } else {
+    throw ProgrammingException("difficultySlider の値がおかしい");
   }
   
   NSString *str[4] = {@"Easy", @"Normal", @"Hard", @"Very Hard"};
   difficultyLabel.text = str[(int)newDifficulty];
+}
+
+- (IBAction)historyButton {
+  NSLog(@"history");
+  historyVC = [[historyViewController alloc] initWithNibName:@"historyViewController" bundle:nil];
+  historyVC.view.bounds = historyVC.view.frame = [UIScreen mainScreen].bounds;
+  [self.view addSubview:historyVC.view];
+  [historyVC setParameters:self nakuron:superVC];
+}
+
+- (IBAction)twitterButton {
+  NSLog(@"twitter");
+  twitterVC = [[twitterViewController alloc] initWithNibName:@"twitterViewController" bundle:nil];
+  twitterVC.view.bounds = twitterVC.view.frame = [UIScreen mainScreen].bounds;
+  [self.view addSubview:twitterVC.view];
+}
+
+- (void)setParameters:(nakuronViewController *)n difficulty:(Difficulty)d probNum:(int)p
+{
+  superVC = n;
+  newDifficulty = d;
+  newProbNum = p;
+  probNumField.text = [NSString stringWithFormat:@"%d", newProbNum];
+  switch (d) {
+    case DIFFICULTY_EASY: difficultySlider.value = 0; break;
+    case DIFFICULTY_NORMAL: difficultySlider.value = 1; break;
+    case DIFFICULTY_HARD: difficultySlider.value = 2; break;
+    case DIFFICULTY_VERY_HARD: difficultySlider.value = 3; break;
+    default: throw ProgrammingException("[menuView initView] difficulty がおかしい");
+  }
+  [self difficultyChanging:difficultySlider];
 }
 
 - (void)dealloc {

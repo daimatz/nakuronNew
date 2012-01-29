@@ -16,9 +16,9 @@
 #import "menuViewController.h"
 
 #include "nakuron.h"
-#include<cstring>
-#include<vector>
-#include<algorithm>
+#include <cstring>
+#include <vector>
+#include <algorithm>
 
 @interface nakuronViewController : UIViewController {
 @private
@@ -31,13 +31,16 @@
 
   menuViewController *menuView;
 
-  int seed;
+  int probNum;
+  Difficulty difficulty;
   
-  PieceData pieces[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2];
   int boardSize;
-  int colorNum;
+  PieceData pieces[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2];
 
-  float boardLeftLowerX,boardLeftLowerY,cellSize,boardSizePx;
+  float cellSize;
+  
+  std::vector<Direction> step;
+  int score;
   
   std::map<PieceData, GLuint> piecenumToTexture;
   
@@ -57,5 +60,6 @@
 - (void)stopAnimation;
 - (void)drawMain;
 - (void)dump;
--(void)boardInitWithSize:(int)size colorNum:(int)colnum holeRatio:(int)hole;
+-(void)boardInit:(Difficulty)d probNum:(int)p holeRatio:(int)r;
+
 @end
