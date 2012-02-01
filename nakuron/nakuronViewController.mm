@@ -131,6 +131,8 @@ enum {
     }
   }
   
+  validatePieces(pieces, boardSize, 1, 1);
+  
   step.clear();
   score = 0;
 }

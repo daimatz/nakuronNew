@@ -59,6 +59,8 @@ typedef enum {
   RIGHT,
 } Direction;
 
+struct PieceData;
+
 int pieceToInt(Piece p);
 int colorToInt(Color c);
 std::string pieceToStr(Piece p);
@@ -70,6 +72,8 @@ Difficulty intToDifficulty(int i);
 int probNumToSeed(int p);
 int difficultyToBoardSize(Difficulty d);
 
+bool validatePieces(PieceData pd[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2], int boardSize, int sx, int sy);
+
 std::string intToString(int n);
 
 std::string NSStringToString(NSString *ns);
@@ -79,7 +83,8 @@ std::string string_join(std::vector<std::string> ss, std::string c);
 
 // ドキュメントディレクトリのパスを std::string で得る
 // ここにDBファイルとか置く
-std::string documentDir();
+const std::string DOCUMENT_DIR = NSStringToString([NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]);
+
 struct PieceData {
   Piece piece;
   Color color;

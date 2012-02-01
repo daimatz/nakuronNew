@@ -97,6 +97,10 @@ int difficultyToBoardSize(Difficulty d) {
   return b+2;
 }
 
+bool validatePieces(PieceData pd[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2], int boardSize, int sx, int sy) {
+  return true;
+}
+
 string intToString(int n) {
   char buf[32];
   sprintf(buf, "%d", n);
@@ -130,16 +134,6 @@ string string_join(vector<string> ss, string c) {
       ret += c;
   }
   return ret;
-}
-
-string documentDir() {
-  static string path;
-  if (path == "") {
-    NSArray* writePashs;
-    writePashs = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    path = NSStringToString([writePashs objectAtIndex:0]);
-  }
-  return path;
 }
 
 ProgrammingException::ProgrammingException(const string& mes) {
