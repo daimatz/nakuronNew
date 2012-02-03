@@ -106,8 +106,46 @@ int difficultyToBoardSize(Difficulty d) {
   return b+2;
 }
 
-bool validatePieces(PieceData pd[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2], int boardSize, int sx, int sy) {
-  return true;
+void removeCycleRec(int temp[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2], int size, int sx, int sy) {
+  int dx[] = {-1,0,1,0}, dy[] = {0,-1,0,1};
+  // ある箇所が 1 ならその周りは全部 1
+  if (temp[sx][sy] == 1) {
+    for (int i = 0; i < 4; i++) {
+      if (0 <= sx+dx[i] && sx+dx[i] < size // 次の x が範囲内
+          && 0 <= sy+dy[i] && sy+dy[i] < size // 次の y が範囲内
+          && temp[sx+dx[i]][sy+dy[i]] == 0) { // 次の (x,y) をまだ調べてない
+        temp[sx+dx[i]][sy+dy[i]] = 1;
+        removeCycleRec(temp, size, sx+dx[i], sy+dy[i]);
+      }
+    }
+  }
+}
+
+// 閉路を壁で埋める。閉路 => Cycle?
+void removeCycle(PieceData pd[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2], int boardSize) {
+  int temp[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2];
+  for (int i = 0; i < boardSize; i++) {
+    for (int j = 0; j < boardSize; j++) {
+      if (pd[i][j].piece == HOLE) temp[i][j] = 1;
+      else if (pd[i][j].piece == WALL) temp[i][j] = -1;
+      else if (pd[i][j].piece == BALL) temp[i][j] = 0;
+      else throw ProgrammingException("EMPTYがある");
+    }
+  }
+  for (int i = 0; i < boardSize; i++)
+    for (int j = 0; j < boardSize; j++)
+      removeCycleRec(temp, boardSize, i, j);
+  for (int i = 0; i < boardSize; i++) {
+    for (int j = 0; j < boardSize; j++) printf("%2d ", temp[i][j]);
+    printf("\n");
+  }
+  for (int i = 0; i < boardSize; i++)
+    for (int j = 0; j < boardSize; j++)
+      // 0 のまま残ったところが閉路
+      if (temp[i][j] == 0) {
+        pd[i][j].piece = WALL;
+        pd[i][j].color = BLACK;
+      }
 }
 
 string intToString(int n) {

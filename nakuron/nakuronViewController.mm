@@ -132,7 +132,7 @@ enum {
     }
   }
   
-  validatePieces(pieces, boardSize, 1, 1);
+  removeCycle(pieces, boardSize);
   
   step.clear();
   score = 0;
