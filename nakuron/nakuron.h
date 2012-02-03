@@ -48,10 +48,10 @@ typedef enum {
 } Color;
 
 typedef enum {
-  DIFFICULTY_EASY,
-  DIFFICULTY_NORMAL,
-  DIFFICULTY_HARD,
-  DIFFICULTY_VERY_HARD,
+  EASY,
+  NORMAL,
+  HARD,
+  VERY_HARD,
 } Difficulty;
 
 typedef enum {

@@ -97,9 +97,8 @@ enum {
   //最初はballは移動してないので
   ballMoveFlag = false;
   //最初の盤面を作成
-  [self boardInit:DIFFICULTY_NORMAL
-          //probNum:(((arc4random() & 0x7FFFFFFF) % MAX_PROBNUM) + MIN_PROBNUM)
-          probNum:1
+  [self boardInit:NORMAL
+          probNum:(((arc4random() & 0x7FFFFFFF) % MAX_PROBNUM) + MIN_PROBNUM)
         holeRatio:HOLE_RATIO];
 }
 

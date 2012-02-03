@@ -97,16 +97,16 @@
   if (slider.value < 0-EPS) {
     throw ProgrammingException("difficultySlider の値がおかしい");
   } else if (slider.value < 0.75) {
-    newDifficulty = DIFFICULTY_EASY;
+    newDifficulty = EASY;
     slider.value = 0;
   } else if (slider.value < 1.5) {
-    newDifficulty = DIFFICULTY_NORMAL;
+    newDifficulty = NORMAL;
     slider.value = 1;
   } else if (slider.value < 2.25) {
-    newDifficulty = DIFFICULTY_HARD;
+    newDifficulty = HARD;
     slider.value = 2;
   } else if (slider.value <= 3+EPS) {
-    newDifficulty = DIFFICULTY_VERY_HARD;
+    newDifficulty = VERY_HARD;
     slider.value = 3;
   } else {
     throw ProgrammingException("difficultySlider の値がおかしい");
@@ -137,10 +137,10 @@
   newProbNum = p;
   probNumField.text = [NSString stringWithFormat:@"%d", newProbNum];
   switch (d) {
-    case DIFFICULTY_EASY: difficultySlider.value = 0; break;
-    case DIFFICULTY_NORMAL: difficultySlider.value = 1; break;
-    case DIFFICULTY_HARD: difficultySlider.value = 2; break;
-    case DIFFICULTY_VERY_HARD: difficultySlider.value = 3; break;
+    case EASY: difficultySlider.value = 0; break;
+    case NORMAL: difficultySlider.value = 1; break;
+    case HARD: difficultySlider.value = 2; break;
+    case VERY_HARD: difficultySlider.value = 3; break;
     default: throw ProgrammingException("[menuView initView] difficulty がおかしい");
   }
   [self difficultyChanging:difficultySlider];
