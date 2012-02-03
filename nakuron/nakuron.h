@@ -28,7 +28,8 @@ const int colorNum = 4;
 const int HOLE_RATIO = 80;
 
 const std::string DB_BASENAME = "nakuron.db";
-std::string documentDir() ;
+#define DOCUMENT_DIR documentDir()
+std::string documentDir();
 
 typedef enum {
   EMPTY,
