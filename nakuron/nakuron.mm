@@ -23,6 +23,15 @@ int colorToInt(Color c) {
     default: throw ProgrammingException("Color おかしい");
   }
 }
+int directionToInt(Direction d){
+  switch(d){
+    case UP:return 0;
+    case RIGHT:return 1;
+    case LEFT:return 2;
+    case DOWN:return 3;
+    default: throw ProgrammingException("Direction おかしい");
+  }
+}
 string pieceToStr(Piece p){
   switch(p){
     case EMPTY: return "E";

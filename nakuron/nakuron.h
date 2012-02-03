@@ -64,6 +64,7 @@ struct PieceData;
 
 int pieceToInt(Piece p);
 int colorToInt(Color c);
+int directionToInt(Direction d);
 std::string pieceToStr(Piece p);
 std::string colorToStr(Color c);
 Color intToColor(int i);

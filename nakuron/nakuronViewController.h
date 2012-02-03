@@ -40,6 +40,7 @@
   std::complex<float> targetCoord[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2];
   std::complex<float> curCoord[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2];
   Direction pushedDir;
+  float curVel;
 
   bool ballMoveFlag;
 
