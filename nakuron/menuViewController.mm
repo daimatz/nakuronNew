@@ -64,11 +64,27 @@
 }
 
 - (IBAction)updateButton:(id)sender {
-  // newDifficulty はここで代入しなくてよい
-  newProbNum = [probNumField.text intValue];
-  [superVC boardInit:newDifficulty probNum:newProbNum holeRatio:HOLE_RATIO];
-  [self.view removeFromSuperview];
-  [self release];
+  UIAlertView *alert = [[UIAlertView alloc]
+                        initWithTitle:@"Play from History"
+                        message:@"この設定で新しく始めますか？"
+                        delegate:self
+                        cancelButtonTitle:@"Cancel"
+                        otherButtonTitles:@"OK", nil];
+  [alert show];
+  [alert release];
+}
+
+// アラートをキャッチする
+-(void)alertView:(UIAlertView*)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+  if (buttonIndex == 1) {
+    // OK ボタン
+    // newDifficulty はここで代入しなくてよい
+    newProbNum = [probNumField.text intValue];
+    [superVC boardInit:newDifficulty probNum:newProbNum   holeRatio:HOLE_RATIO];
+    [self.view removeFromSuperview];
+    [self release];
+  }
 }
 
 - (IBAction)probNumFieldEndEdit:(id)sender {
