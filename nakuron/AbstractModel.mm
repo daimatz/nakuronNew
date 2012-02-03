@@ -126,7 +126,7 @@ string FindClause::addWhereString(const vector<Where> &where, AbstractModel *mdl
 
 AbstractModel::AbstractModel() {
   NSLog(@"constructed Model");
-  NSString *path = stringToNSString(DOCUMENT_DIR+"/"+DB_BASENAME);
+  NSString *path = stringToNSString(documentDir()+"/"+DB_BASENAME);
   NSLog(@"DB filepath = %@", path);
   _db = [FMDatabase databaseWithPath:path];
 }

@@ -136,6 +136,16 @@ string string_join(vector<string> ss, string c) {
   return ret;
 }
 
+// ドキュメントディレクトリのパスを std::string で得る
+// ここにDBファイルとか置く
+string documentDir() {
+  static string dir;
+  if (dir.empty()) {
+    dir = NSStringToString([NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]);
+  }
+  return dir;
+}
+
 ProgrammingException::ProgrammingException(const string& mes) {
 
 }
