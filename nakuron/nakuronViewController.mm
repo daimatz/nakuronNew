@@ -226,6 +226,21 @@ enum {
                         boardLeftLowerY+boardSizePx-(r+1)*cellSize+cellSize/2);
 }
 - (IBAction)downButton {
+  [self updateStateDownButton];
+}
+
+- (IBAction)leftButton {
+  [self updateStateLeftButton];
+}
+
+- (IBAction)upButton {
+  [self updateStateUpButton];
+}
+
+- (IBAction)rightButton {
+  [self updateStateRightButton];
+}
+- (void)updateStateDownButton{
   //NSLog(@"down");
   //[self dump];
   [self targetCoordInit];
@@ -264,45 +279,7 @@ enum {
   //[self dump];
   [self printTargetCoord];
 }
-
-- (IBAction)leftButton {
-  //NSLog(@"left");
-  [self targetCoordInit];
-  for(int r=1;r < boardSize-1;r++){
-    //穴の場合
-    if(pieces[r][0].piece == HOLE){
-      //壁を探す
-      int wc=1;
-      while(pieces[r][wc].piece!=WALL && wc<boardSize-1) wc++;
-      //壁より前が全部落とす
-      for(int c=1;c<wc;c++){ 
-        pieces[r][c]=PieceData(EMPTY,WHITE);
-        targetCoord[r][c] = [self getCoordRC:r C:0];
-      }
-    }
-    //壁の場合
-    else{
-      //壁を探す
-      int wc=1;
-      while(pieces[r][wc].piece!=WALL && wc<boardSize-1) wc++;
-      //壁がない
-      if(wc==boardSize-1) continue;
-      //壁より前は壁まで落とす。
-      //prはemptyか自分自身
-      //crは初めてBALLがでてくる場所
-      int pc=1,cc=1;
-      while(cc<wc){
-        while(cc<wc && pieces[r][cc].piece==EMPTY) cc++;
-        swap(pieces[r][pc],pieces[r][cc]);
-        targetCoord[r][pc] = [self getCoordRC:r C:cc];
-        cc++;
-        pc++;
-      }
-    }
-  }
-}
-
-- (IBAction)upButton {
+- (void)updateStateUpButton{
   //NSLog(@"up");
   //[self dump];
   [self targetCoordInit];
@@ -340,8 +317,7 @@ enum {
   }
   //[self dump];
 }
-
-- (IBAction)rightButton {
+- (void)updateStateRightButton{
   //NSLog(@"right");
   //[self dump];
   [self targetCoordInit];
@@ -378,6 +354,42 @@ enum {
     }
   }
   //[self dump];
+}
+- (void)updateStateLeftButton{
+  //NSLog(@"left");
+  [self targetCoordInit];
+  for(int r=1;r < boardSize-1;r++){
+    //穴の場合
+    if(pieces[r][0].piece == HOLE){
+      //壁を探す
+      int wc=1;
+      while(pieces[r][wc].piece!=WALL && wc<boardSize-1) wc++;
+      //壁より前が全部落とす
+      for(int c=1;c<wc;c++){ 
+        pieces[r][c]=PieceData(EMPTY,WHITE);
+        targetCoord[r][c] = [self getCoordRC:r C:0];
+      }
+    }
+    //壁の場合
+    else{
+      //壁を探す
+      int wc=1;
+      while(pieces[r][wc].piece!=WALL && wc<boardSize-1) wc++;
+      //壁がない
+      if(wc==boardSize-1) continue;
+      //壁より前は壁まで落とす。
+      //prはemptyか自分自身
+      //crは初めてBALLがでてくる場所
+      int pc=1,cc=1;
+      while(cc<wc){
+        while(cc<wc && pieces[r][cc].piece==EMPTY) cc++;
+        swap(pieces[r][pc],pieces[r][cc]);
+        targetCoord[r][pc] = [self getCoordRC:r C:cc];
+        cc++;
+        pc++;
+      }
+    }
+  }
 }
 
 - (IBAction)menuButton {

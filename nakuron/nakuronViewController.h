@@ -58,7 +58,6 @@
 - (IBAction)downButton;
 - (IBAction)leftButton;
 - (IBAction)upButton;
-
 - (IBAction)menuButton;
 
 - (void)startAnimation;
@@ -67,6 +66,10 @@
 - (void)dump;
 - (void)targetCoordInit;
 - (void)printTargetCoord;
+- (void)updateStateDownButton;
+- (void)updateStateUpButton;
+- (void)updateStateRightButton;
+- (void)updateStateLeftButton;
 - (std::complex<float>)getCoordRC:(int)r C:(int)c;
 -(void)boardInit:(Difficulty)d probNum:(int)p holeRatio:(int)r;
 
