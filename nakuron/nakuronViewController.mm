@@ -237,22 +237,30 @@ enum {
 }
 
 - (IBAction)downButton {
-  //ballMoveFlag = true;
+  ballMoveFlag = true;
+  pushedDir = DOWN;
+  curVel = 0.0;
   [self updateStateDownButton];
 }
 
 - (IBAction)leftButton {
-  //ballMoveFlag = true;
+  ballMoveFlag = true;
+  pushedDir = LEFT;
+  curVel = 0.0;
   [self updateStateLeftButton];
 }
 
 - (IBAction)upButton {
-  //ballMoveFlag = true;
+  ballMoveFlag = true;
+  pushedDir = UP;
+  curVel = 0.0;
   [self updateStateUpButton];
 }
 
 - (IBAction)rightButton {
-  //ballMoveFlag = true;
+  ballMoveFlag = true;
+  pushedDir = RIGHT;
+  curVel = 0.0;
   [self updateStateRightButton];
 }
 -(void)updateState:(Direction)d{
@@ -496,7 +504,20 @@ enum {
 -(void)drawMain
 {
   if(ballMoveFlag){
-    
+    bool endflag = true;
+    curVel +=0.1f;
+    complex<float> dv = polar(curVel,(float)M_PI_2*directionToInt(pushedDir));
+    for(int r = 0; r < boardSize; r++) {
+      for (int c = 0; c < boardSize; c++) {
+        GLuint texture = piecenumToTexture[pieces[r][c]];
+        if(targetCoord[r][c] != curCoord[r][c]){
+          endflag = false;
+          curCoord[r][c] += dv;
+        }
+        drawTexture(real(targetCoord[r][c]),imag(targetCoord[r][c]),cellSize,cellSize, texture,255,255,255,255);
+      }
+    }
+    if(endflag) ballMoveFlag = false;
   }
   else{
     for(int r = 0; r < boardSize; r++) {
