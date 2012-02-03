@@ -66,6 +66,7 @@
 - (void)dump;
 - (void)targetCoordInit;
 - (void)printTargetCoord;
+- (void)updateState:(Direction)d;
 - (void)updateStateDownButton;
 - (void)updateStateUpButton;
 - (void)updateStateRightButton;

@@ -245,7 +245,7 @@ enum {
   //ballMoveFlag = true;
   [self updateStateRightButton];
 }
-/*-(void)updateState(Direction d){
+-(void)updateState:(Direction)d{
   [self targetCoordInit];
   for(int c=1;c < boardSize-1;c++){
     int wr = boardSize-2;
@@ -278,7 +278,7 @@ enum {
     }
   }
   //[self dump];
-}*/
+}
 - (void)updateStateDownButton{
   //NSLog(@"down");
   //[self dump];
@@ -469,7 +469,7 @@ enum {
 {
   [(EAGLView *)self.view setFramebuffer];
 
-  glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+  glClearColor(255.0f, 255.0f, 255.0f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT);
 
   glMatrixMode(GL_PROJECTION);
