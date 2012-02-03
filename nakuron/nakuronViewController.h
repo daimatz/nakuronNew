@@ -69,6 +69,7 @@
 - (void)targetCoordInit;
 - (void)printTargetCoord;
 - (void)updateScore:(int)diff;
+- (void)updateState:(Direction)d;
 - (void)updateStateDownButton;
 - (void)updateStateUpButton;
 - (void)updateStateRightButton;
