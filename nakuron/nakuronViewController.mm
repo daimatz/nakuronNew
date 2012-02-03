@@ -39,6 +39,7 @@ enum {
 @end
 
 @implementation nakuronViewController
+@synthesize scoreLabel;
 
 @synthesize animating, context, displayLink;
 
@@ -135,6 +136,7 @@ enum {
   
   step.clear();
   score = 0;
+  [self updateScore:0];
 }
 
 - (void)dealloc
@@ -152,6 +154,7 @@ enum {
 
   [context release];
 
+  [scoreLabel release];
   [super dealloc];
 }
 
@@ -179,6 +182,7 @@ enum {
 
 - (void)viewDidUnload
 {
+  [self setScoreLabel:nil];
   [super viewDidUnload];
 
   if (program) {
@@ -225,6 +229,12 @@ enum {
   return complex<float>(boardLeftLowerX + c*cellSize+cellSize/2,
                         boardLeftLowerY+boardSizePx-(r+1)*cellSize+cellSize/2);
 }
+
+- (void)updateScore:(int)diff {
+  score += diff;
+  scoreLabel.text = [NSString stringWithFormat:@"%d", score];
+}
+
 - (IBAction)downButton {
   [self updateStateDownButton];
 }

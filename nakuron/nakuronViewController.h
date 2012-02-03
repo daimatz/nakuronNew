@@ -54,6 +54,8 @@
 @property (readonly, nonatomic, getter=isAnimating) BOOL animating;
 @property (nonatomic) NSInteger animationFrameInterval;
 
+@property (retain, nonatomic) IBOutlet UILabel *scoreLabel;
+
 - (IBAction)rightButton;
 - (IBAction)downButton;
 - (IBAction)leftButton;
@@ -66,6 +68,7 @@
 - (void)dump;
 - (void)targetCoordInit;
 - (void)printTargetCoord;
+- (void)updateScore:(int)diff;
 - (void)updateStateDownButton;
 - (void)updateStateUpButton;
 - (void)updateStateRightButton;
