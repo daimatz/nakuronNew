@@ -227,22 +227,26 @@ enum {
                         boardLeftLowerY+boardSizePx-(r+1)*cellSize+cellSize/2);
 }
 - (IBAction)downButton {
-  //ballMoveFlag = true;
+  ballMoveFlag = true;
+  pushedDir = DOWN;
   [self updateStateDownButton];
 }
 
 - (IBAction)leftButton {
-  //ballMoveFlag = true;
+  ballMoveFlag = true;
+  pushedDir = LEFT;
   [self updateStateLeftButton];
 }
 
 - (IBAction)upButton {
-  //ballMoveFlag = true;
+  ballMoveFlag = true;
+  pushedDir = UP;
   [self updateStateUpButton];
 }
 
 - (IBAction)rightButton {
-  //ballMoveFlag = true;
+  ballMoveFlag = true;
+  pushedDir = RIGHT;
   [self updateStateRightButton];
 }
 -(void)updateState:(Direction)d{
@@ -469,7 +473,7 @@ enum {
 {
   [(EAGLView *)self.view setFramebuffer];
 
-  glClearColor(255.0f, 255.0f, 255.0f, 1.0f);
+  glClearColor(0.5f, 0.5f, 0.5f, 0.5f);
   glClear(GL_COLOR_BUFFER_BIT);
 
   glMatrixMode(GL_PROJECTION);
@@ -486,7 +490,17 @@ enum {
 -(void)drawMain
 {
   if(ballMoveFlag){
-    
+    float acceralator = 1.0f;
+    complex<float> dirv = polar()
+    for(int r = 0; r < boardSize; r++) {
+      for (int c = 0; c < boardSize; c++) {
+        GLuint texture = piecenumToTexture[pieces[r][c]];
+        if(targetCoord[r][c] != curCoord[r][c]){
+          
+        }
+        drawTexture(x,y,cellSize,cellSize, texture,255,255,255,255);
+      }
+    }
   }
   else{
     for(int r = 0; r < boardSize; r++) {
