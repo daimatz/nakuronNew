@@ -28,6 +28,7 @@ const int colorNum = 4;
 const int HOLE_RATIO = 80;
 
 const std::string DB_BASENAME = "nakuron.db";
+std::string documentDir() ;
 
 typedef enum {
   EMPTY,
@@ -80,10 +81,6 @@ std::string NSStringToString(NSString *ns);
 NSString* stringToNSString(std::string s);
 std::vector<std::string> string_split(std::string s, std::string c);
 std::string string_join(std::vector<std::string> ss, std::string c);
-
-// ドキュメントディレクトリのパスを std::string で得る
-// ここにDBファイルとか置く
-const std::string DOCUMENT_DIR = NSStringToString([NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]);
 
 struct PieceData {
   Piece piece;

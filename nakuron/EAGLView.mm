@@ -30,9 +30,18 @@
 {
   self = [super initWithCoder:coder];
 	if (self) {
-    CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
+    // http://stackoverflow.com/questions/5283670/displaying-an-eaglview-with-transparent-background-on-a-uiimageview
+    self.opaque = NO;
+    self.backgroundColor = [UIColor clearColor];
     
-    eaglLayer.opaque = TRUE;
+    CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
+    eaglLayer.opaque = NO;
+    
+    CGColorSpaceRef rgb = CGColorSpaceCreateDeviceRGB();
+    const CGFloat myColor[] = {0.0, 0.0, 0.0, 0.0};
+    eaglLayer.backgroundColor = CGColorCreate(rgb, myColor);
+    CGColorSpaceRelease(rgb);
+    
     eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
                                     [NSNumber numberWithBool:FALSE], kEAGLDrawablePropertyRetainedBacking,
                                     kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat,
