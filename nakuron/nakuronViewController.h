@@ -21,7 +21,8 @@
 #include <algorithm>
 #include <complex>
 
-@interface nakuronViewController : UIViewController {
+@interface nakuronViewController : UIViewController <UIAccelerometerDelegate>
+{
 @private
   EAGLContext *context;
   GLuint program;
@@ -50,7 +51,12 @@
   int score;
   
   std::map<PieceData, GLuint> piecenumToTexture;
-  
+
+  // 傾きセンサー
+  UIAccelerationValue accelerationX;
+  UIAccelerationValue accelerationY;
+  float currentRawReading;
+  float calibrationOffset;
 }
 
 @property (readonly, nonatomic, getter=isAnimating) BOOL animating;

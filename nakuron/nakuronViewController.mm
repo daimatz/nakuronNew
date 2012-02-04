@@ -686,4 +686,18 @@ enum {
   return TRUE;
 }
 
+#pragma mark -
+#pragma mark === Responding to accelerations ===
+#pragma mark -
+- (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration {
+  const float kFilteringFactor = 0.05;
+
+  // Use a basic low-pass filter to only keep the gravity in the accelerometer values for the X and Y axes
+  accelerationX = acceleration.x * kFilteringFactor + accelerationX * (1.0 - kFilteringFactor);
+  accelerationY = acceleration.y * kFilteringFactor + accelerationY * (1.0 - kFilteringFactor);
+  
+  // keep the raw reading, to use during calibrations
+  currentRawReading = atan2(accelerationY, accelerationX);
+}
+
 @end

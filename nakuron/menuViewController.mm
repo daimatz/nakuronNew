@@ -65,7 +65,7 @@
 
 - (IBAction)updateButton:(id)sender {
   UIAlertView *alert = [[UIAlertView alloc]
-                        initWithTitle:@"Play from History"
+                        initWithTitle:@"Play from New"
                         message:@"この設定で新しく始めますか？"
                         delegate:self
                         cancelButtonTitle:@"Cancel"
