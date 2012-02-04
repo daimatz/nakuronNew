@@ -136,16 +136,16 @@ void removeCycle(PieceData pd[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2], int boardSi
     for (int j = 0; j < boardSize; j++)
       removeCycleRec(temp, boardSize, i, j);
   for (int i = 0; i < boardSize; i++) {
-    for (int j = 0; j < boardSize; j++) printf("%2d ", temp[i][j]);
-    printf("\n");
-  }
-  for (int i = 0; i < boardSize; i++)
-    for (int j = 0; j < boardSize; j++)
+    for (int j = 0; j < boardSize; j++) {
       // 0 のまま残ったところが閉路
       if (temp[i][j] == 0) {
         pd[i][j].piece = WALL;
         pd[i][j].color = BLACK;
       }
+      printf("%2d ", temp[i][j]);
+    }
+    printf("\n");
+  }
 }
 
 string intToString(int n) {
