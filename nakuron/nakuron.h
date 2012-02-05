@@ -6,6 +6,7 @@
 #include <vector>
 #include <cstring>
 #include <cstdlib>
+#include <complex>
 
 // SQLite3を扱うためのライブラリ
 // トップレベルの ▼nakuron -> TARGETS -> nakuron -> Build Phases -> Link Binary With Libraries
@@ -114,3 +115,6 @@ public:
   int randomInt(int to);
   int randomIntFrom(int from, int to);
 };
+//内積
+double dot(const std::complex<float> & a, const std::complex<float> & b);
+

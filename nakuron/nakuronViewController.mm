@@ -236,6 +236,7 @@ enum {
 }
 
 - (IBAction)downButton {
+  memcpy(prevPieces, pieces, sizeof(prevPieces));
   ballMoveFlag = true;
   pushedDir = DOWN;
   curVel = 0.0;
@@ -243,6 +244,7 @@ enum {
 }
 
 - (IBAction)leftButton {
+  memcpy(prevPieces, pieces, sizeof(prevPieces));
   ballMoveFlag = true;
   pushedDir = LEFT;
   curVel = 0.0;
@@ -250,6 +252,7 @@ enum {
 }
 
 - (IBAction)upButton {
+  memcpy(prevPieces, pieces, sizeof(prevPieces));
   ballMoveFlag = true;
   pushedDir = UP;
   curVel = 0.0;
@@ -257,6 +260,7 @@ enum {
 }
 
 - (IBAction)rightButton {
+  memcpy(prevPieces, pieces, sizeof(prevPieces));
   ballMoveFlag = true;
   pushedDir = RIGHT;
   curVel = 0.0;
@@ -499,22 +503,39 @@ enum {
 
   [(EAGLView *)self.view presentFramebuffer];
 }
-
+-(bool)isOverTarget:(int)r C:(int)c{
+  complex<float> dv = polar(1.0f,(float)M_PI_2*directionToInt(pushedDir));
+  complex<float> t = targetCoord[r][c]-curCoord[r][c];
+  return dot(t,dv) < 0;
+}
 -(void)drawMain
 {
   if(ballMoveFlag){
     bool endflag = true;
     curVel +=0.1f;
     complex<float> dv = polar(curVel,(float)M_PI_2*directionToInt(pushedDir));
-    for(int r = 0; r < boardSize; r++) {
-      for (int c = 0; c < boardSize; c++) {
-        GLuint texture = piecenumToTexture[pieces[r][c]];
+    for(int r = 1; r < boardSize-1; r++) {
+      for (int c = 1; c < boardSize-1; c++) {
+        GLuint texture = piecenumToTexture[prevPieces[r][c]];
         if(targetCoord[r][c] != curCoord[r][c]){
           endflag = false;
           curCoord[r][c] += dv;
+          if([self isOverTarget:(int)r C:(int)c]) curCoord[r][c] = targetCoord[r][c];
         }
-        drawTexture(real(targetCoord[r][c]),imag(targetCoord[r][c]),cellSize,cellSize, texture,255,255,255,255);
+        drawTexture(real(curCoord[r][c]),imag(curCoord[r][c]),cellSize,cellSize, texture,255,255,255,255);
       }
+    }
+    for(int r=0;r<boardSize;r++){
+      GLuint texture = piecenumToTexture[pieces[r][0]];
+      drawTexture(real(curCoord[r][0]),imag(curCoord[r][0]),cellSize,cellSize, texture,255,255,255,255);
+      texture = piecenumToTexture[pieces[r][boardSize-1]];
+      drawTexture(real(curCoord[r][boardSize-1]),imag(curCoord[r][boardSize-1]),cellSize,cellSize, texture,255,255,255,255);
+    }
+    for(int c=0;c<boardSize;c++){
+      GLuint texture = piecenumToTexture[pieces[0][c]];
+      drawTexture(real(curCoord[0][c]),imag(curCoord[0][c]),cellSize,cellSize, texture,255,255,255,255);
+      texture = piecenumToTexture[pieces[boardSize-1][c]];
+      drawTexture(real(curCoord[boardSize-1][c]),imag(curCoord[boardSize-1][c]),cellSize,cellSize, texture,255,255,255,255);
     }
     if(endflag) ballMoveFlag = false;
   }

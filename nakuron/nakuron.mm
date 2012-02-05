@@ -25,8 +25,8 @@ int colorToInt(Color c) {
 }
 int directionToInt(Direction d){
   switch(d){
-    case UP:return 0;
-    case RIGHT:return 1;
+    case RIGHT:return 0;
+    case UP:return 1;
     case LEFT:return 2;
     case DOWN:return 3;
     default: throw ProgrammingException("Direction おかしい");
@@ -215,4 +215,7 @@ int Xor128::randomIntFrom(int from, int to) {
   int r = getInt() % size;
   if (r < 0) r += size;
   return from + r;
+}
+double dot(const complex<float> & a, const complex<float> & b){
+  return real(conj(a)*b);
 }

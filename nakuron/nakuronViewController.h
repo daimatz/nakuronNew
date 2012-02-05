@@ -38,6 +38,7 @@
   
   int boardSize;
   PieceData pieces[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2];
+  PieceData prevPieces[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2];
   std::complex<float> targetCoord[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2];
   std::complex<float> curCoord[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2];
   Direction pushedDir;
@@ -72,7 +73,10 @@
 
 - (void)startAnimation;
 - (void)stopAnimation;
-- (void)drawMain;
+
+-(bool)isOverTarget:(int)r C:(int)c;
+-(void)drawMain;
+
 - (void)dump;
 - (void)targetCoordInit;
 - (void)printTargetCoord;
