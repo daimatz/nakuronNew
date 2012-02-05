@@ -35,6 +35,7 @@
 
   int probNum;
   Difficulty difficulty;
+  int restBallNum;
   
   int boardSize;
   PieceData pieces[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2];
@@ -65,6 +66,7 @@
 @property (nonatomic) NSInteger animationFrameInterval;
 
 @property (retain, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (retain, nonatomic) IBOutlet UILabel *restLabel;
 
 - (IBAction)rightButton;
 - (IBAction)downButton;
@@ -81,7 +83,8 @@
 - (void)dump;
 - (void)coordInit;
 - (void)printTargetCoord;
-- (void)updateScore:(int)diff;
+- (void)updateScore:(int)nscore;
+- (void)updateRestBallNum:(int)num;
 - (void)updateState:(Direction)d;
 - (void)updateStateDownButton;
 - (void)updateStateUpButton;

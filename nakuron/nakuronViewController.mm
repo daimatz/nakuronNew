@@ -41,6 +41,7 @@ enum {
 
 @implementation nakuronViewController
 @synthesize scoreLabel;
+@synthesize restLabel;
 
 @synthesize animating, context, displayLink;
 
@@ -133,12 +134,13 @@ enum {
       }
     }
   }
-  
-  removeCycle(pieces, boardSize);
+
+  restBallNum = removeCycle(pieces, boardSize);
   
   step.clear();
   score = 0;
   [self updateScore:0];
+  [self updateRestBallNum:restBallNum];
 }
 
 - (void)dealloc
@@ -157,6 +159,7 @@ enum {
   [context release];
 
   [scoreLabel release];
+  [restLabel release];
   [super dealloc];
 }
 
@@ -185,6 +188,7 @@ enum {
 - (void)viewDidUnload
 {
   [self setScoreLabel:nil];
+  [self setRestLabel:nil];
   [super viewDidUnload];
 
   if (program) {
@@ -232,9 +236,17 @@ enum {
                         boardLeftLowerY+boardSizePx-(r+1)*cellSize+cellSize/2);
 }
 
-- (void)updateScore:(int)diff {
-  score += diff;
+- (void)updateScore:(int)nscore {
+  score = nscore;
   scoreLabel.text = [NSString stringWithFormat:@"%d", score];
+}
+
+- (void)updateRestBallNum:(int)num {
+  restBallNum = num;
+  restLabel.text = [NSString stringWithFormat:@"%d", restBallNum];
+  if (restBallNum == 0) {
+    // 全部落ちた
+  }
 }
 
 - (IBAction)downButton {

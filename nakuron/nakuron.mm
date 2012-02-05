@@ -108,13 +108,13 @@ int difficultyToBoardSize(Difficulty d) {
 
 void removeCycleRec(int temp[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2], int size, int sx, int sy) {
   int dx[] = {-1,0,1,0}, dy[] = {0,-1,0,1};
-  // ある箇所が 1 ならその周りは全部 1
-  if (temp[sx][sy] == 1) {
+  // ある箇所が 1 or 2 ならその周りは全部 2
+  if (temp[sx][sy] == 1 || temp[sx][sy] == 2) {
     for (int i = 0; i < 4; i++) {
       if (0 <= sx+dx[i] && sx+dx[i] < size // 次の x が範囲内
           && 0 <= sy+dy[i] && sy+dy[i] < size // 次の y が範囲内
           && temp[sx+dx[i]][sy+dy[i]] == 0) { // 次の (x,y) をまだ調べてない
-        temp[sx+dx[i]][sy+dy[i]] = 1;
+        temp[sx+dx[i]][sy+dy[i]] = 2;
         removeCycleRec(temp, size, sx+dx[i], sy+dy[i]);
       }
     }
@@ -122,7 +122,8 @@ void removeCycleRec(int temp[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2], int size, in
 }
 
 // 閉路を壁で埋める。閉路 => Cycle?
-void removeCycle(PieceData pd[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2], int boardSize) {
+int removeCycle(PieceData pd[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2], int boardSize) {
+  int count = 0; // 球の個数
   int temp[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2];
   for (int i = 0; i < boardSize; i++) {
     for (int j = 0; j < boardSize; j++) {
@@ -141,11 +142,14 @@ void removeCycle(PieceData pd[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2], int boardSi
       if (temp[i][j] == 0) {
         pd[i][j].piece = WALL;
         pd[i][j].color = BLACK;
+      } else if (temp[i][j] == 2) {
+        count++;
       }
-      printf("%2d ", temp[i][j]);
+      //printf("%2d ", temp[i][j]);
     }
-    printf("\n");
+    //printf("\n");
   }
+  return count;
 }
 
 string intToString(int n) {

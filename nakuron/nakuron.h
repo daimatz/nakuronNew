@@ -76,7 +76,7 @@ Difficulty intToDifficulty(int i);
 int probNumToSeed(int p);
 int difficultyToBoardSize(Difficulty d);
 
-void removeCycle(PieceData pd[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2], int boardSize);
+int removeCycle(PieceData pd[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2], int boardSize);
 
 std::string intToString(int n);
 
