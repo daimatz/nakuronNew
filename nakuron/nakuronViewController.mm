@@ -255,6 +255,7 @@ enum {
   pushedDir = DOWN;
   curVel = 0.0;
   [self updateStateDownButton];
+  [self updateRestBallNum:restBallNum];
 }
 
 - (IBAction)leftButton {
@@ -263,6 +264,7 @@ enum {
   pushedDir = LEFT;
   curVel = 0.0;
   [self updateStateLeftButton];
+  [self updateRestBallNum:restBallNum];
 }
 
 - (IBAction)upButton {
@@ -271,6 +273,7 @@ enum {
   pushedDir = UP;
   curVel = 0.0;
   [self updateStateUpButton];
+  [self updateRestBallNum:restBallNum];
 }
 
 - (IBAction)rightButton {
@@ -280,6 +283,7 @@ enum {
   pushedDir = RIGHT;
   curVel = 0.0;
   [self updateStateRightButton];
+  [self updateRestBallNum:restBallNum];
 }
 -(void)updateState:(Direction)d{
   [self coordInit];
@@ -291,6 +295,7 @@ enum {
       while(pieces[wr][c].piece != WALL && wr>0) wr--;
       //壁より前が全部落とす
       for(int r=boardSize-2;r>wr;r--) {
+        if (pieces[r][c].piece != EMPTY) restBallNum--;
         pieces[r][c]=PieceData(EMPTY,WHITE);
         targetCoord[r][c] = [self getCoordRC:boardSize-2 C:c];
       }
@@ -327,6 +332,7 @@ enum {
       while(wr>0 && pieces[wr][c].piece != WALL) wr--;
       //壁より前が全部落とす
       for(int r=boardSize-2;r>wr;r--) {
+        if (pieces[r][c].piece != EMPTY) restBallNum--;
         pieces[r][c]=PieceData(EMPTY,WHITE);
         targetCoord[r][c] = [self getCoordRC:boardSize-1 C:c];
       }
@@ -363,6 +369,7 @@ enum {
       while(wr<boardSize-1 && pieces[wr][c].piece != WALL) wr++;
       //壁より前が全部落とす
       for(int r=1;r<wr;r++) {
+        if (pieces[r][c].piece != EMPTY) restBallNum--;
         pieces[r][c]=PieceData(EMPTY,WHITE);
         targetCoord[r][c] = [self getCoordRC:0 C:c];
       }
@@ -401,6 +408,7 @@ enum {
       while(wc>0 && pieces[r][wc].piece!=WALL) wc--;
       //壁より前が全部落とす
       for(int c=boardSize-2;c>wc;c--){ 
+        if (pieces[r][c].piece != EMPTY) restBallNum--;
         pieces[r][c]=PieceData(EMPTY,WHITE);
         targetCoord[r][c] = [self getCoordRC:r C:boardSize-1];
       }
@@ -442,6 +450,7 @@ enum {
       while(wc<boardSize-1 && pieces[r][wc].piece!=WALL) wc++;
       //壁より前が全部落とす
       for(int c=1;c<wc;c++){ 
+        if (pieces[r][c].piece != EMPTY) restBallNum--;
         pieces[r][c]=PieceData(EMPTY,WHITE);
         targetCoord[r][c] = [self getCoordRC:r C:0];
       }
