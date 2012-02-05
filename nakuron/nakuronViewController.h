@@ -45,6 +45,7 @@
   float curVel;
 
   bool ballMoveFlag;
+  bool usedDebugballMoveFlag;
 
   float cellSize;
   

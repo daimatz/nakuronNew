@@ -12,6 +12,7 @@
 #import "EAGLView.h"
 #import "graphicUtil.h"
 #include "HistoryModel.h"
+#include <iostream>
 
 using namespace std;
 
@@ -55,8 +56,9 @@ enum {
 -(void) printTargetCoord{
   for(int r=0;r<boardSize;r++){
     for(int c=0;c<boardSize;c++){
-      fprintf(stderr,"(%f,%f),",real(targetCoord[r][c]),imag(targetCoord[r][c]));
+      fprintf(stderr,"(%4.f,%4.f),",real(targetCoord[r][c]),imag(targetCoord[r][c]));
     }
+    fprintf(stderr,"\n");
   }
 }
 
@@ -97,7 +99,7 @@ enum {
   //最初はballは移動してないので
   ballMoveFlag = false;
   //最初の盤面を作成
-  [self boardInit:NORMAL
+  [self boardInit:EASY
           probNum:(((arc4random() & 0x7FFFFFFF) % MAX_PROBNUM) + MIN_PROBNUM)
         holeRatio:HOLE_RATIO];
 }
@@ -221,7 +223,7 @@ enum {
     for(int c=0;c<boardSize;c++){
       float x = boardLeftLowerX + c*cellSize+cellSize/2;
       float y = boardLeftLowerY + boardSizePx - (r+1)*cellSize+cellSize/2;
-      curCoord[r][c] = targetCoord[r][c]=complex<float>(x,y);
+      curCoord[r][c] = targetCoord[r][c] = complex<float>(x,y);
     }
   }
 }
@@ -262,6 +264,7 @@ enum {
 - (IBAction)rightButton {
   memcpy(prevPieces, pieces, sizeof(prevPieces));
   ballMoveFlag = true;
+  usedDebugballMoveFlag = true;
   pushedDir = RIGHT;
   curVel = 0.0;
   [self updateStateRightButton];
@@ -376,14 +379,14 @@ enum {
 }
 - (void)updateStateRightButton{
   //NSLog(@"right");
-  [self dump];
+  //[self dump];
   [self coordInit];
   for(int r=1;r < boardSize-1;r++){
     //穴の場合
     int wc =boardSize-1;
     if(pieces[r][boardSize-1].piece == HOLE){
       //壁を探す
-      while(pieces[r][wc].piece!=WALL && wc>0) wc--;
+      while(wc>0 && pieces[r][wc].piece!=WALL) wc--;
       //壁より前が全部落とす
       for(int c=boardSize-2;c>wc;c--){ 
         pieces[r][c]=PieceData(EMPTY,WHITE);
@@ -404,7 +407,7 @@ enum {
         while(cc>wc && pieces[r][cc].piece==EMPTY) cc--;
         if(cc<=wc) break;
         swap(pieces[r][pc],pieces[r][cc]);
-        targetCoord[r][pc] = [self getCoordRC:r C:cc];
+        targetCoord[r][cc] = [self getCoordRC:r C:pc];        
         cc--;
         pc--;
       }
@@ -412,7 +415,7 @@ enum {
       wc--;
     }
   }
-  [self dump];
+  //[self dump];
 
 }
 - (void)updateStateLeftButton{
@@ -424,7 +427,7 @@ enum {
     int wc = 0;
     if(pieces[r][0].piece == HOLE){
       //壁を探す
-      while(pieces[r][wc].piece!=WALL && wc<boardSize-1) wc++;
+      while(wc<boardSize-1 && pieces[r][wc].piece!=WALL) wc++;
       //壁より前が全部落とす
       for(int c=1;c<wc;c++){ 
         pieces[r][c]=PieceData(EMPTY,WHITE);
@@ -445,7 +448,7 @@ enum {
         while(cc<wc && pieces[r][cc].piece==EMPTY) cc++;
         if(cc>=wc) break;
         swap(pieces[r][pc],pieces[r][cc]);
-        targetCoord[r][pc] = [self getCoordRC:r C:cc];
+        targetCoord[r][cc] = [self getCoordRC:r C:pc];
         cc++;
         pc++;
       }
@@ -506,18 +509,21 @@ enum {
 -(bool)isOverTarget:(int)r C:(int)c{
   complex<float> dv = polar(1.0f,(float)M_PI_2*directionToInt(pushedDir));
   complex<float> t = targetCoord[r][c]-curCoord[r][c];
-  return dot(t,dv) < 0;
+  return dot(dv,t)<0;
 }
 -(void)drawMain
 {
   if(ballMoveFlag){
+    int cnt = 0;
     bool endflag = true;
     curVel +=0.1f;
     complex<float> dv = polar(curVel,(float)M_PI_2*directionToInt(pushedDir));
     for(int r = 1; r < boardSize-1; r++) {
       for (int c = 1; c < boardSize-1; c++) {
+        if(prevPieces[r][c].piece == EMPTY) continue;
         GLuint texture = piecenumToTexture[prevPieces[r][c]];
         if(targetCoord[r][c] != curCoord[r][c]){
+          cnt++;
           endflag = false;
           curCoord[r][c] += dv;
           if([self isOverTarget:(int)r C:(int)c]) curCoord[r][c] = targetCoord[r][c];
@@ -525,6 +531,8 @@ enum {
         drawTexture(real(curCoord[r][c]),imag(curCoord[r][c]),cellSize,cellSize, texture,255,255,255,255);
       }
     }
+    if(usedDebugballMoveFlag) cout<<cnt<<endl;
+    usedDebugballMoveFlag = false;
     for(int r=0;r<boardSize;r++){
       GLuint texture = piecenumToTexture[pieces[r][0]];
       drawTexture(real(curCoord[r][0]),imag(curCoord[r][0]),cellSize,cellSize, texture,255,255,255,255);
