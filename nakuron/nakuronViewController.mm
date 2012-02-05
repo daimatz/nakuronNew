@@ -309,18 +309,18 @@ enum {
     //最初に穴があったら例外処理
     if(pieces[boardSize-1][c].piece == HOLE){
       //壁を探す
-      while(pieces[wr][c].piece != WALL && wr>0) wr--;
+      while(wr>0 && pieces[wr][c].piece != WALL) wr--;
       //壁より前が全部落とす
       for(int r=boardSize-2;r>wr;r--) {
         pieces[r][c]=PieceData(EMPTY,WHITE);
-        targetCoord[r][c] = [self getCoordRC:boardSize-2 C:c];
+        targetCoord[r][c] = [self getCoordRC:boardSize-1 C:c];
       }
     }
     int pwr = wr;
     wr--;
     while(wr>0){
       //壁を探す
-      while(pieces[wr][c].piece!=WALL && wr>0) wr--;
+      while(wr>0 && pieces[wr][c].piece!=WALL) wr--;
       //prはemptyか自分自身
       //crは初めてBALLがでてくる場所
       int pr=pwr-1,cr=pwr-1;
@@ -345,7 +345,7 @@ enum {
     //最初に穴があったら例外処理
     if(pieces[0][c].piece == HOLE){
       //壁を探す
-      while(pieces[wr][c].piece != WALL && wr<boardSize-1) wr++;
+      while(wr<boardSize-1 && pieces[wr][c].piece != WALL) wr++;
       //壁より前が全部落とす
       for(int r=1;r<wr;r++) {
         pieces[r][c]=PieceData(EMPTY,WHITE);
@@ -387,7 +387,7 @@ enum {
       //壁より前が全部落とす
       for(int c=boardSize-2;c>wc;c--){ 
         pieces[r][c]=PieceData(EMPTY,WHITE);
-        targetCoord[r][c] = [self getCoordRC:r C:boardSize-2];
+        targetCoord[r][c] = [self getCoordRC:r C:boardSize-1];
       }
     }
     int pwc = wc;
