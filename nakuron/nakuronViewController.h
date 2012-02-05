@@ -78,7 +78,7 @@
 -(void)drawMain;
 
 - (void)dump;
-- (void)targetCoordInit;
+- (void)coordInit;
 - (void)printTargetCoord;
 - (void)updateScore:(int)diff;
 - (void)updateState:(Direction)d;

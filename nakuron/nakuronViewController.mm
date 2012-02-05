@@ -216,12 +216,12 @@ enum {
     }
   }
 }
--(void)targetCoordInit{
+-(void)coordInit{
   for(int r=0;r<boardSize;r++){
     for(int c=0;c<boardSize;c++){
       float x = boardLeftLowerX + c*cellSize+cellSize/2;
       float y = boardLeftLowerY + boardSizePx - (r+1)*cellSize+cellSize/2;
-      targetCoord[r][c]=complex<float>(x,y);
+      curCoord[r][c] = targetCoord[r][c]=complex<float>(x,y);
     }
   }
 }
@@ -267,7 +267,7 @@ enum {
   [self updateStateRightButton];
 }
 -(void)updateState:(Direction)d{
-  [self targetCoordInit];
+  [self coordInit];
   for(int c=1;c < boardSize-1;c++){
     int wr = boardSize-2;
     //最初に穴があったら例外処理
@@ -303,7 +303,7 @@ enum {
 - (void)updateStateDownButton{
   //NSLog(@"down");
   //[self dump];
-  [self targetCoordInit];
+  [self coordInit];
   for(int c=1;c < boardSize-1;c++){
     int wr = boardSize-1;
     //最初に穴があったら例外処理
@@ -339,7 +339,7 @@ enum {
   //[self dump];
 }
 - (void)updateStateUpButton{
-  [self targetCoordInit];
+  [self coordInit];
   for(int c=1;c < boardSize-1;c++){
     int wr = 0;
     //最初に穴があったら例外処理
@@ -377,7 +377,7 @@ enum {
 - (void)updateStateRightButton{
   //NSLog(@"right");
   [self dump];
-  [self targetCoordInit];
+  [self coordInit];
   for(int r=1;r < boardSize-1;r++){
     //穴の場合
     int wc =boardSize-1;
@@ -418,7 +418,7 @@ enum {
 - (void)updateStateLeftButton{
   //NSLog(@"right");
   //[self dump];
-  [self targetCoordInit];
+  [self coordInit];
   for(int r=1;r < boardSize-1;r++){
     //穴の場合
     int wc = 0;
