@@ -64,7 +64,6 @@ class AbstractModel {
 public:
   AbstractModel();
   virtual ~AbstractModel();
-  void init();
   std::vector<KeyValue> get(int key);  
   std::vector<KeyValue> find(std::auto_ptr<FindClause> fc);
   std::vector<KeyValue> findAll(std::auto_ptr<FindClause> fc);
@@ -75,6 +74,7 @@ public:
   bool query(const std::string &q);
   ValueType getFields();
 protected:
+  void init();
   std::vector<KeyValue> executeQuery(const std::string &query, bool no_transaction = false);
   bool executeUpdate(const std::string &query, bool no_transaction = false);
   ValueType fields;

@@ -85,6 +85,8 @@ NSString* stringToNSString(std::string s);
 std::vector<std::string> string_split(std::string s, std::string c);
 std::string string_join(std::vector<std::string> ss, std::string c);
 
+std::string formattedTime();
+
 struct PieceData {
   Piece piece;
   Color color;

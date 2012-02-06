@@ -187,6 +187,17 @@ string string_join(vector<string> ss, string c) {
   return ret;
 }
 
+string formattedTime() {
+  // 時刻を取得
+  time_t current;
+  struct tm *local;
+  time(&current);
+  local = localtime(&current);
+  char ret[20];
+  sprintf(ret, "%04d/%02d/%02d %02d:%02d:%02d", 1900+local->tm_year, 1+local->tm_mon, local->tm_mday, local->tm_hour, local->tm_min, local->tm_sec);
+  return string(ret);
+}
+
 // ドキュメントディレクトリのパスを std::string で得る
 // ここにDBファイルとか置く
 string documentDir() {

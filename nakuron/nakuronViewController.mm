@@ -13,6 +13,7 @@
 #import "graphicUtil.h"
 #include "HistoryModel.h"
 #include <iostream>
+#include <time.h>
 
 using namespace std;
 
@@ -246,6 +247,14 @@ enum {
   restLabel.text = [NSString stringWithFormat:@"%d", restBallNum];
   if (restBallNum == 0) {
     // 全部落ちた
+    HistoryModel hmdl;
+    KeyValue kv;
+    kv["probNum"] = intToString(probNum);
+    kv["difficulty"] = difficultyToString(difficulty);
+    kv["score"] = intToString(score);
+    kv["created"] = formattedTime();
+    kv["time"] = "0";
+    hmdl.insert(kv);
   }
 }
 
