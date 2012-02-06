@@ -90,6 +90,7 @@
 - (void)updateStateUpButton;
 - (void)updateStateRightButton;
 - (void)updateStateLeftButton;
+- (void)endBallMove;
 - (std::complex<float>)getCoordRC:(int)r C:(int)c;
 -(void)boardInit:(Difficulty)d probNum:(int)p holeRatio:(int)r;
 

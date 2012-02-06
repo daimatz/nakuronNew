@@ -259,40 +259,40 @@ enum {
 }
 
 - (IBAction)downButton {
+  if (ballMoveFlag) return;
   memcpy(prevPieces, pieces, sizeof(prevPieces));
   ballMoveFlag = true;
   pushedDir = DOWN;
   curVel = 0.0;
   [self updateStateDownButton];
-  [self updateRestBallNum:restBallNum];
 }
 
 - (IBAction)leftButton {
+  if (ballMoveFlag) return;
   memcpy(prevPieces, pieces, sizeof(prevPieces));
   ballMoveFlag = true;
   pushedDir = LEFT;
   curVel = 0.0;
   [self updateStateLeftButton];
-  [self updateRestBallNum:restBallNum];
 }
 
 - (IBAction)upButton {
+  if (ballMoveFlag) return;
   memcpy(prevPieces, pieces, sizeof(prevPieces));
   ballMoveFlag = true;
   pushedDir = UP;
   curVel = 0.0;
   [self updateStateUpButton];
-  [self updateRestBallNum:restBallNum];
 }
 
 - (IBAction)rightButton {
+  if (ballMoveFlag) return;
   memcpy(prevPieces, pieces, sizeof(prevPieces));
   ballMoveFlag = true;
   usedDebugballMoveFlag = true;
   pushedDir = RIGHT;
   curVel = 0.0;
   [self updateStateRightButton];
-  [self updateRestBallNum:restBallNum];
 }
 -(void)updateState:(Direction)d{
   [self coordInit];
@@ -490,6 +490,10 @@ enum {
 
 }
 
+- (void)endBallMove {
+  [self updateRestBallNum:restBallNum];
+}
+
 - (IBAction)menuButton {
   NSLog(@"menu");
   menuView = [[menuViewController alloc] initWithNibName:@"menuViewController" bundle:nil];
@@ -546,7 +550,7 @@ enum {
   if(ballMoveFlag){
     int cnt = 0;
     bool endflag = true;
-    curVel +=0.1f;
+    curVel +=0.2f;
     complex<float> dv = polar(curVel,(float)M_PI_2*directionToInt(pushedDir));
     for(int r = 1; r < boardSize-1; r++) {
       for (int c = 1; c < boardSize-1; c++) {
@@ -575,7 +579,10 @@ enum {
       texture = piecenumToTexture[pieces[boardSize-1][c]];
       drawTexture(real(curCoord[boardSize-1][c]),imag(curCoord[boardSize-1][c]),cellSize,cellSize, texture,255,255,255,255);
     }
-    if(endflag) ballMoveFlag = false;
+    if(endflag) {
+      ballMoveFlag = false;
+      [self endBallMove];
+    }
   }
   else{
     for(int r = 0; r < boardSize; r++) {
