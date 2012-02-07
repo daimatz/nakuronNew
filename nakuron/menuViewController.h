@@ -35,6 +35,7 @@
 @property (retain, nonatomic) IBOutlet UISlider *difficultySlider;
 - (IBAction)difficultyChanging:(UISlider*)slider;
 - (IBAction)historyButton;
+- (void)backFromHistory;
 - (IBAction)twitterButton;
 
 - (void)setParameters:(nakuronViewController*)n difficulty:(Difficulty)d probNum:(int)p;

@@ -60,6 +60,7 @@
 
 - (IBAction)cancelButton:(id)sender {
   [self.view removeFromSuperview];
+  [superVC backFromMenu];
   [self release];
 }
 
@@ -83,6 +84,7 @@
     newProbNum = [probNumField.text intValue];
     [superVC boardInit:newDifficulty probNum:newProbNum   holeRatio:HOLE_RATIO];
     [self.view removeFromSuperview];
+    [superVC backFromMenu];
     [self release];
   }
 }
@@ -137,6 +139,9 @@
   historyVC.view.bounds = historyVC.view.frame = [UIScreen mainScreen].bounds;
   [self.view addSubview:historyVC.view];
   [historyVC setParameters:self nakuron:superVC];
+}
+
+- (void)backFromHistory {
 }
 
 - (IBAction)twitterButton {

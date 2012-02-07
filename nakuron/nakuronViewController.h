@@ -55,12 +55,8 @@
   
   std::map<PieceData, GLuint> piecenumToTexture;
   GLuint boardTexture,bgTexture;
+  bool useAcc;
 
-  // 傾きセンサー
-  UIAccelerationValue accelerationX;
-  UIAccelerationValue accelerationY;
-  float currentRawReading;
-  float calibrationOffset;
 }
 
 @property (readonly, nonatomic, getter=isAnimating) BOOL animating;
@@ -74,6 +70,8 @@
 - (IBAction)leftButton;
 - (IBAction)upButton;
 - (IBAction)menuButton;
+- (IBAction)favoriteButton;
+- (IBAction)useAccButton;
 
 - (void)startAnimation;
 - (void)stopAnimation;
@@ -91,7 +89,13 @@
 - (void)updateStateUpButton;
 - (void)updateStateRightButton;
 - (void)updateStateLeftButton;
+- (void)endBallMove;
 - (std::complex<float>)getCoordRC:(int)r C:(int)c;
 -(void)boardInit:(Difficulty)d probNum:(int)p holeRatio:(int)r;
+
+- (void)enableAcc;
+- (void)disableAcc;
+
+- (void)backFromMenu;
 
 @end

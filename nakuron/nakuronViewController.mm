@@ -102,6 +102,10 @@ enum {
   }
   //最初はballは移動してないので
   ballMoveFlag = false;
+
+  // 加速度センサー有効
+  [self enableAcc];
+
   //最初の盤面を作成
   [self boardInit:EASY
           probNum:(((arc4random() & 0x7FFFFFFF) % MAX_PROBNUM) + MIN_PROBNUM)
@@ -261,6 +265,7 @@ enum {
 }
 
 - (IBAction)downButton {
+  if (ballMoveFlag) return;
   memcpy(prevPieces, pieces, sizeof(prevPieces));
   ballMoveFlag = true;
   pushedDir = DOWN;
@@ -269,6 +274,7 @@ enum {
 }
 
 - (IBAction)leftButton {
+  if (ballMoveFlag) return;
   memcpy(prevPieces, pieces, sizeof(prevPieces));
   ballMoveFlag = true;
   pushedDir = LEFT;
@@ -286,6 +292,7 @@ enum {
 }
 
 - (IBAction)rightButton {
+  if (ballMoveFlag) return;
   memcpy(prevPieces, pieces, sizeof(prevPieces));
   ballMoveFlag = true;
   usedDebugballMoveFlag = true;
@@ -489,12 +496,28 @@ enum {
 
 }
 
+- (void)endBallMove {
+  [self updateRestBallNum:restBallNum];
+}
+
 - (IBAction)menuButton {
   NSLog(@"menu");
   menuView = [[menuViewController alloc] initWithNibName:@"menuViewController" bundle:nil];
   menuView.view.bounds = menuView.view.frame = [UIScreen mainScreen].bounds;
   [self.view addSubview:menuView.view];
   [menuView setParameters:self difficulty:difficulty probNum:probNum];
+  [self disableAcc];
+}
+
+- (void)backFromMenu {
+  [self enableAcc];
+}
+
+- (IBAction)favoriteButton {
+}
+
+- (IBAction)useAccButton {
+  useAcc = !useAcc;
 }
 
 - (void)startAnimation
@@ -548,7 +571,7 @@ enum {
   if(ballMoveFlag){
     int cnt = 0;
     bool endflag = true;
-    curVel +=0.1f;
+    curVel +=0.2f;
     complex<float> dv = polar(curVel,(float)M_PI_2*directionToInt(pushedDir));
     for(int r = 1; r < boardSize-1; r++) {
       for (int c = 1; c < boardSize-1; c++) {
@@ -579,7 +602,7 @@ enum {
     }
     if(endflag) {
       ballMoveFlag = false;
-      [self updateRestBallNum:restBallNum];
+      [self endBallMove];
     }
   }
   else{
@@ -752,18 +775,48 @@ enum {
   return TRUE;
 }
 
-#pragma mark -
-#pragma mark === Responding to accelerations ===
-#pragma mark -
-- (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration {
-  const float kFilteringFactor = 0.05;
+- (void)enableAcc {
+  UIAccelerometer *acc = [UIAccelerometer sharedAccelerometer];  
+  acc.delegate = self;
+  acc.updateInterval = 0.3f;
+}
 
-  // Use a basic low-pass filter to only keep the gravity in the accelerometer values for the X and Y axes
-  accelerationX = acceleration.x * kFilteringFactor + accelerationX * (1.0 - kFilteringFactor);
-  accelerationY = acceleration.y * kFilteringFactor + accelerationY * (1.0 - kFilteringFactor);
-  
-  // keep the raw reading, to use during calibrations
-  currentRawReading = atan2(accelerationY, accelerationX);
+- (void)disableAcc {
+  UIAccelerometer *acc = [UIAccelerometer sharedAccelerometer];  
+  acc.delegate = nil;
+}
+
+-(void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration{
+  float angle;
+  UIAccelerationValue x = acceleration.x, y = acceleration.y, z = acceleration.z;
+
+  if (useAcc) {
+    if(fabs(x) > fabs(y)) {
+      angle = atan2(x,z) * (180.0f/M_PI);
+      if (fabs(angle) > 180.0f - ANGLE_NUTRAL) {
+        //NSLog(@"NUTRAL");
+      } else if (angle > 90.0f) {
+        //NSLog(@"RIGHT");
+        [self rightButton];
+      } else if (angle < -90.0f) {
+        //NSLog(@"LEFT");
+        [self leftButton];
+      }
+    }else {
+      angle = atan2(y,z) * (180.0f/M_PI);;
+      if (fabs(angle) > 180.0f - ANGLE_NUTRAL) {
+        //NSLog(@"NUTRAL");
+      } else if (angle > 90.0f) {
+        //NSLog(@"UP");
+        [self upButton];
+      } else if (angle < -90.0f) {
+        //NSLog(@"DOWN");
+        [self downButton];
+      }
+    }
+    //  NSLog(@"angle = %f", angle);
+    //  NSLog(@"%f, %f, %f", x, y, z);
+  }
 }
 
 @end
