@@ -7,6 +7,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <complex>
+#include <stdexcept>
 
 // SQLite3を扱うためのライブラリ
 // トップレベルの ▼nakuron -> TARGETS -> nakuron -> Build Phases -> Link Binary With Libraries
@@ -103,9 +104,10 @@ struct PieceData {
   }
 };
 
-class ProgrammingException : std::exception {
+class ProgrammingException : public std::domain_error {
 public:
-  ProgrammingException(const std::string& mes);
+  ProgrammingException(const std::string& cause)
+  : std::domain_error("cause: " + cause) {}
 };
 
 // ハッシュクラス

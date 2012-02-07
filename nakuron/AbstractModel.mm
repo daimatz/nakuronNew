@@ -264,12 +264,16 @@ bool AbstractModel::query(const std::string &q) {
   std::transform(st.begin(), st.end(), st.begin(), ::toupper);
   
   // SELECT 文かどうかで変える
-  if (st == "SELECT") {
-    debug(q);
-    executeQuery(q);
-  } else {
-    debug(q);
-    executeUpdate(q);
+  try {
+    if (st == "SELECT") {
+      debug(q);
+      executeQuery(q);
+    } else {
+      debug(q);
+      executeUpdate(q);
+    }
+  } catch (ProgrammingException e) {
+    NSLog(@"%s", e.what());
   }
   
   return [_db lastErrorCode] == 0 ? true : false;

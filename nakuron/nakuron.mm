@@ -208,10 +208,6 @@ string documentDir() {
   return dir;
 }
 
-ProgrammingException::ProgrammingException(const string& mes) {
-
-}
-
 // ハッシュクラス
 Xor128::Xor128(int seed) {
   x = 123456789, y = 362436069, z = 521288629, w = seed;
