@@ -90,12 +90,14 @@ enum {
   //texture読み込み
   piecenumToTexture.insert(make_pair(PieceData(EMPTY, WHITE),loadTexture(@"empty.png")));
   piecenumToTexture.insert(make_pair(PieceData(WALL, BLACK), loadTexture(@"wall.png")));
+  bgTexture = loadTexture(@"bg.jpg");
+  boardTexture = loadTexture(@"wood-texture_beiz.jp_S30182.jpg");
 
   // colorNum の個数分
   NSString *cs[] = {@"red", @"green", @"blue", @"yellow"};
   Color s[] = {RED, GREEN, BLUE, YELLOW};
   for(int i=0;i<colorNum;i++) {
-    piecenumToTexture.insert(make_pair(PieceData(BALL, s[i]), loadTexture([NSString stringWithFormat:@"b%@.png",cs[i]])));
+    piecenumToTexture.insert(make_pair(PieceData(BALL, s[i]), loadTexture([NSString stringWithFormat:@"b%@2.png",cs[i]])));
     piecenumToTexture.insert(make_pair(PieceData(HOLE, s[i]), loadTexture([NSString stringWithFormat:@"h%@.png",cs[i]])));
   }
   //最初はballは移動してないので
@@ -264,7 +266,6 @@ enum {
   pushedDir = DOWN;
   curVel = 0.0;
   [self updateStateDownButton];
-  [self updateRestBallNum:restBallNum];
 }
 
 - (IBAction)leftButton {
@@ -273,16 +274,15 @@ enum {
   pushedDir = LEFT;
   curVel = 0.0;
   [self updateStateLeftButton];
-  [self updateRestBallNum:restBallNum];
 }
 
 - (IBAction)upButton {
+  if (ballMoveFlag) return;
   memcpy(prevPieces, pieces, sizeof(prevPieces));
   ballMoveFlag = true;
   pushedDir = UP;
   curVel = 0.0;
   [self updateStateUpButton];
-  [self updateRestBallNum:restBallNum];
 }
 
 - (IBAction)rightButton {
@@ -292,7 +292,6 @@ enum {
   pushedDir = RIGHT;
   curVel = 0.0;
   [self updateStateRightButton];
-  [self updateRestBallNum:restBallNum];
 }
 -(void)updateState:(Direction)d{
   [self coordInit];
@@ -543,6 +542,9 @@ enum {
 }
 -(void)drawMain
 {
+  //drawTexture(0,0 ,boardSizePx, boardSizePx, boardTexture, 255,255,255,255);
+  drawTexture(0,0 ,320.0, 480.0,bgTexture,255,255,255,255);
+  glEnable(GL_BLEND);
   if(ballMoveFlag){
     int cnt = 0;
     bool endflag = true;
@@ -575,11 +577,15 @@ enum {
       texture = piecenumToTexture[pieces[boardSize-1][c]];
       drawTexture(real(curCoord[boardSize-1][c]),imag(curCoord[boardSize-1][c]),cellSize,cellSize, texture,255,255,255,255);
     }
-    if(endflag) ballMoveFlag = false;
+    if(endflag) {
+      ballMoveFlag = false;
+      [self updateRestBallNum:restBallNum];
+    }
   }
   else{
     for(int r = 0; r < boardSize; r++) {
       for (int c = 0; c < boardSize; c++) {
+        if(pieces[r][c].piece == EMPTY) continue;
         GLuint texture = piecenumToTexture[pieces[r][c]];
         float x = boardLeftLowerX + c*cellSize+cellSize/2;
         float y = boardLeftLowerY + boardSizePx - (r+1)*cellSize+cellSize/2;
@@ -588,6 +594,7 @@ enum {
       }
     }
   }
+  glEnable(GL_BLEND);
 }
 
 - (BOOL)compileShader:(GLuint *)shader type:(GLenum)type file:(NSString *)file

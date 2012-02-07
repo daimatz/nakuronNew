@@ -54,6 +54,7 @@
   int score;
   
   std::map<PieceData, GLuint> piecenumToTexture;
+  GLuint boardTexture,bgTexture;
 
   // 傾きセンサー
   UIAccelerationValue accelerationX;
