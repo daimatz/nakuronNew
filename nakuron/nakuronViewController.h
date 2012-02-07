@@ -84,6 +84,8 @@
 - (void)printTargetCoord;
 - (void)updateScore:(int)nscore;
 - (void)updateRestBallNum:(int)num;
+- (void)didDropAllBalls;
+
 - (void)updateState:(Direction)d;
 - (void)updateStateDownButton;
 - (void)updateStateUpButton;

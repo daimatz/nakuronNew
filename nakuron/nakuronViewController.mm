@@ -253,15 +253,19 @@ enum {
   restLabel.text = [NSString stringWithFormat:@"%d", restBallNum];
   if (restBallNum == 0) {
     // 全部落ちた
-    HistoryModel hmdl;
-    KeyValue kv;
-    kv["probNum"] = intToString(probNum);
-    kv["difficulty"] = difficultyToString(difficulty);
-    kv["score"] = intToString(score);
-    kv["created"] = formattedTime();
-    kv["time"] = "0";
-    hmdl.insert(kv);
+    [self didDropAllBalls];
   }
+}
+
+- (void)didDropAllBalls {
+  HistoryModel hmdl;
+  KeyValue kv;
+  kv["probNum"] = intToString(probNum);
+  kv["difficulty"] = difficultyToString(difficulty);
+  kv["score"] = intToString(score);
+  kv["created"] = formattedTime();
+  kv["time"] = "0";
+  hmdl.insert(kv);
 }
 
 - (IBAction)downButton {
