@@ -76,6 +76,7 @@ using namespace std;
 
 - (IBAction)backButton:(id)sender {
   [self.view removeFromSuperview];
+  [superVC backFromHistory];
   [self release];
 }
 
