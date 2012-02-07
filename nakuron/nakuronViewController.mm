@@ -567,6 +567,7 @@ enum {
 {
   //drawTexture(0,0 ,boardSizePx, boardSizePx, boardTexture, 255,255,255,255);
   drawTexture(0,0 ,320.0, 480.0,bgTexture,255,255,255,255);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glEnable(GL_BLEND);
   if(ballMoveFlag){
     int cnt = 0;
