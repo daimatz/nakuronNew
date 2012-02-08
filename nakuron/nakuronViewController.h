@@ -14,6 +14,7 @@
 #import <OpenGLES/ES1/glext.h>
 
 #import "menuViewController.h"
+#import "finishViewController.h"
 
 #include "nakuron.h"
 #include <cstring>
@@ -32,6 +33,7 @@
   CADisplayLink *displayLink;
 
   menuViewController *menuView;
+  finishViewController *finishVC;
 
   int probNum;
   Difficulty difficulty;
@@ -99,6 +101,8 @@
 - (void)enableAcc;
 - (void)disableAcc;
 
+- (void)backFromSubview;
+- (void)backFromFinish;
 - (void)backFromMenu;
 
 @end

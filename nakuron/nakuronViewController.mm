@@ -97,7 +97,7 @@ enum {
   NSString *cs[] = {@"red", @"green", @"blue", @"yellow"};
   Color s[] = {RED, GREEN, BLUE, YELLOW};
   for(int i=0;i<colorNum;i++) {
-    piecenumToTexture.insert(make_pair(PieceData(BALL, s[i]), loadTexture([NSString stringWithFormat:@"b%@2.png",cs[i]])));
+    piecenumToTexture.insert(make_pair(PieceData(BALL, s[i]), loadTexture([NSString stringWithFormat:@"b%@.png",cs[i]])));
     piecenumToTexture.insert(make_pair(PieceData(HOLE, s[i]), loadTexture([NSString stringWithFormat:@"h%@.png",cs[i]])));
   }
   //最初はballは移動してないので
@@ -107,9 +107,7 @@ enum {
   [self enableAcc];
 
   //最初の盤面を作成
-  [self boardInit:EASY
-          probNum:(((arc4random() & 0x7FFFFFFF) % MAX_PROBNUM) + MIN_PROBNUM)
-        holeRatio:HOLE_RATIO];
+  [self boardInit:EASY probNum:randomProbNum() holeRatio:HOLE_RATIO];
 }
 
 - (void)boardInit:(Difficulty)d probNum:(int)p holeRatio:(int)r
@@ -258,6 +256,7 @@ enum {
 }
 
 - (void)didDropAllBalls {
+  NSLog(@"finish");
   HistoryModel hmdl;
   KeyValue kv;
   kv["probNum"] = intToString(probNum);
@@ -266,6 +265,12 @@ enum {
   kv["created"] = formattedTime();
   kv["time"] = "0";
   hmdl.insert(kv);
+
+  finishVC = [[finishViewController alloc] initWithNibName:@"finishViewController" bundle:nil];
+  finishVC.view.bounds = finishVC.view.frame = [UIScreen mainScreen].bounds;
+  [finishVC setParameters:self];
+  [self.view addSubview:finishVC.view];
+  [self disableAcc];
 }
 
 - (IBAction)downButton {
@@ -520,10 +525,6 @@ enum {
   [self.view addSubview:menuView.view];
   [menuView setParameters:self difficulty:difficulty probNum:probNum];
   [self disableAcc];
-}
-
-- (void)backFromMenu {
-  [self enableAcc];
 }
 
 - (IBAction)favoriteButton {
@@ -831,6 +832,17 @@ enum {
     //  NSLog(@"angle = %f", angle);
     //  NSLog(@"%f, %f, %f", x, y, z);
   }
+}
+
+
+- (void)backFromSubview {
+  [self enableAcc];
+}
+- (void)backFromFinish {
+  [self backFromSubview];
+}
+- (void)backFromMenu {
+  [self backFromSubview];
 }
 
 @end

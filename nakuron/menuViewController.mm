@@ -82,7 +82,7 @@
     // OK ボタン
     // newDifficulty はここで代入しなくてよい
     newProbNum = [probNumField.text intValue];
-    [superVC boardInit:newDifficulty probNum:newProbNum   holeRatio:HOLE_RATIO];
+    [superVC boardInit:newDifficulty probNum:newProbNum holeRatio:HOLE_RATIO];
     [self.view removeFromSuperview];
     [superVC backFromMenu];
     [self release];
