@@ -65,9 +65,11 @@ enum {
 }
 
 //#include "ModelTest.h"
+#include "nakuron-twitter.h"
 - (void)awakeFromNib
 {
   //ModelTest::test();
+  //[[NSUserDefaults standardUserDefaults] removeObjectForKey:TWITTER_AUTHDATA_KEY];
 
   //常にES1を使う
   EAGLContext *aContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];

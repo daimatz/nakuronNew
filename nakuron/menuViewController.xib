@@ -256,7 +256,7 @@
 					<object class="IBUIButton" id="235112233">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{77, 314}, {166, 37}}</string>
+						<string key="NSFrame">{{77, 303}, {166, 37}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView"/>
@@ -450,8 +450,8 @@
 							<reference ref="423129188"/>
 							<reference ref="387375601"/>
 							<reference ref="635928615"/>
-							<reference ref="235112233"/>
 							<reference ref="393273552"/>
+							<reference ref="235112233"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -559,7 +559,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">51</int>
+			<int key="maxID">54</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -574,7 +574,6 @@
 						<string key="probNumFieldEndEdit:">id</string>
 						<string key="probNumMinusButton">id</string>
 						<string key="probNumPlusButton">id</string>
-						<string key="twitterButton">id</string>
 						<string key="updateButton:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
@@ -604,10 +603,6 @@
 						</object>
 						<object class="IBActionInfo" key="probNumPlusButton">
 							<string key="name">probNumPlusButton</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="twitterButton">
-							<string key="name">twitterButton</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="updateButton:">

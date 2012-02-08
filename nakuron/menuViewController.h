@@ -19,7 +19,6 @@
   nakuronViewController *superVC;
 }
 
-
 - (IBAction)cancelButton:(id)sender;
 - (IBAction)updateButton:(id)sender;
 

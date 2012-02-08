@@ -22,6 +22,9 @@
 #include <algorithm>
 #include <complex>
 
+#import "SA_OAuthTwitterEngine.h"
+#include "nakuron-twitter.h"
+
 @interface nakuronViewController : UIViewController <UIAccelerometerDelegate>
 {
 @private
@@ -60,6 +63,8 @@
   GLuint boardTexture,bgTexture;
   bool useAcc;
 
+  // Twitter エンジン
+  SA_OAuthTwitterEngine *twitterEngine;
 }
 
 @property (readonly, nonatomic, getter=isAnimating) BOOL animating;
