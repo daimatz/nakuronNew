@@ -51,8 +51,7 @@ using namespace std;
   current = -1;
 
   HistoryModel hmdl;
-  auto_ptr<FindClause> fc(new FindClause());
-  fc->order("id","desc");
+  Find(fc)->order("id","desc");
   histories = hmdl.findAll(fc);
   [self updateShowing:0]; // 最初は履歴の 0 番目を表示
 }

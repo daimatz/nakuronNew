@@ -2,6 +2,10 @@
 
 using namespace std;
 
+int randomProbNum() {
+  return (((arc4random() & 0x7FFFFFFF) % MAX_PROBNUM) + MIN_PROBNUM);
+}
+
 int pieceToInt(Piece p) {
   switch (p) {
     case EMPTY: return 0;
@@ -78,6 +82,14 @@ int difficultyToInt(Difficulty d) {
 string difficultyToString(Difficulty d) {
   string str[4] = {"Easy", "Normal", "Hard", "Very Hard"};
   return str[difficultyToInt(d)];
+}
+
+Difficulty stringToDifficulty(const string &s) {
+  if (s == "Easy") return EASY;
+  else if (s == "Normal") return NORMAL;
+  else if (s == "Hard") return HARD;
+  else if (s == "Very Hard") return VERY_HARD;
+  else throw ProgrammingException("Difficulty String がおかしい");
 }
 
 Difficulty intToDifficulty(int i) {

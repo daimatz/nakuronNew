@@ -8,13 +8,14 @@
 #include <cstdlib>
 #include <complex>
 #include <stdexcept>
+#include <memory>
 
 // SQLite3を扱うためのライブラリ
 // トップレベルの ▼nakuron -> TARGETS -> nakuron -> Build Phases -> Link Binary With Libraries
 // から libsqlite3.0.dylib を追加する。
-#include "FMDatabase.h"
-#include "FMDatabaseAdditions.h"
-#include "FMResultSet.h"
+#import "FMDatabase.h"
+#import "FMDatabaseAdditions.h"
+#import "FMResultSet.h"
 
 const float EPS = 1e-6;
 
@@ -34,6 +35,9 @@ const float ANGLE_NUTRAL = 30.0f; // この角度以下は NUTRAL
 const std::string DB_BASENAME = "nakuron.db";
 #define DOCUMENT_DIR documentDir()
 std::string documentDir();
+
+#define Find(fc) auto_ptr<FindClause> fc(new FindClause()); fc
+#define newFind(fc) fc=auto_ptr<FindClause>(new FindClause()); fc
 
 typedef enum {
   EMPTY,
@@ -67,6 +71,8 @@ typedef enum {
 
 struct PieceData;
 
+int randomProbNum();
+
 int pieceToInt(Piece p);
 int colorToInt(Color c);
 int directionToInt(Direction d);
@@ -75,6 +81,7 @@ std::string colorToStr(Color c);
 Color intToColor(int i);
 int difficultyToInt(Difficulty d);
 std::string difficultyToString(Difficulty d);
+Difficulty stringToDifficulty(const std::string &s);
 Difficulty intToDifficulty(int i);
 int probNumToSeed(int p);
 int difficultyToBoardSize(Difficulty d);
@@ -135,4 +142,3 @@ public:
 };
 //内積
 double dot(const std::complex<float> & a, const std::complex<float> & b);
-

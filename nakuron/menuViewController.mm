@@ -82,7 +82,7 @@
     // OK ボタン
     // newDifficulty はここで代入しなくてよい
     newProbNum = [probNumField.text intValue];
-    [superVC boardInit:newDifficulty probNum:newProbNum   holeRatio:HOLE_RATIO];
+    [superVC boardInit:newDifficulty probNum:newProbNum holeRatio:HOLE_RATIO];
     [self.view removeFromSuperview];
     [superVC backFromMenu];
     [self release];
@@ -144,13 +144,6 @@
 - (void)backFromHistory {
 }
 
-- (IBAction)twitterButton {
-  NSLog(@"twitter");
-  twitterVC = [[twitterViewController alloc] initWithNibName:@"twitterViewController" bundle:nil];
-  twitterVC.view.bounds = twitterVC.view.frame = [UIScreen mainScreen].bounds;
-  [self.view addSubview:twitterVC.view];
-}
-
 - (void)setParameters:(nakuronViewController *)n difficulty:(Difficulty)d probNum:(int)p
 {
   superVC = n;
@@ -173,4 +166,5 @@
   [probNumField release];
   [super dealloc];
 }
+
 @end

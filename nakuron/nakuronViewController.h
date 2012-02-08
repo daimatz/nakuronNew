@@ -14,6 +14,7 @@
 #import <OpenGLES/ES1/glext.h>
 
 #import "menuViewController.h"
+#import "finishViewController.h"
 
 #include "nakuron.h"
 #include <cstring>
@@ -21,6 +22,9 @@
 #include <algorithm>
 #include <complex>
 #include <deque>
+
+#import "SA_OAuthTwitterEngine.h"
+#include "nakuron-twitter.h"
 
 @interface nakuronViewController : UIViewController <UIAccelerometerDelegate>
 {
@@ -33,6 +37,7 @@
   CADisplayLink *displayLink;
 
   menuViewController *menuView;
+  finishViewController *finishVC;
 
   int probNum;
   Difficulty difficulty;
@@ -61,6 +66,8 @@
   GLuint boardTexture,bgTexture;
   bool useAcc;
 
+  // Twitter エンジン
+  SA_OAuthTwitterEngine *twitterEngine;
 }
 
 @property (readonly, nonatomic, getter=isAnimating) BOOL animating;
@@ -103,6 +110,8 @@
 - (void)enableAcc;
 - (void)disableAcc;
 
+- (void)backFromSubview;
+- (void)backFromFinish;
 - (void)backFromMenu;
 
 @end
