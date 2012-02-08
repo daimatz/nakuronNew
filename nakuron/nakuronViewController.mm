@@ -509,8 +509,8 @@ enum {
 }
 
 - (void)endBallMove {
-  [self updateRestBallNum:restBallNum];
   [self updateScore:score+dScore];
+  [self updateRestBallNum:restBallNum];
 }
 
 - (IBAction)menuButton {

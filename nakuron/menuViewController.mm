@@ -144,13 +144,6 @@
 - (void)backFromHistory {
 }
 
-- (IBAction)twitterButton {
-  NSLog(@"twitter");
-  twitterVC = [[twitterViewController alloc] initWithNibName:@"twitterViewController" bundle:nil];
-  twitterVC.view.bounds = twitterVC.view.frame = [UIScreen mainScreen].bounds;
-  [self.view addSubview:twitterVC.view];
-}
-
 - (void)setParameters:(nakuronViewController *)n difficulty:(Difficulty)d probNum:(int)p
 {
   superVC = n;
