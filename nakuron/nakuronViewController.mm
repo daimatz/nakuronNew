@@ -510,7 +510,7 @@ enum {
 
 - (void)endBallMove {
   [self updateRestBallNum:restBallNum];
-  score +=dScore;
+  [self updateScore:score+dScore];
 }
 
 - (IBAction)menuButton {
@@ -600,7 +600,7 @@ enum {
         drawTexture(real(curCoord[r][c]),imag(curCoord[r][c]),cellSize,cellSize, texture,255,255,255,255);
       }
     }
-    if(usedDebugballMoveFlag) cout<<cnt<<endl;
+    //if(usedDebugballMoveFlag) cout<<cnt<<endl;
     usedDebugballMoveFlag = false;
     for(int r=0;r<boardSize;r++){
       GLuint texture = piecenumToTexture[pieces[r][0]];
