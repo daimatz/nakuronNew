@@ -20,6 +20,7 @@
 #include <vector>
 #include <algorithm>
 #include <complex>
+#include <deque>
 
 @interface nakuronViewController : UIViewController <UIAccelerometerDelegate>
 {
@@ -42,6 +43,8 @@
   PieceData prevPieces[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2];
   std::complex<float> targetCoord[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2];
   std::complex<float> curCoord[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2];
+  std::deque<VanishState> vanishBalls;
+  
   Direction pushedDir;
   float curVel;
 
@@ -77,6 +80,7 @@
 - (void)startAnimation;
 - (void)stopAnimation;
 
+-(bool)isHoleCoord:(std::complex<float>)p;
 -(bool)isOverTarget:(int)r C:(int)c;
 -(void)drawMain;
 

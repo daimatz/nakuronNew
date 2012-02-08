@@ -576,6 +576,11 @@ enum {
   complex<float> t = targetCoord[r][c]-curCoord[r][c];
   return dot(dv,t)<0;
 }
+-(bool)isHoleCoord:(complex<float>)p{
+  complex<float> edgeP1 = [self getCoordRC:0 C:0];
+  complex<float> edgeP2 = [self getCoordRC:boardSize-1 C:boardSize-1];
+  return real(p) == real(edgeP1) || imag(p) == imag(edgeP1) || real(p) == real(edgeP2) || imag(p) == imag(edgeP2);
+}
 -(void)drawMain
 {
   //drawTexture(0,0 ,boardSizePx, boardSizePx, boardTexture, 255,255,255,255);
@@ -586,22 +591,7 @@ enum {
     int cnt = 0;
     bool endflag = true;
     curVel +=0.2f;
-    complex<float> dv = polar(curVel,(float)M_PI_2*directionToInt(pushedDir));
-    for(int r = 1; r < boardSize-1; r++) {
-      for (int c = 1; c < boardSize-1; c++) {
-        if(prevPieces[r][c].piece == EMPTY) continue;
-        GLuint texture = piecenumToTexture[prevPieces[r][c]];
-        if(targetCoord[r][c] != curCoord[r][c]){
-          cnt++;
-          endflag = false;
-          curCoord[r][c] += dv;
-          if([self isOverTarget:(int)r C:(int)c]) curCoord[r][c] = targetCoord[r][c];
-        }
-        drawTexture(real(curCoord[r][c]),imag(curCoord[r][c]),cellSize,cellSize, texture,255,255,255,255);
-      }
-    }
-    if(usedDebugballMoveFlag) cout<<cnt<<endl;
-    usedDebugballMoveFlag = false;
+    int maxVanishState = 30;
     for(int r=0;r<boardSize;r++){
       GLuint texture = piecenumToTexture[pieces[r][0]];
       drawTexture(real(curCoord[r][0]),imag(curCoord[r][0]),cellSize,cellSize, texture,255,255,255,255);
@@ -614,6 +604,33 @@ enum {
       texture = piecenumToTexture[pieces[boardSize-1][c]];
       drawTexture(real(curCoord[boardSize-1][c]),imag(curCoord[boardSize-1][c]),cellSize,cellSize, texture,255,255,255,255);
     }
+    complex<float> dv = polar(curVel,(float)M_PI_2*directionToInt(pushedDir));
+    for(int r = 1; r < boardSize-1; r++) {
+      for (int c = 1; c < boardSize-1; c++) {
+        if(prevPieces[r][c].piece == EMPTY) continue;
+        GLuint texture = piecenumToTexture[prevPieces[r][c]];
+        if(targetCoord[r][c] != curCoord[r][c]){
+          cnt++;
+          endflag = false;
+          curCoord[r][c] += dv;
+          if([self isOverTarget:(int)r C:(int)c]){
+            curCoord[r][c] = targetCoord[r][c];
+            if([self isHoleCoord:curCoord[r][c]])vanishBalls.push_back(VanishState(0,curCoord[r][c],prevPieces[r][c]));
+          }
+        }
+        if(curCoord[r][c] != targetCoord[r][c])drawTexture(real(curCoord[r][c]),imag(curCoord[r][c]),cellSize,cellSize, texture,255,255,255,255);
+        else drawTexture(real(curCoord[r][c]),imag(curCoord[r][c]),cellSize,cellSize, texture,255,255,255,255);
+      }
+    }
+    int vanishBallSize = vanishBalls.size();
+    for(int i=0;i<vanishBallSize;i++){
+      drawTexture(real(vanishBalls[i].p), imag(vanishBalls[i].p), cellSize,cellSize,piecenumToTexture[vanishBalls[i].pd],
+                  255, 255, 255, 255.0-255.0*vanishBalls[i].num/maxVanishState);
+      vanishBalls[i].num++;
+    }
+    while(!vanishBalls.empty() && vanishBalls.front().num==maxVanishState) vanishBalls.pop_front();
+    if(!vanishBalls.empty()) endflag = false;
+    usedDebugballMoveFlag = false;
     if(endflag) {
       ballMoveFlag = false;
       [self endBallMove];

@@ -103,7 +103,19 @@ struct PieceData {
     else return colorToInt(color)<colorToInt(pd.color);
   }
 };
-
+struct VanishState{
+  int num;
+  std::complex<float> p;
+  PieceData pd;
+  VanishState(int n,std::complex<float> _p,PieceData _pd){
+    num = n;
+    p = _p;
+    pd = _pd;
+  }
+};
+struct BoardCoord{
+  int r,c;
+};
 class ProgrammingException : public std::domain_error {
 public:
   ProgrammingException(const std::string& cause)
