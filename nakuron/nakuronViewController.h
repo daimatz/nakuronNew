@@ -51,6 +51,7 @@
   float cellSize;
   
   std::vector<Direction> step;
+  int dScore; //scoreの増分
   int score;
   
   std::map<PieceData, GLuint> piecenumToTexture;

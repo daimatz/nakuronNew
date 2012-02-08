@@ -270,6 +270,7 @@ enum {
 
 - (IBAction)downButton {
   if (ballMoveFlag) return;
+  dScore = 0;
   memcpy(prevPieces, pieces, sizeof(prevPieces));
   ballMoveFlag = true;
   pushedDir = DOWN;
@@ -279,6 +280,7 @@ enum {
 
 - (IBAction)leftButton {
   if (ballMoveFlag) return;
+  dScore = 0;
   memcpy(prevPieces, pieces, sizeof(prevPieces));
   ballMoveFlag = true;
   pushedDir = LEFT;
@@ -288,6 +290,7 @@ enum {
 
 - (IBAction)upButton {
   if (ballMoveFlag) return;
+  dScore = 0;
   memcpy(prevPieces, pieces, sizeof(prevPieces));
   ballMoveFlag = true;
   pushedDir = UP;
@@ -297,6 +300,7 @@ enum {
 
 - (IBAction)rightButton {
   if (ballMoveFlag) return;
+  dScore = 0;
   memcpy(prevPieces, pieces, sizeof(prevPieces));
   ballMoveFlag = true;
   usedDebugballMoveFlag = true;
@@ -352,6 +356,7 @@ enum {
       //壁より前が全部落とす
       for(int r=boardSize-2;r>wr;r--) {
         if (pieces[r][c].piece != EMPTY) restBallNum--;
+        if(pieces[r][c].piece == BALL && pieces[r][c].color == pieces[boardSize-1][c].color) dScore++;
         pieces[r][c]=PieceData(EMPTY,WHITE);
         targetCoord[r][c] = [self getCoordRC:boardSize-1 C:c];
       }
@@ -389,6 +394,7 @@ enum {
       //壁より前が全部落とす
       for(int r=1;r<wr;r++) {
         if (pieces[r][c].piece != EMPTY) restBallNum--;
+        if(pieces[r][c].piece == BALL && pieces[r][c].color == pieces[0][c].color) dScore++;
         pieces[r][c]=PieceData(EMPTY,WHITE);
         targetCoord[r][c] = [self getCoordRC:0 C:c];
       }
@@ -428,6 +434,7 @@ enum {
       //壁より前が全部落とす
       for(int c=boardSize-2;c>wc;c--){ 
         if (pieces[r][c].piece != EMPTY) restBallNum--;
+        if(pieces[r][c].piece == BALL && pieces[r][c].color == pieces[r][boardSize-1].color) dScore++;
         pieces[r][c]=PieceData(EMPTY,WHITE);
         targetCoord[r][c] = [self getCoordRC:r C:boardSize-1];
       }
@@ -470,6 +477,7 @@ enum {
       //壁より前が全部落とす
       for(int c=1;c<wc;c++){ 
         if (pieces[r][c].piece != EMPTY) restBallNum--;
+        if(pieces[r][c].piece == BALL && pieces[r][c].color == pieces[r][0].color) dScore++;
         pieces[r][c]=PieceData(EMPTY,WHITE);
         targetCoord[r][c] = [self getCoordRC:r C:0];
       }
@@ -502,6 +510,7 @@ enum {
 
 - (void)endBallMove {
   [self updateRestBallNum:restBallNum];
+  score +=dScore;
 }
 
 - (IBAction)menuButton {
