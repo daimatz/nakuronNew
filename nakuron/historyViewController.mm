@@ -111,7 +111,7 @@ using namespace std;
       NSLog(@"Play probNum: %d", current);
       int probNum = atoi(histories[current]["probNum"].c_str());
       Difficulty difficulty = intToDifficulty(atoi(histories[current]["difficulty"].c_str()));
-      [nakuronVC boardInit:difficulty probNum:probNum holeRatio:HOLE_RATIO];
+      [nakuronVC boardInit:difficulty probNum:probNum];
       [self.view removeFromSuperview];
       [superVC cancelButton:nil];
       [self release];

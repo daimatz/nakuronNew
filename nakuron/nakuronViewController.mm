@@ -92,7 +92,10 @@ enum {
   //texture読み込み
   piecenumToTexture.insert(make_pair(PieceData(EMPTY, WHITE),loadTexture(@"empty.png")));
   piecenumToTexture.insert(make_pair(PieceData(WALL, BLACK), loadTexture(@"wall.png")));
-  bgTexture = loadTexture(@"bg.jpg");
+  piecenumToTexture.insert(make_pair(PieceData(WALL, RED_BROWN), loadTexture(@"Brick02-p.jpg")));
+  piecenumToTexture.insert(make_pair(PieceData(WALL, BROWN), loadTexture(@"Brick01-p.jpg")));
+  NSString *bgnames[]={@"bg.jpg",@"bg4.jpg",@"bg3.jpg",@"bg2.jpg"};
+  for(int i=0;i<4;i++) bgTexture[i] = loadTexture(bgnames[i]);
   boardTexture = loadTexture(@"wood-texture_beiz.jp_S30182.jpg");
 
   // colorNum の個数分
@@ -109,10 +112,10 @@ enum {
   [self enableAcc];
 
   //最初の盤面を作成
-  [self boardInit:EASY probNum:randomProbNum() holeRatio:HOLE_RATIO];
+  [self boardInit:EASY probNum:randomProbNum()];
 }
 
-- (void)boardInit:(Difficulty)d probNum:(int)p holeRatio:(int)r
+- (void)boardInit:(Difficulty)d probNum:(int)p
 {
   difficulty = d;
   boardSize = difficultyToBoardSize(difficulty);
@@ -123,25 +126,8 @@ enum {
   NSLog(@"difficulty = %d, boardSize = %d, probNum = %d", d, boardSize, probNum);
 
   cellSize = boardSizePx/boardSize;
-
-  int hole = r;
-  int wall = 100 - hole;
   Xor128 hash(probNum);
-  for(int r=0;r<boardSize;r++){
-    for(int c=0;c<boardSize;c++){
-      if((r==0 && c==0) || (r==boardSize-1 && c==boardSize-1)) pieces[r][c] = PieceData(WALL, BLACK);
-      else if(r==0 || c==0 || r==boardSize-1 || c==boardSize-1 ){
-        pieces[r][c] = (hash.randomInt(100) < hole)
-                       ? PieceData(HOLE, intToColor(hash.randomInt(colorNum)))
-                       : PieceData(WALL, BLACK);
-      } else{
-        pieces[r][c] = (hash.randomInt(100) < wall)
-                       ? PieceData(WALL, BLACK)
-                       : PieceData(BALL, intToColor(hash.randomInt(colorNum)));
-      }
-    }
-  }
-
+  pieces = getBoard(d, p);
   restBallNum = removeCycle(pieces, boardSize);
   
   step.clear();
@@ -278,7 +264,7 @@ enum {
 - (IBAction)downButton {
   if (ballMoveFlag) return;
   dScore = 0;
-  memcpy(prevPieces, pieces, sizeof(prevPieces));
+  prevPieces = pieces;
   ballMoveFlag = true;
   pushedDir = DOWN;
   curVel = 0.0;
@@ -288,7 +274,7 @@ enum {
 - (IBAction)leftButton {
   if (ballMoveFlag) return;
   dScore = 0;
-  memcpy(prevPieces, pieces, sizeof(prevPieces));
+  prevPieces = pieces;
   ballMoveFlag = true;
   pushedDir = LEFT;
   curVel = 0.0;
@@ -298,7 +284,7 @@ enum {
 - (IBAction)upButton {
   if (ballMoveFlag) return;
   dScore = 0;
-  memcpy(prevPieces, pieces, sizeof(prevPieces));
+  prevPieces = pieces;
   ballMoveFlag = true;
   pushedDir = UP;
   curVel = 0.0;
@@ -308,7 +294,7 @@ enum {
 - (IBAction)rightButton {
   if (ballMoveFlag) return;
   dScore = 0;
-  memcpy(prevPieces, pieces, sizeof(prevPieces));
+  prevPieces = pieces;
   ballMoveFlag = true;
   usedDebugballMoveFlag = true;
   pushedDir = RIGHT;
@@ -587,7 +573,7 @@ enum {
 -(void)drawMain
 {
   //drawTexture(0,0 ,boardSizePx, boardSizePx, boardTexture, 255,255,255,255);
-  drawTexture(0,0 ,320.0, 480.0,bgTexture,255,255,255,255);
+  drawTexture(0,0 ,320.0, 480.0,bgTexture[difficultyToInt(difficulty)],255,255,255,255);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glEnable(GL_BLEND);
   if(ballMoveFlag){

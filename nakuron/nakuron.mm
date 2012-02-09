@@ -1,4 +1,5 @@
 #include "nakuron.h"
+#include<iostream>
 
 using namespace std;
 
@@ -24,6 +25,8 @@ int colorToInt(Color c) {
     case YELLOW: return 3;
     case BLACK: return 4;
     case WHITE: return 5;
+    case BROWN: return 6;
+    case RED_BROWN: return 7;
     default: throw ProgrammingException("Color おかしい");
   }
 }
@@ -53,6 +56,8 @@ string colorToStr(Color c){
     case YELLOW: return "Yellow";
     case BLACK: return "Black";
     case WHITE: return "White";
+    case BROWN: return "Brown";
+    case RED_BROWN: return "RedBrown";
     default: throw ProgrammingException("Color おかしい");
   }
 }
@@ -134,7 +139,7 @@ void removeCycleRec(int temp[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2], int size, in
 }
 
 // 閉路を壁で埋める。閉路 => Cycle?
-int removeCycle(PieceData pd[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2], int boardSize) {
+int removeCycle(vector<vector<PieceData> > &pd, int boardSize) {
   int count = 0; // 球の個数
   int temp[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2];
   for (int i = 0; i < boardSize; i++) {
@@ -241,4 +246,33 @@ int Xor128::randomIntFrom(int from, int to) {
 }
 double dot(const complex<float> & a, const complex<float> & b){
   return real(conj(a)*b);
+}
+std::vector<std::vector<PieceData> > getBoard(Difficulty difficulty, int probNum){
+  int hole = HOLE_RATIO;
+  int wall = 100 - hole;
+  
+  Xor128 hash(probNum);
+  int boardSize = difficultyToBoardSize(difficulty);
+  vector<vector<PieceData> > pieces;
+  for(int r=0;r<boardSize;r++){
+    vector<PieceData> tv(boardSize);
+    for(int c=0;c<boardSize;c++){
+      if((r==0 && c==0) || (r==boardSize-1 && c==boardSize-1)) tv[c] = PieceData(WALL, BROWN);
+      else if(r==0 || c==0 || r==boardSize-1 || c==boardSize-1 ){
+        tv[c] = (hash.randomInt(100) < hole)
+        ? PieceData(HOLE, intToColor(hash.randomInt(colorNum)))
+        : ((hash.randomInt(100) < 50) 
+           ? PieceData(WALL, BROWN):
+           PieceData(WALL,RED_BROWN));
+      } else{
+        tv[c] = (hash.randomInt(100) < wall)
+        ? ((hash.randomInt(100) < 50) 
+           ? PieceData(WALL, BROWN):
+           PieceData(WALL,RED_BROWN))
+        : PieceData(BALL, intToColor(hash.randomInt(colorNum)));
+      }
+    }
+    pieces.push_back(tv);
+  }
+  return pieces;
 }

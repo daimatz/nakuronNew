@@ -53,6 +53,8 @@ typedef enum {
   YELLOW,
   BLACK,
   WHITE,
+  BROWN,
+  RED_BROWN,
 } Color;
 
 typedef enum {
@@ -86,7 +88,7 @@ Difficulty intToDifficulty(int i);
 int probNumToSeed(int p);
 int difficultyToBoardSize(Difficulty d);
 
-int removeCycle(PieceData pd[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2], int boardSize);
+int removeCycle(std::vector<std::vector<PieceData> > &pd, int boardSize);
 
 std::string intToString(int n);
 
@@ -142,3 +144,5 @@ public:
 };
 //内積
 double dot(const std::complex<float> & a, const std::complex<float> & b);
+
+std::vector<std::vector<PieceData> > getBoard(Difficulty difficulty, int probNum);

@@ -61,7 +61,7 @@ using namespace std;
 - (IBAction)newGameButton:(id)sender {
   NSLog(@"newGame");
   int newProbNum = randomProbNum();
-  [superVC boardInit:difficulty probNum:newProbNum holeRatio:HOLE_RATIO];
+  [superVC boardInit:difficulty probNum:newProbNum];
   [self.view removeFromSuperview];
   [superVC backFromFinish];
   [self release];

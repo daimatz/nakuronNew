@@ -56,6 +56,11 @@
 		23BDF82B14CDCCAD00402EF2 /* historyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23BDF82914CDCCAD00402EF2 /* historyViewController.xib */; };
 		23EBF02D14C55F9B006876D4 /* menuViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 23EBF02B14C55F9B006876D4 /* menuViewController.mm */; };
 		23EBF02E14C55F9B006876D4 /* menuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23EBF02C14C55F9B006876D4 /* menuViewController.xib */; };
+		2797431914E41F5D00895E4A /* bg2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2797431614E41F5D00895E4A /* bg2.jpg */; };
+		2797431A14E41F5D00895E4A /* bg3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2797431714E41F5D00895E4A /* bg3.jpg */; };
+		2797431B14E41F5D00895E4A /* bg4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2797431814E41F5D00895E4A /* bg4.jpg */; };
+		2797432214E42CD900895E4A /* Brick01-p.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2797432114E42CD900895E4A /* Brick01-p.jpg */; };
+		2797432514E42D3600895E4A /* Brick02-p.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2797432414E42D3600895E4A /* Brick02-p.jpg */; };
 		27C187FF14E0EAE300DCEACA /* wood-texture_beiz.jp_S30182.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 27C187FE14E0EAE300DCEACA /* wood-texture_beiz.jp_S30182.jpg */; };
 		27C1880A14E0F8E400DCEACA /* bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 27C1880914E0F8E400DCEACA /* bg.jpg */; };
 		27C7ADA814C53564006CF983 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27C7ADA714C53564006CF983 /* UIKit.framework */; };
@@ -171,6 +176,11 @@
 		23EBF02B14C55F9B006876D4 /* menuViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = menuViewController.mm; sourceTree = "<group>"; };
 		23EBF02C14C55F9B006876D4 /* menuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = menuViewController.xib; sourceTree = "<group>"; };
 		23EBF02F14C56051006876D4 /* nakuron.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nakuron.h; sourceTree = "<group>"; };
+		2797431614E41F5D00895E4A /* bg2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg2.jpg; sourceTree = "<group>"; };
+		2797431714E41F5D00895E4A /* bg3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg3.jpg; sourceTree = "<group>"; };
+		2797431814E41F5D00895E4A /* bg4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg4.jpg; sourceTree = "<group>"; };
+		2797432114E42CD900895E4A /* Brick01-p.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Brick01-p.jpg"; sourceTree = "<group>"; };
+		2797432414E42D3600895E4A /* Brick02-p.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Brick02-p.jpg"; sourceTree = "<group>"; };
 		27C187FE14E0EAE300DCEACA /* wood-texture_beiz.jp_S30182.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "wood-texture_beiz.jp_S30182.jpg"; sourceTree = "<group>"; };
 		27C1880914E0F8E400DCEACA /* bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg.jpg; sourceTree = "<group>"; };
 		27C7ADA314C53564006CF983 /* nakuron.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = nakuron.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -351,6 +361,11 @@
 		23915A8314C9C18100C925B8 /* resource */ = {
 			isa = PBXGroup;
 			children = (
+				2797432414E42D3600895E4A /* Brick02-p.jpg */,
+				2797432114E42CD900895E4A /* Brick01-p.jpg */,
+				2797431614E41F5D00895E4A /* bg2.jpg */,
+				2797431714E41F5D00895E4A /* bg3.jpg */,
+				2797431814E41F5D00895E4A /* bg4.jpg */,
 				27C1880914E0F8E400DCEACA /* bg.jpg */,
 				27C187FE14E0EAE300DCEACA /* wood-texture_beiz.jp_S30182.jpg */,
 				23915A8414C9C18100C925B8 /* arrow-down.png */,
@@ -530,6 +545,11 @@
 				2351909314E2F7B700A53055 /* jQueryInject.txt in Resources */,
 				2351909414E2F7B700A53055 /* jQueryInjectLandscape.txt in Resources */,
 				235190A614E2F7B700A53055 /* twitter_load.png in Resources */,
+				2797431914E41F5D00895E4A /* bg2.jpg in Resources */,
+				2797431A14E41F5D00895E4A /* bg3.jpg in Resources */,
+				2797431B14E41F5D00895E4A /* bg4.jpg in Resources */,
+				2797432214E42CD900895E4A /* Brick01-p.jpg in Resources */,
+				2797432514E42D3600895E4A /* Brick02-p.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -44,8 +44,8 @@
   int restBallNum;
   
   int boardSize;
-  PieceData pieces[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2];
-  PieceData prevPieces[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2];
+  std::vector<std::vector<PieceData> > pieces;
+  std::vector<std::vector<PieceData> > prevPieces;
   std::complex<float> targetCoord[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2];
   std::complex<float> curCoord[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2];
   std::deque<VanishState> vanishBalls;
@@ -63,7 +63,7 @@
   int score;
   
   std::map<PieceData, GLuint> piecenumToTexture;
-  GLuint boardTexture,bgTexture;
+  GLuint boardTexture,bgTexture[4];
   bool useAcc;
 
   // Twitter エンジン
@@ -105,7 +105,7 @@
 - (void)updateStateLeftButton;
 - (void)endBallMove;
 - (std::complex<float>)getCoordRC:(int)r C:(int)c;
--(void)boardInit:(Difficulty)d probNum:(int)p holeRatio:(int)r;
+- (void)boardInit:(Difficulty)d probNum:(int)p;
 
 - (void)enableAcc;
 - (void)disableAcc;
