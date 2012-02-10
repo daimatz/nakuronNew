@@ -31,15 +31,22 @@ using namespace std;
 
 - (void)updateShowing:(int)num
 {
+  for (UIView *v in historyMapView.subviews) {
+    [v removeFromSuperview];
+  }
   if (histories.empty()) {
     difficultyLabel.text = probNumLabel.text = datetimeLabel.text = scoreLabel.text = @"No histories";
   } else {
     current = num % histories.size();
     NSLog(@"current: %d", current);
+    Difficulty difficulty = stringToDifficulty(histories[current]["difficulty"]);
+    int probNum = atoi(histories[current]["probNum"].c_str());
     difficultyLabel.text = stringToNSString(histories[current]["difficulty"]);
     probNumLabel.text = stringToNSString(histories[current]["probNum"]);
     datetimeLabel.text = stringToNSString(histories[current]["created"]);
     scoreLabel.text = stringToNSString(histories[current]["score"]);
+
+    drawMapToSubview(difficulty, probNum, historyMapView);
   }
 }
 
@@ -62,6 +69,8 @@ using namespace std;
   [self setDatetimeLabel:nil];
   [self setScoreLabel:nil];
   [self setDifficultyLabel:nil];
+  [historyMapView release];
+  historyMapView = nil;
   [super viewDidUnload];
   // Release any retained subviews of the main view.
   // e.g. self.myOutlet = nil;
@@ -130,6 +139,10 @@ using namespace std;
   [datetimeLabel release];
   [scoreLabel release];
   [difficultyLabel release];
+  for (UIView *v in historyMapView.subviews) {
+    [v removeFromSuperview];
+  }
+  [historyMapView release];
   [super dealloc];
 }
 - (IBAction)rightButton {

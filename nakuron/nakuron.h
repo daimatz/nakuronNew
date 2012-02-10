@@ -99,6 +99,8 @@ std::string string_join(std::vector<std::string> ss, std::string c);
 
 std::string formattedTime();
 
+void drawMapToSubview(Difficulty difficulty, int probNum, UIView *view);
+
 struct PieceData {
   Piece piece;
   Color color;

@@ -12,6 +12,7 @@
   
   Difficulty difficulty;
 
+  IBOutlet UIView *finishMapView;
   SA_OAuthTwitterEngine *twitterEngine;
   IBOutlet UIButton *twitterButton;
   NSString *authData;

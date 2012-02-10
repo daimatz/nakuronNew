@@ -225,6 +225,31 @@ string documentDir() {
   return dir;
 }
 
+void drawMapToSubview(Difficulty difficulty, int probNum, UIView *view) {
+  int boardSize = difficultyToBoardSize(difficulty);
+  int cellSizePx = boardSizePx / boardSize;
+  vector<vector<PieceData> > pd = getBoard(difficulty, probNum);
+  NSString *cs[] = {@"red", @"blue", @"yellow", @"green"};
+  for (int r = 0; r < boardSize; r++) {
+    for (int c = 0; c < boardSize; c++) {
+      CGRect frame = CGRectMake(c*cellSizePx, r*cellSizePx, cellSizePx, cellSizePx);
+      UIImageView *imgs = [[[UIImageView alloc]
+                            initWithFrame:frame] autorelease];
+      NSString *imgFile;
+      if (pd[r][c].piece == WALL) {
+        imgFile = @"Brick01-p.jpg";
+      } else if (pd[r][c].piece == HOLE) {
+        imgFile = [NSString stringWithFormat:@"h%@.png", cs[colorToInt(pd[r][c].color)]];
+      } else {
+        imgFile = [NSString stringWithFormat:@"b%@.png", cs[colorToInt(pd[r][c].color)]];
+      }
+      imgs.image = [UIImage imageNamed:imgFile];
+      [view addSubview:imgs];
+    }
+  }
+}
+
+
 // ハッシュクラス
 Xor128::Xor128(int seed) {
   x = 123456789, y = 362436069, z = 521288629, w = seed;

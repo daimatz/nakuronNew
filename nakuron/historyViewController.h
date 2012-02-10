@@ -11,6 +11,7 @@
   int current;
   std::vector<KeyValue> histories;
   
+  IBOutlet UIView *historyMapView;
   menuViewController *superVC;
   nakuronViewController *nakuronVC;
 }

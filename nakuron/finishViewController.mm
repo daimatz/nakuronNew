@@ -41,6 +41,8 @@ using namespace std;
   assert(!kvs.empty());
   KeyValue kv = kvs[0];
   difficulty = stringToDifficulty(kv["difficulty"]);
+  int probNum = atoi(kv["probNum"].c_str());
+  drawMapToSubview(difficulty, probNum, finishMapView);
 
   [self updateTwitterAuthInfo];
 }
@@ -49,6 +51,8 @@ using namespace std;
 {
   [twitterButton release];
   twitterButton = nil;
+    [finishMapView release];
+    finishMapView = nil;
   [super viewDidUnload];
   // Release any retained subviews of the main view.
   // e.g. self.myOutlet = nil;
@@ -159,6 +163,10 @@ using namespace std;
 - (void)dealloc {
   [twitterEngine release];
   [twitterButton release];
+  for (UIView *v in finishMapView.subviews) {
+    [v removeFromSuperview];
+  }
+  [finishMapView release];
   [super dealloc];
 }
 @end
