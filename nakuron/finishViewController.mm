@@ -41,7 +41,8 @@ using namespace std;
   assert(!kvs.empty());
   KeyValue kv = kvs[0];
   difficulty = stringToDifficulty(kv["difficulty"]);
-  int probNum = atoi(kv["probNum"].c_str());
+  probNum = atoi(kv["probNum"].c_str());
+  score = atoi(kv["score"].c_str());
   drawMapToSubview(difficulty, probNum, finishMapView);
 
   [self updateTwitterAuthInfo];
@@ -118,7 +119,16 @@ using namespace std;
   if (buttonIndex == 1) {
     // YES ボタン
     // 実際に Twitter にポスト
-		[twitterEngine sendUpdate: [NSString stringWithFormat:@"Already Updated. %@", [NSDate date]]];
+    string str = "なくろん：難易度";
+    str += difficultyToString(difficulty);
+    str += ", 問題番号";
+    str += intToString(probNum);
+    str += "で ";
+    str += intToString(score);
+    str += " 点を叩き出しました！ ";
+    str += NSStringToString([NSDate date]);
+    str += " @nakuron";
+		[twitterEngine sendUpdate:stringToNSString(str)];
   }
 }
 

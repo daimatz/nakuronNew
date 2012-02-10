@@ -11,6 +11,8 @@
   nakuronViewController *superVC;
   
   Difficulty difficulty;
+  int probNum;
+  int score;
 
   IBOutlet UIView *finishMapView;
   SA_OAuthTwitterEngine *twitterEngine;

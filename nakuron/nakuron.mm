@@ -229,7 +229,7 @@ void drawMapToSubview(Difficulty difficulty, int probNum, UIView *view) {
   int boardSize = difficultyToBoardSize(difficulty);
   int cellSizePx = boardSizePx / boardSize;
   vector<vector<PieceData> > pd = getBoard(difficulty, probNum);
-  NSString *cs[] = {@"red", @"blue", @"yellow", @"green"};
+  NSString *cs[] = {@"red", @"green", @"blue", @"yellow"};
   for (int r = 0; r < boardSize; r++) {
     for (int c = 0; c < boardSize; c++) {
       CGRect frame = CGRectMake(c*cellSizePx, r*cellSizePx, cellSizePx, cellSizePx);
