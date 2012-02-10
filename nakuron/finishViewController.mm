@@ -40,7 +40,7 @@ using namespace std;
   vector<KeyValue> kvs = hmdl.find(fc);
   assert(!kvs.empty());
   KeyValue kv = kvs[0];
-  difficulty = stringToDifficulty(kv["difficulty"]);
+  difficulty = intToDifficulty(atoi(kv["difficulty"].c_str()));
   probNum = atoi(kv["probNum"].c_str());
   score = atoi(kv["score"].c_str());
   drawMapToSubview(difficulty, probNum, finishMapView);

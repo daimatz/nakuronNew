@@ -248,7 +248,9 @@ enum {
   HistoryModel hmdl;
   KeyValue kv;
   kv["probNum"] = intToString(probNum);
-  kv["difficulty"] = difficultyToString(difficulty);
+  int dInt = difficultyToInt(difficulty);
+  char buf[2]; sprintf(buf, "%d", dInt);
+  kv["difficulty"] = buf;
   kv["score"] = intToString(score);
   kv["created"] = formattedTime();
   kv["time"] = "0";

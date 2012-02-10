@@ -39,9 +39,9 @@ using namespace std;
   } else {
     current = num % histories.size();
     NSLog(@"current: %d", current);
-    Difficulty difficulty = stringToDifficulty(histories[current]["difficulty"]);
+    Difficulty difficulty = intToDifficulty(atoi(histories[current]["difficulty"].c_str()));
     int probNum = atoi(histories[current]["probNum"].c_str());
-    difficultyLabel.text = stringToNSString(histories[current]["difficulty"]);
+    difficultyLabel.text = stringToNSString(difficultyToString(difficulty));
     probNumLabel.text = stringToNSString(histories[current]["probNum"]);
     datetimeLabel.text = stringToNSString(histories[current]["created"]);
     scoreLabel.text = stringToNSString(histories[current]["score"]);
