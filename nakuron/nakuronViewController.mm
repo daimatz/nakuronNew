@@ -303,6 +303,11 @@ enum {
   curVel = 0.0;
   [self updateStateRightButton];
 }
+
+- (IBAction)quitButton {
+  [self didDropAllBalls];
+}
+
 -(void)updateState:(Direction)d{
   [self coordInit];
   for(int c=1;c < boardSize-1;c++){
@@ -851,5 +856,4 @@ enum {
 - (void)backFromMenu {
   [self backFromSubview];
 }
-
 @end
