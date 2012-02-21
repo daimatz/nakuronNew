@@ -6,7 +6,7 @@
 
 @class nakuronViewController;
 
-@interface finishViewController : UIViewController <SA_OAuthTwitterControllerDelegate> {
+@interface finishViewController : UIViewController {// <SA_OAuthTwitterControllerDelegate> {
 @private
   nakuronViewController *superVC;
   
@@ -15,16 +15,22 @@
   int score;
 
   IBOutlet UIView *finishMapView;
-  SA_OAuthTwitterEngine *twitterEngine;
-  IBOutlet UIButton *twitterButton;
-  NSString *authData;
+
+//  SA_OAuthTwitterEngine *twitterEngine;
+//  IBOutlet UIButton *twitterButton;
+//  NSString *authData;
 }
 
 - (void)setParameters:(nakuronViewController*)n;
 - (IBAction)newGameButton:(id)sender;
 
-- (void)updateTwitterAuthInfo;
-- (IBAction)twitterButton;
-- (IBAction)twitterSettingButton;
+@property (retain, nonatomic) IBOutlet UILabel *difficultyLabel;
+@property (retain, nonatomic) IBOutlet UILabel *probNumLabel;
+@property (retain, nonatomic) IBOutlet UILabel *datetimeLabel;
+@property (retain, nonatomic) IBOutlet UILabel *scoreLabel;
+
+//- (void)updateTwitterAuthInfo;
+//- (IBAction)twitterButton;
+//- (IBAction)twitterSettingButton;
 
 @end
