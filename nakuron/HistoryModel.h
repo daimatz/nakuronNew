@@ -12,8 +12,9 @@ public:
     fields["probNum"] = "int";
     fields["difficulty"] = "int";
     fields["score"] = "int";
+    fields["nums"] = "int";
+    fields["times"] = "int";
     fields["created"] = "datetime";
-    fields["time"] = "int";
     init();
   }
 };

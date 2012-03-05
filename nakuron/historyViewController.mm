@@ -48,7 +48,11 @@ using namespace std;
     probNumLabel.text = stringToNSString(histories[current]["probNum"]);
     datetimeLabel.text = stringToNSString(histories[current]["created"]);
     currentLabel.text = stringToNSString("No. "+intToString(current+1));
-    scoreLabel.text = stringToNSString(histories[current]["score"]);
+    string scoreStr;
+    scoreStr += histories[current]["score"];
+    scoreStr += " / " + histories[current]["nums"];
+    scoreStr += " / " + histories[current]["times"];
+    scoreLabel.text = stringToNSString(scoreStr);
 
     drawMapToSubview(difficulty, probNum, historyMapView);
   }

@@ -52,7 +52,11 @@ using namespace std;
   difficultyLabel.text = stringToNSString(difficultyToString(difficulty));
   probNumLabel.text = stringToNSString(kv["probNum"]);
   datetimeLabel.text = stringToNSString(kv["created"]);
-  scoreLabel.text = stringToNSString(kv["score"]);
+  string scoreStr;
+  scoreStr += kv["score"];
+  scoreStr += " / " + kv["nums"];
+  scoreStr += " / " + kv["times"];
+  scoreLabel.text = stringToNSString(scoreStr);
 
 //  [self updateTwitterAuthInfo];
 }

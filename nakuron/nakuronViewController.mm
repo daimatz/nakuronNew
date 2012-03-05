@@ -43,6 +43,7 @@ enum {
 @implementation nakuronViewController
 @synthesize scoreLabel;
 @synthesize restLabel;
+@synthesize timesLabel;
 
 @synthesize animating, context, displayLink;
 
@@ -135,11 +136,13 @@ enum {
   Xor128 hash(probNum);
   pieces = getBoard(d, p);
   restBallNum = removeCycle(pieces, boardSize);
-  
-  step.clear();
+
   score = 0;
+  initialBallNum = restBallNum;
+  times = 0;
   [self updateScore:0];
   [self updateRestBallNum:restBallNum];
+  [self updateTimes:0];
 }
 
 - (void)dealloc
@@ -159,6 +162,7 @@ enum {
 
   [scoreLabel release];
   [restLabel release];
+  [timesLabel release];
   [super dealloc];
 }
 
@@ -188,6 +192,7 @@ enum {
 {
   [self setScoreLabel:nil];
   [self setRestLabel:nil];
+  [self setTimesLabel:nil];
   [super viewDidUnload];
 
   if (program) {
@@ -249,6 +254,11 @@ enum {
   }
 }
 
+- (void)updateTimes:(int)t {
+  times = t;
+  timesLabel.text = [NSString stringWithFormat:@"%d", times];
+}
+
 - (void)didDropAllBalls {
   NSLog(@"finish");
   HistoryModel hmdl;
@@ -259,7 +269,8 @@ enum {
   kv["difficulty"] = buf;
   kv["score"] = intToString(score);
   kv["created"] = formattedTime();
-  kv["time"] = "0";
+  kv["nums"] = intToString(initialBallNum - restBallNum);
+  kv["times"] = intToString(times);
   hmdl.insert(kv);
 
   finishVC = [[finishViewController alloc] initWithNibName:@"finishViewController" bundle:nil];
@@ -269,40 +280,43 @@ enum {
 }
 
 - (IBAction)downButton {
-  if (ballMoveFlag) return;
+  if (ballMoveFlag || pushedDir == DOWN) return;
   dScore = 0;
   memset(correctEffect,0,sizeof(correctEffect));
   prevPieces = pieces;
   ballMoveFlag = true;
   pushedDir = DOWN;
   curVel = 0.0;
+  times++;
   [self updateStateDownButton];
 }
 
 - (IBAction)leftButton {
-  if (ballMoveFlag) return;
+  if (ballMoveFlag || pushedDir == LEFT) return;
   dScore = 0;
   memset(correctEffect,0,sizeof(correctEffect));
   prevPieces = pieces;
   ballMoveFlag = true;
   pushedDir = LEFT;
   curVel = 0.0;
+  times++;
   [self updateStateLeftButton];
 }
 
 - (IBAction)upButton {
-  if (ballMoveFlag) return;
+  if (ballMoveFlag || pushedDir == UP) return;
   dScore = 0;
   memset(correctEffect,0,sizeof(correctEffect));
   prevPieces = pieces;
   ballMoveFlag = true;
   pushedDir = UP;
   curVel = 0.0;
+  times++;
   [self updateStateUpButton];
 }
 
 - (IBAction)rightButton {
-  if (ballMoveFlag) return;
+  if (ballMoveFlag || pushedDir == RIGHT) return;
   dScore = 0;
   memset(correctEffect,0,sizeof(correctEffect));
   prevPieces = pieces;
@@ -310,6 +324,7 @@ enum {
   usedDebugballMoveFlag = true;
   pushedDir = RIGHT;
   curVel = 0.0;
+  times++;
   [self updateStateRightButton];
 }
 
@@ -548,6 +563,7 @@ enum {
 - (void)endBallMove {
   [self updateScore:score+dScore];
   [self updateRestBallNum:restBallNum];
+  [self updateTimes:times];
 }
 
 - (IBAction)menuButton {

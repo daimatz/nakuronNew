@@ -60,9 +60,10 @@
 
   float cellSize;
   
-  std::vector<Direction> step;
   int dScore; //scoreの増分
   int score;
+  int times;
+  int initialBallNum;
   
   std::map<PieceData, GLuint> piecenumToTexture;
   GLuint boardTexture,bgTexture[4];
@@ -80,6 +81,7 @@
 
 @property (retain, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (retain, nonatomic) IBOutlet UILabel *restLabel;
+@property (retain, nonatomic) IBOutlet UILabel *timesLabel;
 
 - (IBAction)rightButton;
 - (IBAction)downButton;
@@ -102,6 +104,7 @@
 - (void)printTargetCoord;
 - (void)updateScore:(int)nscore;
 - (void)updateRestBallNum:(int)num;
+- (void)updateTimes:(int)times;
 - (void)didDropAllBalls;
 
 - (void)updateState:(Direction)d;
