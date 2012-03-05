@@ -166,7 +166,7 @@ using namespace std;
 
 -(void)rightSwipe:(id)sender {
   NSLog(@"right swipe");
-  [self rightButton];
+  [self leftButton];
 }
 
 - (IBAction)rightButton {
@@ -177,7 +177,7 @@ using namespace std;
 
 -(void)leftSwipe:(id)sender {
   NSLog(@"left swipe");
-  [self leftButton];
+  [self rightButton];
 }
 
 - (IBAction)leftButton {
