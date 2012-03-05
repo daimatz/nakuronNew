@@ -287,13 +287,13 @@ std::vector<std::vector<PieceData> > getBoard(Difficulty difficulty, int probNum
         tv[c] = (hash.randomInt(100) < hole)
         ? PieceData(HOLE, intToColor(hash.randomInt(colorNum)))
         : ((hash.randomInt(100) < 50) 
-           ? PieceData(WALL, BROWN):
-           PieceData(WALL,RED_BROWN));
+           ? PieceData(WALL, BLACK):
+           PieceData(WALL,BLACK));
       } else{
         tv[c] = (hash.randomInt(100) < wall)
         ? ((hash.randomInt(100) < 50) 
-           ? PieceData(WALL, BROWN):
-           PieceData(WALL,RED_BROWN))
+           ? PieceData(WALL, BLACK):
+           PieceData(WALL,BLACK))
         : PieceData(BALL, intToColor(hash.randomInt(colorNum)));
       }
     }

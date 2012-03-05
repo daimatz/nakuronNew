@@ -12,6 +12,7 @@
 
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
+#import <AVFoundation/AVFoundation.h>
 
 #import "menuViewController.h"
 #import "finishViewController.h"
@@ -48,6 +49,7 @@
   std::vector<std::vector<PieceData> > prevPieces;
   std::complex<float> targetCoord[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2];
   std::complex<float> curCoord[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2];
+  bool correctEffect[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2];
   std::deque<VanishState> vanishBalls;
   
   Direction pushedDir;
@@ -65,6 +67,9 @@
   std::map<PieceData, GLuint> piecenumToTexture;
   GLuint boardTexture,bgTexture[4];
   bool useAcc;
+  
+  AVAudioPlayer *correctSound;
+  AVAudioPlayer *pushSound;
 
   // Twitter エンジン
   SA_OAuthTwitterEngine *twitterEngine;

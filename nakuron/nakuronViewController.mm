@@ -98,6 +98,12 @@ enum {
   for(int i=0;i<4;i++) bgTexture[i] = loadTexture(bgnames[i]);
   boardTexture = loadTexture(@"wood-texture_beiz.jp_S30182.jpg");
 
+  
+  //効果音読み込み
+  NSString *correctSoundFilePath = [[NSBundle mainBundle] pathForResource:@"se_maoudamashii_se_fall01"ofType:@"wav"];
+  NSURL *correctSoundFileURL = [NSURL fileURLWithPath:correctSoundFilePath];
+  correctSound = [[AVAudioPlayer alloc] initWithContentsOfURL:correctSoundFileURL error:nil];
+  [correctSound prepareToPlay];
   // colorNum の個数分
   NSString *cs[] = {@"red", @"green", @"blue", @"yellow"};
   Color s[] = {RED, GREEN, BLUE, YELLOW};
@@ -265,6 +271,7 @@ enum {
 - (IBAction)downButton {
   if (ballMoveFlag) return;
   dScore = 0;
+  memset(correctEffect,0,sizeof(correctEffect));
   prevPieces = pieces;
   ballMoveFlag = true;
   pushedDir = DOWN;
@@ -275,6 +282,7 @@ enum {
 - (IBAction)leftButton {
   if (ballMoveFlag) return;
   dScore = 0;
+  memset(correctEffect,0,sizeof(correctEffect));
   prevPieces = pieces;
   ballMoveFlag = true;
   pushedDir = LEFT;
@@ -285,6 +293,7 @@ enum {
 - (IBAction)upButton {
   if (ballMoveFlag) return;
   dScore = 0;
+  memset(correctEffect,0,sizeof(correctEffect));
   prevPieces = pieces;
   ballMoveFlag = true;
   pushedDir = UP;
@@ -295,6 +304,7 @@ enum {
 - (IBAction)rightButton {
   if (ballMoveFlag) return;
   dScore = 0;
+  memset(correctEffect,0,sizeof(correctEffect));
   prevPieces = pieces;
   ballMoveFlag = true;
   usedDebugballMoveFlag = true;
@@ -371,7 +381,10 @@ enum {
       //壁より前が全部落とす
       for(int r=boardSize-2;r>wr;r--) {
         if (pieces[r][c].piece != EMPTY) restBallNum--;
-        if(pieces[r][c].piece == BALL && pieces[r][c].color == pieces[boardSize-1][c].color) dScore++;
+        if(pieces[r][c].piece == BALL && pieces[r][c].color == pieces[boardSize-1][c].color){
+          correctEffect[r][c] = true;
+          dScore++;
+        }
         pieces[r][c]=PieceData(EMPTY,WHITE);
         targetCoord[r][c] = [self getCoordRC:boardSize-1 C:c];
       }
@@ -409,7 +422,10 @@ enum {
       //壁より前が全部落とす
       for(int r=1;r<wr;r++) {
         if (pieces[r][c].piece != EMPTY) restBallNum--;
-        if(pieces[r][c].piece == BALL && pieces[r][c].color == pieces[0][c].color) dScore++;
+        if(pieces[r][c].piece == BALL && pieces[r][c].color == pieces[0][c].color){
+          correctEffect[r][c] = true;
+          dScore++;
+        }
         pieces[r][c]=PieceData(EMPTY,WHITE);
         targetCoord[r][c] = [self getCoordRC:0 C:c];
       }
@@ -449,7 +465,10 @@ enum {
       //壁より前が全部落とす
       for(int c=boardSize-2;c>wc;c--){ 
         if (pieces[r][c].piece != EMPTY) restBallNum--;
-        if(pieces[r][c].piece == BALL && pieces[r][c].color == pieces[r][boardSize-1].color) dScore++;
+        if(pieces[r][c].piece == BALL && pieces[r][c].color == pieces[r][boardSize-1].color) {
+          correctEffect[r][c] = true;
+          dScore++;
+        }
         pieces[r][c]=PieceData(EMPTY,WHITE);
         targetCoord[r][c] = [self getCoordRC:r C:boardSize-1];
       }
@@ -492,7 +511,10 @@ enum {
       //壁より前が全部落とす
       for(int c=1;c<wc;c++){ 
         if (pieces[r][c].piece != EMPTY) restBallNum--;
-        if(pieces[r][c].piece == BALL && pieces[r][c].color == pieces[r][0].color) dScore++;
+        if(pieces[r][c].piece == BALL && pieces[r][c].color == pieces[r][0].color) {
+          correctEffect[r][c] = true;
+          dScore++;
+        }
         pieces[r][c]=PieceData(EMPTY,WHITE);
         targetCoord[r][c] = [self getCoordRC:r C:0];
       }
@@ -625,6 +647,10 @@ enum {
           curCoord[r][c] += dv;
           if([self isOverTarget:(int)r C:(int)c]){
             curCoord[r][c] = targetCoord[r][c];
+            if(correctEffect[r][c]){
+              [correctSound setCurrentTime:0.0f];
+              [correctSound play];
+            }
             if([self isHoleCoord:curCoord[r][c]])vanishBalls.push_back(VanishState(0,curCoord[r][c],prevPieces[r][c]));
           }
         }
