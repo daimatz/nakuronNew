@@ -5,7 +5,7 @@
 @class menuViewController;
 @class nakuronViewController;
 
-@interface historyViewController : UIViewController
+@interface historyViewController : UIViewController <UIGestureRecognizerDelegate>
 {
 @private
   int current;
@@ -25,6 +25,7 @@
 - (IBAction)rightButton;
 - (IBAction)leftButton;
 
+@property (retain, nonatomic) IBOutlet UIView *display;
 - (void)setParameters:(menuViewController*)m nakuron:(nakuronViewController*)n;
 
 @end
