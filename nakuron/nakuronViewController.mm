@@ -91,7 +91,7 @@ enum {
 
   //texture読み込み
   piecenumToTexture.insert(make_pair(PieceData(EMPTY, WHITE),loadTexture(@"empty.png")));
-  piecenumToTexture.insert(make_pair(PieceData(WALL, BLACK), loadTexture(@"wall.png")));
+  piecenumToTexture.insert(make_pair(PieceData(WALL, BLACK), loadTexture(@"wall2.png")));
   piecenumToTexture.insert(make_pair(PieceData(WALL, RED_BROWN), loadTexture(@"Brick02-p.jpg")));
   piecenumToTexture.insert(make_pair(PieceData(WALL, BROWN), loadTexture(@"Brick01-p.jpg")));
   NSString *bgnames[]={@"bg.jpg",@"bg4.jpg",@"bg3.jpg",@"bg2.jpg"};
@@ -103,7 +103,7 @@ enum {
   Color s[] = {RED, GREEN, BLUE, YELLOW};
   for(int i=0;i<colorNum;i++) {
     piecenumToTexture.insert(make_pair(PieceData(BALL, s[i]), loadTexture([NSString stringWithFormat:@"b%@.png",cs[i]])));
-    piecenumToTexture.insert(make_pair(PieceData(HOLE, s[i]), loadTexture([NSString stringWithFormat:@"h%@.png",cs[i]])));
+    piecenumToTexture.insert(make_pair(PieceData(HOLE, s[i]), loadTexture([NSString stringWithFormat:@"h%@2.png",cs[i]])));
   }
   //最初はballは移動してないので
   ballMoveFlag = false;
@@ -575,7 +575,7 @@ enum {
 -(void)drawMain
 {
   //drawTexture(0,0 ,boardSizePx, boardSizePx, boardTexture, 255,255,255,255);
-  drawTexture(0,0 ,320.0, 480.0,bgTexture[difficultyToInt(difficulty)],255,255,255,255);
+  //drawTexture(0,0 ,320.0, 480.0,bgTexture[difficultyToInt(difficulty)],255,255,255,255);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glEnable(GL_BLEND);
   if(ballMoveFlag){

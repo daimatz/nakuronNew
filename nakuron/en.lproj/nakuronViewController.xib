@@ -160,16 +160,24 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
-						<reference key="IBUIHighlightedTitleColor" ref="634287916"/>
+						<object class="NSColor" key="IBUIHighlightedTitleColor">
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MC4xOTYwNzg0MzE0IDAuMzA5ODAzOTIxNiAwLjUyMTU2ODYyNzUAA</bytes>
+						</object>
 						<object class="NSColor" key="IBUINormalTitleColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MC4xOTYwNzg0MzE0IDAuMzA5ODAzOTIxNiAwLjUyMTU2ODYyNzUAA</bytes>
 						</object>
-						<reference key="IBUINormalTitleShadowColor" ref="639633850"/>
-						<object class="NSCustomResource" key="IBUIHighlightedImage">
-							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">icon_settings.png</string>
+						<object class="NSColor" key="IBUIHighlightedTitleShadowColor" id="551875788">
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MCAwIDAAA</bytes>
 						</object>
+						<reference key="IBUINormalTitleShadowColor" ref="639633850"/>
+						<object class="NSCustomResource" key="IBUIHighlightedImage" id="762670308">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">settings_64.png</string>
+						</object>
+						<reference key="IBUINormalImage" ref="762670308"/>
 						<object class="IBUIFontDescription" key="IBUIFontDescription" id="203099211">
 							<int key="type">2</int>
 							<int key="size">2</int>
@@ -204,7 +212,7 @@
 					<object class="IBUIButton" id="1041038127">
 						<reference key="NSNextResponder" ref="184854543"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{151, 419}, {18, 19}}</string>
+						<string key="NSFrame">{{152, 419}, {18, 19}}</string>
 						<reference key="NSSuperview" ref="184854543"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="386930627"/>
@@ -236,10 +244,7 @@
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<string key="IBUIText"/>
-						<object class="NSColor" key="IBUITextColor" id="551875788">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MCAwIDAAA</bytes>
-						</object>
+						<reference key="IBUITextColor" ref="551875788"/>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">1</int>
 						<float key="IBUIMinimumFontSize">10</float>
@@ -555,7 +560,7 @@
 					<string>EAGLView</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<real value="1"/>
+					<real value="0.0"/>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -719,7 +724,7 @@
 				<string>arrow-left.png</string>
 				<string>arrow-right.png</string>
 				<string>arrow-up.png</string>
-				<string>icon_settings.png</string>
+				<string>settings_64.png</string>
 			</object>
 			<object class="NSMutableArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
@@ -727,7 +732,7 @@
 				<string>{71, 72}</string>
 				<string>{72, 72}</string>
 				<string>{72, 71}</string>
-				<string>{30, 30}</string>
+				<string>{64, 64}</string>
 			</object>
 		</object>
 		<string key="IBCocoaTouchPluginVersion">933</string>
