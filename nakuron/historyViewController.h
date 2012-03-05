@@ -20,6 +20,7 @@
 @property (retain, nonatomic) IBOutlet UILabel *difficultyLabel;
 @property (retain, nonatomic) IBOutlet UILabel *probNumLabel;
 @property (retain, nonatomic) IBOutlet UILabel *datetimeLabel;
+@property (retain, nonatomic) IBOutlet UILabel *currentLabel;
 @property (retain, nonatomic) IBOutlet UILabel *scoreLabel;
 - (IBAction)rightButton;
 - (IBAction)leftButton;

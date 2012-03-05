@@ -257,7 +257,6 @@ enum {
   hmdl.insert(kv);
 
   finishVC = [[finishViewController alloc] initWithNibName:@"finishViewController" bundle:nil];
-  finishVC.view.bounds = finishVC.view.frame = [UIScreen mainScreen].bounds;
   [finishVC setParameters:self];
   [self.view addSubview:finishVC.view];
   [self disableAcc];
@@ -516,7 +515,6 @@ enum {
 - (IBAction)menuButton {
   NSLog(@"menu");
   menuView = [[menuViewController alloc] initWithNibName:@"menuViewController" bundle:nil];
-  menuView.view.bounds = menuView.view.frame = [UIScreen mainScreen].bounds;
   [self.view addSubview:menuView.view];
   [menuView setParameters:self difficulty:difficulty probNum:probNum];
   [self disableAcc];
