@@ -187,7 +187,18 @@ bool AbstractModel::insert(KeyValue kv) {
     ks += ", "; vs += ", ";
   }
   query += "("+ks+") VALUES ("+vs+");";
-  return executeUpdate(query);
+  bool update = executeUpdate(query);
+  if (max > 0) {
+    Find(fc)->order("id");
+    vector<KeyValue> all = this->findAll(fc);
+    if (all.size() > max) {
+      for (int i = 0; i < all.size() - max; i++) {
+        Find(fc)->where("id","=",all[i][primary]);
+        this->remove(fc);
+      }
+    }
+  }
+  return update;
 }
 
 bool AbstractModel::update(KeyValue kv, auto_ptr<FindClause> fc) {

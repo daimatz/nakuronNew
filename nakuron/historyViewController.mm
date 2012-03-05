@@ -146,10 +146,14 @@ using namespace std;
   [super dealloc];
 }
 - (IBAction)rightButton {
-  [self updateShowing:current+1];
+  if (current == histories.size() - 1) current = 0;
+  else current++;
+  [self updateShowing:current];
 }
 
 - (IBAction)leftButton {
-  [self updateShowing:current-1];
+  if (current == 0) current = histories.size() - 1;
+  else current--;
+  [self updateShowing:current];
 }
 @end
