@@ -304,7 +304,23 @@ enum {
 }
 
 - (IBAction)quitButton {
-  [self didDropAllBalls];
+  UIAlertView *alert = [[UIAlertView alloc]
+                        initWithTitle:@"Quit"
+                        message:@"この状態で終了しますか？\n履歴には追加されます。"
+                        delegate:self
+                        cancelButtonTitle:@"Cancel"
+                        otherButtonTitles:@"OK", nil];
+  [alert show];
+  [alert release];
+}
+
+// アラートをキャッチする
+-(void)alertView:(UIAlertView*)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+  if (buttonIndex == 1) {
+    // OK ボタン
+    [self didDropAllBalls];
+  }
 }
 
 -(void)updateState:(Direction)d{
