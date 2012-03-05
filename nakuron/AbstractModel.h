@@ -75,6 +75,7 @@ public:
   ValueType getFields();
 protected:
   void init();
+  void limited();
   std::vector<KeyValue> executeQuery(const std::string &query, bool no_transaction = false);
   bool executeUpdate(const std::string &query, bool no_transaction = false);
   ValueType fields;

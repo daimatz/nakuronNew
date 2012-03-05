@@ -177,6 +177,19 @@ vector<KeyValue> AbstractModel::findAll() {
   return executeQuery("SELECT * FROM `"+table+"`;");
 }
 
+void AbstractModel::limited() {
+  if (max > 0) {
+    Find(fc)->order("id");
+    vector<KeyValue> all = this->findAll(fc);
+    if (all.size() > max) {
+      for (int i = 0; i < all.size() - max; i++) {
+        Find(fc)->where("id","=",all[i][primary]);
+        this->remove(fc);
+      }
+    }
+  }
+}
+
 bool AbstractModel::insert(KeyValue kv) {
   string query = "INSERT INTO `"+table+"` ", ks, vs;
   KeyValue::iterator it = kv.begin();
@@ -188,16 +201,7 @@ bool AbstractModel::insert(KeyValue kv) {
   }
   query += "("+ks+") VALUES ("+vs+");";
   bool update = executeUpdate(query);
-  if (max > 0) {
-    Find(fc)->order("id");
-    vector<KeyValue> all = this->findAll(fc);
-    if (all.size() > max) {
-      for (int i = 0; i < all.size() - max; i++) {
-        Find(fc)->where("id","=",all[i][primary]);
-        this->remove(fc);
-      }
-    }
-  }
+  limited();
   return update;
 }
 
@@ -210,7 +214,9 @@ bool AbstractModel::update(KeyValue kv, auto_ptr<FindClause> fc) {
     kvs += ", ";
   }
   query += kvs+fc->updateString(this);
-  return executeUpdate(query);
+  bool update = executeUpdate(query);
+  limited();
+  return update;
 }
 
 bool AbstractModel::remove(auto_ptr<FindClause> fc) {
