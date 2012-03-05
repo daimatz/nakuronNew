@@ -83,6 +83,7 @@
 - (IBAction)menuButton;
 - (IBAction)favoriteButton;
 - (IBAction)useAccButton;
+- (IBAction)quitButton;
 
 - (void)startAnimation;
 - (void)stopAnimation;

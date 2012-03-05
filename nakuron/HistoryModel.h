@@ -7,6 +7,7 @@ public:
   HistoryModel() {
     table = "history";
     primary = "id";
+    max = HISTORY_MAX;
     fields["id"] = "int";
     fields["probNum"] = "int";
     fields["difficulty"] = "int";

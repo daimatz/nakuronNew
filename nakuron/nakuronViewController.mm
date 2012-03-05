@@ -257,7 +257,6 @@ enum {
   hmdl.insert(kv);
 
   finishVC = [[finishViewController alloc] initWithNibName:@"finishViewController" bundle:nil];
-  finishVC.view.bounds = finishVC.view.frame = [UIScreen mainScreen].bounds;
   [finishVC setParameters:self];
   [self.view addSubview:finishVC.view];
   [self disableAcc];
@@ -303,6 +302,27 @@ enum {
   curVel = 0.0;
   [self updateStateRightButton];
 }
+
+- (IBAction)quitButton {
+  UIAlertView *alert = [[UIAlertView alloc]
+                        initWithTitle:@"Quit"
+                        message:@"この状態で終了しますか？\n履歴には追加されます。"
+                        delegate:self
+                        cancelButtonTitle:@"Cancel"
+                        otherButtonTitles:@"OK", nil];
+  [alert show];
+  [alert release];
+}
+
+// アラートをキャッチする
+-(void)alertView:(UIAlertView*)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+  if (buttonIndex == 1) {
+    // OK ボタン
+    [self didDropAllBalls];
+  }
+}
+
 -(void)updateState:(Direction)d{
   [self coordInit];
   for(int c=1;c < boardSize-1;c++){
@@ -511,7 +531,6 @@ enum {
 - (IBAction)menuButton {
   NSLog(@"menu");
   menuView = [[menuViewController alloc] initWithNibName:@"menuViewController" bundle:nil];
-  menuView.view.bounds = menuView.view.frame = [UIScreen mainScreen].bounds;
   [self.view addSubview:menuView.view];
   [menuView setParameters:self difficulty:difficulty probNum:probNum];
   [self disableAcc];
@@ -851,5 +870,4 @@ enum {
 - (void)backFromMenu {
   [self backFromSubview];
 }
-
 @end

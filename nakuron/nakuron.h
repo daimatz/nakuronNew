@@ -32,6 +32,8 @@ const int HOLE_RATIO = 80;
 
 const float ANGLE_NUTRAL = 30.0f; // この角度以下は NUTRAL
 
+const int HISTORY_MAX = 100;
+
 const std::string DB_BASENAME = "nakuron.db";
 #define DOCUMENT_DIR documentDir()
 std::string documentDir();

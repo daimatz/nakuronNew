@@ -136,7 +136,6 @@
 - (IBAction)historyButton {
   NSLog(@"history");
   historyVC = [[historyViewController alloc] initWithNibName:@"historyViewController" bundle:nil];
-  historyVC.view.bounds = historyVC.view.frame = [UIScreen mainScreen].bounds;
   [self.view addSubview:historyVC.view];
   [historyVC setParameters:self nakuron:superVC];
 }
