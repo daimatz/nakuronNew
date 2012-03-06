@@ -262,7 +262,7 @@
 					<object class="IBUILabel" id="692469317">
 						<reference key="NSNextResponder" ref="184854543"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 399}, {50, 21}}</string>
+						<string key="NSFrame">{{20, 399}, {60, 21}}</string>
 						<reference key="NSSuperview" ref="184854543"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="792388183"/>
@@ -271,7 +271,7 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<string key="IBUIText">Score</string>
+						<string key="IBUIText">点数</string>
 						<reference key="IBUITextColor" ref="551875788"/>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">1</int>
@@ -282,7 +282,7 @@
 					<object class="IBUILabel" id="908848285">
 						<reference key="NSNextResponder" ref="184854543"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 419}, {42, 21}}</string>
+						<string key="NSFrame">{{20, 419}, {60, 21}}</string>
 						<reference key="NSSuperview" ref="184854543"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="332744548"/>
@@ -291,7 +291,7 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<string key="IBUIText">Rest</string>
+						<string key="IBUIText">残り</string>
 						<reference key="IBUITextColor" ref="551875788"/>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">1</int>
@@ -323,7 +323,7 @@
 					<object class="IBUILabel" id="938558120">
 						<reference key="NSNextResponder" ref="184854543"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 439}, {47, 21}}</string>
+						<string key="NSFrame">{{20, 439}, {60, 21}}</string>
 						<reference key="NSSuperview" ref="184854543"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="386930627"/>
@@ -332,7 +332,7 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<string key="IBUIText">Times</string>
+						<string key="IBUIText">手数</string>
 						<reference key="IBUITextColor" ref="551875788"/>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">1</int>
@@ -805,9 +805,11 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>restLabel</string>
 							<string>scoreLabel</string>
+							<string>timesLabel</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>UILabel</string>
 							<string>UILabel</string>
 							<string>UILabel</string>
 						</object>
@@ -818,6 +820,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>restLabel</string>
 							<string>scoreLabel</string>
+							<string>timesLabel</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -827,6 +830,10 @@
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">scoreLabel</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">timesLabel</string>
 								<string key="candidateClassName">UILabel</string>
 							</object>
 						</object>
