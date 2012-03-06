@@ -237,9 +237,9 @@ void drawMapToSubview(Difficulty difficulty, int probNum, UIView *view) {
                             initWithFrame:frame] autorelease];
       NSString *imgFile;
       if (pd[r][c].piece == WALL) {
-        imgFile = @"Brick01-p.jpg";
+        imgFile = @"wall.png";
       } else if (pd[r][c].piece == HOLE) {
-        imgFile = [NSString stringWithFormat:@"h%@.png", cs[colorToInt(pd[r][c].color)]];
+        imgFile = [NSString stringWithFormat:@"h%@2.png", cs[colorToInt(pd[r][c].color)]];
       } else {
         imgFile = [NSString stringWithFormat:@"b%@.png", cs[colorToInt(pd[r][c].color)]];
       }
@@ -282,7 +282,7 @@ std::vector<std::vector<PieceData> > getBoard(Difficulty difficulty, int probNum
   for(int r=0;r<boardSize;r++){
     vector<PieceData> tv(boardSize);
     for(int c=0;c<boardSize;c++){
-      if((r==0 && c==0) || (r==boardSize-1 && c==boardSize-1)) tv[c] = PieceData(WALL, BROWN);
+      if((r==0 && c==0) || (r==boardSize-1 && c==boardSize-1)) tv[c] = PieceData(WALL, BLACK);
       else if(r==0 || c==0 || r==boardSize-1 || c==boardSize-1 ){
         tv[c] = (hash.randomInt(100) < hole)
         ? PieceData(HOLE, intToColor(hash.randomInt(colorNum)))

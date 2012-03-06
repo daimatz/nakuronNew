@@ -91,7 +91,7 @@ enum {
 
   //texture読み込み
   piecenumToTexture.insert(make_pair(PieceData(EMPTY, WHITE),loadTexture(@"empty.png")));
-  piecenumToTexture.insert(make_pair(PieceData(WALL, BLACK), loadTexture(@"wall2.png")));
+  piecenumToTexture.insert(make_pair(PieceData(WALL, BLACK), loadTexture(@"wall.png")));
   piecenumToTexture.insert(make_pair(PieceData(WALL, RED_BROWN), loadTexture(@"Brick02-p.jpg")));
   piecenumToTexture.insert(make_pair(PieceData(WALL, BROWN), loadTexture(@"Brick01-p.jpg")));
   NSString *bgnames[]={@"bg.jpg",@"bg4.jpg",@"bg3.jpg",@"bg2.jpg"};
@@ -100,7 +100,7 @@ enum {
 
   
   //効果音読み込み
-  NSString *correctSoundFilePath = [[NSBundle mainBundle] pathForResource:@"se_maoudamashii_se_fall01"ofType:@"wav"];
+  NSString *correctSoundFilePath = [[NSBundle mainBundle] pathForResource:@"se_maoudamashii_system47"ofType:@"wav"];
   NSURL *correctSoundFileURL = [NSURL fileURLWithPath:correctSoundFilePath];
   correctSound = [[AVAudioPlayer alloc] initWithContentsOfURL:correctSoundFileURL error:nil];
   [correctSound prepareToPlay];
