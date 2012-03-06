@@ -119,6 +119,9 @@
 - (void)enableAcc;
 - (void)disableAcc;
 
+- (void)enableSE;
+- (void)disableSE;
+
 - (void)backFromSubview;
 - (void)backFromFinish;
 - (void)backFromMenu;

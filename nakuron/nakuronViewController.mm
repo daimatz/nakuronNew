@@ -870,6 +870,14 @@ enum {
   acc.delegate = nil;
 }
 
+- (void)enableSE {
+  NSLog(@"enable SE");
+}
+
+- (void)disableSE {
+  NSLog(@"disable SE");
+}
+
 -(void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration{
   float angle;
   UIAccelerationValue x = acceleration.x, y = acceleration.y, z = acceleration.z;
