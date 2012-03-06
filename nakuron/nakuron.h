@@ -71,6 +71,7 @@ typedef enum {
   LEFT,
   DOWN,
   RIGHT,
+  NONE,
 } Direction;
 
 struct PieceData;

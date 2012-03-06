@@ -140,6 +140,7 @@ enum {
   score = 0;
   initialBallNum = restBallNum;
   times = 0;
+  pushedDir = NONE;
   [self updateScore:0];
   [self updateRestBallNum:restBallNum];
   [self updateTimes:0];
