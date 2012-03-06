@@ -5,6 +5,7 @@
 using namespace std;
 
 @implementation historyViewController
+@synthesize display;
 @synthesize currentLabel;
 @synthesize difficultyLabel;
 @synthesize probNumLabel;
@@ -47,7 +48,11 @@ using namespace std;
     probNumLabel.text = stringToNSString(histories[current]["probNum"]);
     datetimeLabel.text = stringToNSString(histories[current]["created"]);
     currentLabel.text = stringToNSString("No. "+intToString(current+1));
-    scoreLabel.text = stringToNSString(histories[current]["score"]);
+    string scoreStr;
+    scoreStr += histories[current]["score"];
+    scoreStr += " / " + histories[current]["nums"];
+    scoreStr += " / " + histories[current]["times"];
+    scoreLabel.text = stringToNSString(scoreStr);
 
     drawMapToSubview(difficulty, probNum, historyMapView);
   }
@@ -64,6 +69,16 @@ using namespace std;
   Find(fc)->order("id","desc");
   histories = hmdl.findAll(fc);
   [self updateShowing:0]; // 最初は履歴の 0 番目を表示
+  
+  UISwipeGestureRecognizer *left = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(leftSwipe:)];
+  left.direction = UISwipeGestureRecognizerDirectionLeft;
+  left.delegate = self;
+  [display addGestureRecognizer:left];
+
+  UISwipeGestureRecognizer *right = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(rightSwipe:)];
+  right.direction = UISwipeGestureRecognizerDirectionRight;
+  right.delegate = self;
+  [display addGestureRecognizer:right];
 }
 
 - (void)viewDidUnload
@@ -75,6 +90,7 @@ using namespace std;
   [historyMapView release];
   historyMapView = nil;
   [self setCurrentLabel:nil];
+  [self setDisplay:nil];
   [super viewDidUnload];
   // Release any retained subviews of the main view.
   // e.g. self.myOutlet = nil;
@@ -148,12 +164,24 @@ using namespace std;
   }
   [historyMapView release];
   [currentLabel release];
+  [display release];
   [super dealloc];
 }
+
+-(void)rightSwipe:(id)sender {
+  NSLog(@"right swipe");
+  [self leftButton];
+}
+
 - (IBAction)rightButton {
   if (current == histories.size() - 1) current = 0;
   else current++;
   [self updateShowing:current];
+}
+
+-(void)leftSwipe:(id)sender {
+  NSLog(@"left swipe");
+  [self rightButton];
 }
 
 - (IBAction)leftButton {
