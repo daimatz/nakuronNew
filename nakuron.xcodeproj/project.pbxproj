@@ -78,6 +78,7 @@
 		27C7ADC614C53564006CF983 /* EAGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 27C7ADC514C53564006CF983 /* EAGLView.mm */; };
 		27C7ADC914C53564006CF983 /* nakuronViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 27C7ADC814C53564006CF983 /* nakuronViewController.mm */; };
 		27C7ADCC14C53564006CF983 /* nakuronViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27C7ADCA14C53564006CF983 /* nakuronViewController.xib */; };
+		27E04F28151050B8007ED333 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 27E04F27151050B8007ED333 /* icon.png */; };
 		27E36D6114C53A3E00004587 /* graphicUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = 27E36D6014C53A3E00004587 /* graphicUtil.mm */; };
 		27E8299C150510300094C4B6 /* hblue2.png in Resources */ = {isa = PBXBuildFile; fileRef = 27E82997150510300094C4B6 /* hblue2.png */; };
 		27E8299D150510300094C4B6 /* hgreen2.png in Resources */ = {isa = PBXBuildFile; fileRef = 27E82998150510300094C4B6 /* hgreen2.png */; };
@@ -214,6 +215,7 @@
 		27C7ADC714C53564006CF983 /* nakuronViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = nakuronViewController.h; sourceTree = "<group>"; };
 		27C7ADC814C53564006CF983 /* nakuronViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = nakuronViewController.mm; sourceTree = "<group>"; };
 		27C7ADCB14C53564006CF983 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/nakuronViewController.xib; sourceTree = "<group>"; };
+		27E04F27151050B8007ED333 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		27E36D5F14C53A3E00004587 /* graphicUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graphicUtil.h; sourceTree = "<group>"; };
 		27E36D6014C53A3E00004587 /* graphicUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = graphicUtil.mm; sourceTree = "<group>"; };
 		27E82997150510300094C4B6 /* hblue2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hblue2.png; sourceTree = "<group>"; };
@@ -428,6 +430,7 @@
 		27C7AD9814C53564006CF983 = {
 			isa = PBXGroup;
 			children = (
+				27E04F27151050B8007ED333 /* icon.png */,
 				27E829A615051BBE0094C4B6 /* AVFoundation.framework */,
 				235190AF14E2FEF600A53055 /* libxml2.dylib */,
 				27C7ADB114C53564006CF983 /* nakuron */,
@@ -590,6 +593,7 @@
 				27E829B61505C3460094C4B6 /* se_maoudamashii_se_fall01.wav in Resources */,
 				27E829B71505C3460094C4B6 /* se_maoudamashii_se_fall02.wav in Resources */,
 				27E829B91505C3660094C4B6 /* se_maoudamashii_system47.wav in Resources */,
+				27E04F28151050B8007ED333 /* icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
