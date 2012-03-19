@@ -78,13 +78,13 @@
 @property (retain, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (retain, nonatomic) IBOutlet UILabel *restLabel;
 @property (retain, nonatomic) IBOutlet UILabel *timesLabel;
+@property (retain, nonatomic) IBOutlet UIButton *useAccButtonLabel;
 
 - (IBAction)rightButton;
 - (IBAction)downButton;
 - (IBAction)leftButton;
 - (IBAction)upButton;
 - (IBAction)menuButton;
-- (IBAction)favoriteButton;
 - (IBAction)useAccButton;
 - (IBAction)quitButton;
 
