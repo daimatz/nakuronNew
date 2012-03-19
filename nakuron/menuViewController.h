@@ -33,7 +33,6 @@
 - (IBAction)difficultyChanging:(UISlider*)slider;
 - (IBAction)historyButton;
 - (void)backFromHistory;
-@property (retain, nonatomic) IBOutlet UISwitch *SESwitch;
 
 - (void)setParameters:(nakuronViewController*)n difficulty:(Difficulty)d probNum:(int)p;
 
