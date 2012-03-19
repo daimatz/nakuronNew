@@ -635,7 +635,7 @@ enum {
     int cnt = 0;
     bool endflag = true;
     curVel +=0.2f;
-    int maxVanishState = 30;
+    //int maxVanishState = 30;
     int maxPlusOneEffectState = 60;
     for(int r=0;r<boardSize;r++){
       GLuint texture = piecenumToTexture[pieces[r][0]];
@@ -667,29 +667,29 @@ enum {
               [correctSound play];
               plusOneEffects.push_back(PlusOneEffectState(0,curCoord[r][c],colorToInt(prevPieces[r][c].color)));
             }
-            if([self isHoleCoord:curCoord[r][c]])vanishBalls.push_back(VanishState(0,curCoord[r][c],prevPieces[r][c]));
+            //if([self isHoleCoord:curCoord[r][c]])vanishBalls.push_back(VanishState(0,curCoord[r][c],prevPieces[r][c]));
           }
         }
         if(curCoord[r][c] != targetCoord[r][c])drawTexture(real(curCoord[r][c]),imag(curCoord[r][c]),cellSize,cellSize, texture,255,255,255,255);
         else drawTexture(real(curCoord[r][c]),imag(curCoord[r][c]),cellSize,cellSize, texture,255,255,255,255);
       }
     }
-    int vanishBallSize = vanishBalls.size();
+    /*int vanishBallSize = vanishBalls.size();
     for(int i=0;i<vanishBallSize;i++){
-      drawTexture(real(vanishBalls[i].p), imag(vanishBalls[i].p), cellSize,cellSize,piecenumToTexture[vanishBalls[i].pd],
+      /*drawTexture(real(vanishBalls[i].p), imag(vanishBalls[i].p), cellSize,cellSize,piecenumToTexture[vanishBalls[i].pd],
                   255, 255, 255, 255.0-255.0*vanishBalls[i].num/maxVanishState);
       vanishBalls[i].num++;
-    }
+    }*/
     int plusOneEffectsSize = plusOneEffects.size();
     for(int i=0;i<plusOneEffectsSize;i++){
       PlusOneEffectState &ps=plusOneEffects[i];
       drawTexture(real(ps.p), imag(ps.p), cellSize/2,cellSize/2,plusOneTexture[ps.colornum],
                   255, 255, 255, 255);
-      ps.p+=complex<float>(0,0.2);
+      ps.p+=complex<float>(0,0.4);
       ps.num++;
     }
-    while(!vanishBalls.empty() && vanishBalls.front().num==maxVanishState) vanishBalls.pop_front();
-    if(!vanishBalls.empty()) endflag = false;
+    //while(!vanishBalls.empty() && vanishBalls.front().num==maxVanishState) vanishBalls.pop_front();
+    //if(!vanishBalls.empty()) endflag = false;
     while(!plusOneEffects.empty() && plusOneEffects.front().num==maxPlusOneEffectState) plusOneEffects.pop_front();
     if(!plusOneEffects.empty()) endflag = false;
     usedDebugballMoveFlag = false;
