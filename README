@@ -1,12 +1,2 @@
 new nakuron
 
-There isn't needed header file 'nakuron-twitter.h' because this file includes
-Twitter Authentication infomation.
-If you want to build and run this project, please create 'nakuron-twitter.h' and
-write following:
-
-#pragma once
-#define TWITTER_AUTHDATA_KEY @"twitterAuthData"
-#define kOAuthConsumerKey @"consumer key"
-#define kOAuthConsumerSecret @"consumer secret"
-

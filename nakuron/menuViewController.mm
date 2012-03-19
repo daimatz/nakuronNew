@@ -7,6 +7,7 @@
 #import "nakuronViewController.h"
 
 @implementation menuViewController
+@synthesize SESwitch;
 
 @synthesize probNumField;
 @synthesize difficultyLabel;
@@ -40,6 +41,9 @@
 
   // スライド中もイベント通知
   difficultySlider.continuous = YES;
+
+  SESwitch.on = YES;
+  [SESwitch addTarget:self action:@selector(SEChanged:) forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)viewDidUnload
@@ -47,6 +51,7 @@
   [self setDifficultyLabel:nil];
   [self setDifficultySlider:nil];
   [self setProbNumField:nil];
+  [self setSESwitch:nil];
   [super viewDidUnload];
   // Release any retained subviews of the main view.
   // e.g. self.myOutlet = nil;
@@ -133,6 +138,15 @@
   difficultyLabel.text = stringToNSString(difficultyToString(newDifficulty));
 }
 
+- (void) SEChanged:(UISwitch*)sw {
+  NSLog(@"SESwitch");
+  if (sw.on) {
+    [superVC enableSE];
+  } else {
+    [superVC disableSE];
+  }
+}
+
 - (IBAction)historyButton {
   NSLog(@"history");
   historyVC = [[historyViewController alloc] initWithNibName:@"historyViewController" bundle:nil];
@@ -163,6 +177,7 @@
   [difficultyLabel release];
   [difficultySlider release];
   [probNumField release];
+  [SESwitch release];
   [super dealloc];
 }
 

@@ -65,13 +65,8 @@ enum {
   }
 }
 
-//#include "ModelTest.h"
-#include "nakuron-twitter.h"
 - (void)awakeFromNib
 {
-  //ModelTest::test();
-  //[[NSUserDefaults standardUserDefaults] removeObjectForKey:TWITTER_AUTHDATA_KEY];
-
   //常にES1を使う
   EAGLContext *aContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
 
@@ -141,6 +136,7 @@ enum {
   score = 0;
   initialBallNum = restBallNum;
   times = 0;
+  pushedDir = NONE;
   [self updateScore:0];
   [self updateRestBallNum:restBallNum];
   [self updateTimes:0];
@@ -880,6 +876,14 @@ enum {
 - (void)disableAcc {
   UIAccelerometer *acc = [UIAccelerometer sharedAccelerometer];  
   acc.delegate = nil;
+}
+
+- (void)enableSE {
+  NSLog(@"enable SE");
+}
+
+- (void)disableSE {
+  NSLog(@"disable SE");
 }
 
 -(void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration{

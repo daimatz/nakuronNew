@@ -24,9 +24,6 @@
 #include <complex>
 #include <deque>
 
-#import "SA_OAuthTwitterEngine.h"
-#include "nakuron-twitter.h"
-
 @interface nakuronViewController : UIViewController <UIAccelerometerDelegate>
 {
 @private
@@ -73,9 +70,6 @@
   
   AVAudioPlayer *correctSound;
   AVAudioPlayer *pushSound;
-
-  // Twitter エンジン
-  SA_OAuthTwitterEngine *twitterEngine;
 }
 
 @property (readonly, nonatomic, getter=isAnimating) BOOL animating;
@@ -120,6 +114,9 @@
 
 - (void)enableAcc;
 - (void)disableAcc;
+
+- (void)enableSE;
+- (void)disableSE;
 
 - (void)backFromSubview;
 - (void)backFromFinish;
