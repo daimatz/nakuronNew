@@ -44,6 +44,7 @@ enum {
 @synthesize scoreLabel;
 @synthesize restLabel;
 @synthesize timesLabel;
+@synthesize useAccButtonLabel;
 
 @synthesize animating, context, displayLink;
 
@@ -160,6 +161,7 @@ enum {
   [scoreLabel release];
   [restLabel release];
   [timesLabel release];
+    [useAccButtonLabel release];
   [super dealloc];
 }
 
@@ -190,6 +192,7 @@ enum {
   [self setScoreLabel:nil];
   [self setRestLabel:nil];
   [self setTimesLabel:nil];
+    [self setUseAccButtonLabel:nil];
   [super viewDidUnload];
 
   if (program) {
@@ -571,11 +574,14 @@ enum {
   [self disableAcc];
 }
 
-- (IBAction)favoriteButton {
-}
-
 - (IBAction)useAccButton {
-  useAcc = !useAcc;
+  if (useAcc) {
+    useAcc = false;
+    [useAccButtonLabel setBackgroundImage:[UIImage imageNamed:@"star_outline_64.png"] forState:UIControlStateNormal];
+  } else {
+    useAcc = true;
+    [useAccButtonLabel setBackgroundImage:[UIImage imageNamed:@"star_64.png"] forState:UIControlStateNormal];
+  }
 }
 
 - (void)startAnimation
