@@ -677,12 +677,12 @@ enum {
           }
         }
         if(curCoord[r][c] != targetCoord[r][c])drawTexture(real(curCoord[r][c]),imag(curCoord[r][c]),cellSize,cellSize, texture,255,255,255,255);
-        else drawTexture(real(curCoord[r][c]),imag(curCoord[r][c]),cellSize,cellSize, texture,255,255,255,255);
+        //else drawTexture(real(curCoord[r][c]),imag(curCoord[r][c]),cellSize,cellSize, texture,255,255,255,255);
       }
     }
     /*int vanishBallSize = vanishBalls.size();
     for(int i=0;i<vanishBallSize;i++){
-      /*drawTexture(real(vanishBalls[i].p), imag(vanishBalls[i].p), cellSize,cellSize,piecenumToTexture[vanishBalls[i].pd],
+      drawTexture(real(vanishBalls[i].p), imag(vanishBalls[i].p), cellSize,cellSize,piecenumToTexture[vanishBalls[i].pd],
                   255, 255, 255, 255.0-255.0*vanishBalls[i].num/maxVanishState);
       vanishBalls[i].num++;
     }*/
