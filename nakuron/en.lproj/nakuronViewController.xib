@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1280</int>
-		<string key="IBDocument.SystemVersion">11C74</string>
+		<string key="IBDocument.SystemVersion">10K549</string>
 		<string key="IBDocument.InterfaceBuilderVersion">1938</string>
-		<string key="IBDocument.AppKitVersion">1138.23</string>
-		<string key="IBDocument.HIToolboxVersion">567.00</string>
+		<string key="IBDocument.AppKitVersion">1038.36</string>
+		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			<string key="NS.object.0">933</string>
@@ -131,7 +131,7 @@
 						<string key="NSFrame">{{110, 290}, {100, 100}}</string>
 						<reference key="NSSuperview" ref="184854543"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="692469317"/>
+						<reference key="NSNextKeyView" ref="792388183"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
@@ -160,17 +160,11 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
-						<object class="NSColor" key="IBUIHighlightedTitleColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MC4xOTYwNzg0MzE0IDAuMzA5ODAzOTIxNiAwLjUyMTU2ODYyNzUAA</bytes>
-						</object>
+						<int key="IBUIButtonType">1</int>
+						<reference key="IBUIHighlightedTitleColor" ref="634287916"/>
 						<object class="NSColor" key="IBUINormalTitleColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MC4xOTYwNzg0MzE0IDAuMzA5ODAzOTIxNiAwLjUyMTU2ODYyNzUAA</bytes>
-						</object>
-						<object class="NSColor" key="IBUIHighlightedTitleShadowColor" id="551875788">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MCAwIDAAA</bytes>
 						</object>
 						<reference key="IBUINormalTitleShadowColor" ref="639633850"/>
 						<object class="NSCustomResource" key="IBUIHighlightedImage" id="762670308">
@@ -244,7 +238,10 @@
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<string key="IBUIText"/>
-						<reference key="IBUITextColor" ref="551875788"/>
+						<object class="NSColor" key="IBUITextColor" id="551875788">
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MCAwIDAAA</bytes>
+						</object>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">1</int>
 						<float key="IBUIMinimumFontSize">10</float>
@@ -265,7 +262,7 @@
 						<string key="NSFrame">{{20, 399}, {50, 21}}</string>
 						<reference key="NSSuperview" ref="184854543"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="792388183"/>
+						<reference key="NSNextKeyView" ref="908848285"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<int key="IBUIContentMode">7</int>
@@ -364,23 +361,24 @@
 					<object class="IBUIButton" id="792388183">
 						<reference key="NSNextResponder" ref="184854543"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{233, 368}, {72, 37}}</string>
+						<string key="NSFrame">{{230, 377}, {80, 22}}</string>
 						<reference key="NSSuperview" ref="184854543"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="908848285"/>
-						<string key="NSReuseIdentifierKey">_NS:225</string>
+						<reference key="NSNextKeyView" ref="692469317"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
-						<int key="IBUIButtonType">1</int>
-						<string key="IBUINormalTitle">Quit...</string>
 						<reference key="IBUIHighlightedTitleColor" ref="634287916"/>
 						<object class="NSColor" key="IBUINormalTitleColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 						</object>
 						<reference key="IBUINormalTitleShadowColor" ref="639633850"/>
+						<object class="NSCustomResource" key="IBUINormalImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">quit.png</string>
+						</object>
 						<reference key="IBUIFontDescription" ref="569770678"/>
 						<reference key="IBUIFont" ref="189863622"/>
 					</object>
@@ -805,9 +803,11 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>restLabel</string>
 							<string>scoreLabel</string>
+							<string>timesLabel</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>UILabel</string>
 							<string>UILabel</string>
 							<string>UILabel</string>
 						</object>
@@ -818,6 +818,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>restLabel</string>
 							<string>scoreLabel</string>
+							<string>timesLabel</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -827,6 +828,10 @@
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">scoreLabel</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">timesLabel</string>
 								<string key="candidateClassName">UILabel</string>
 							</object>
 						</object>
@@ -854,6 +859,7 @@
 				<string>arrow-left.png</string>
 				<string>arrow-right.png</string>
 				<string>arrow-up.png</string>
+				<string>quit.png</string>
 				<string>settings_64.png</string>
 			</object>
 			<object class="NSMutableArray" key="dict.values">
@@ -862,6 +868,7 @@
 				<string>{100, 100}</string>
 				<string>{150, 150}</string>
 				<string>{150, 150}</string>
+				<string>{120, 30}</string>
 				<string>{64, 64}</string>
 			</object>
 		</object>

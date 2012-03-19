@@ -126,6 +126,16 @@ struct VanishState{
     pd = _pd;
   }
 };
+struct PlusOneEffectState{
+  int num;
+  std::complex<float> p;
+  int colornum;
+  PlusOneEffectState(int n,std::complex<float> _p,int coln){
+    num = n;
+    p = _p;
+    colornum = coln;
+  }
+};
 struct BoardCoord{
   int r,c;
 };

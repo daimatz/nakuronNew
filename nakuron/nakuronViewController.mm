@@ -93,11 +93,11 @@ enum {
   //texture読み込み
   piecenumToTexture.insert(make_pair(PieceData(EMPTY, WHITE),loadTexture(@"empty.png")));
   piecenumToTexture.insert(make_pair(PieceData(WALL, BLACK), loadTexture(@"wall.png")));
-  piecenumToTexture.insert(make_pair(PieceData(WALL, RED_BROWN), loadTexture(@"Brick02-p.jpg")));
-  piecenumToTexture.insert(make_pair(PieceData(WALL, BROWN), loadTexture(@"Brick01-p.jpg")));
-  NSString *bgnames[]={@"bg.jpg",@"bg4.jpg",@"bg3.jpg",@"bg2.jpg"};
-  for(int i=0;i<4;i++) bgTexture[i] = loadTexture(bgnames[i]);
-  boardTexture = loadTexture(@"wood-texture_beiz.jp_S30182.jpg");
+  //piecenumToTexture.insert(make_pair(PieceData(WALL, RED_BROWN), loadTexture(@"Brick02-p.jpg")));
+  //piecenumToTexture.insert(make_pair(PieceData(WALL, BROWN), loadTexture(@"Brick01-p.jpg")));
+  //NSString *bgnames[]={@"bg.jpg",@"bg4.jpg",@"bg3.jpg",@"bg2.jpg"};
+  //for(int i=0;i<4;i++) bgTexture[i] = loadTexture(bgnames[i]);
+  //boardTexture = loadTexture(@"wood-texture_beiz.jp_S30182.jpg");
 
   
   //効果音読み込み
@@ -111,6 +111,7 @@ enum {
   for(int i=0;i<colorNum;i++) {
     piecenumToTexture.insert(make_pair(PieceData(BALL, s[i]), loadTexture([NSString stringWithFormat:@"b%@.png",cs[i]])));
     piecenumToTexture.insert(make_pair(PieceData(HOLE, s[i]), loadTexture([NSString stringWithFormat:@"h%@2.png",cs[i]])));
+    plusOneTexture[i]=loadTexture([NSString stringWithFormat:@"%@1-1.png",cs[i]]);
   }
   //最初はballは移動してないので
   ballMoveFlag = false;
@@ -633,13 +634,13 @@ enum {
 {
   //drawTexture(0,0 ,boardSizePx, boardSizePx, boardTexture, 255,255,255,255);
   //drawTexture(0,0 ,320.0, 480.0,bgTexture[difficultyToInt(difficulty)],255,255,255,255);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  glEnable(GL_BLEND);
+  
   if(ballMoveFlag){
     int cnt = 0;
     bool endflag = true;
     curVel +=0.2f;
     int maxVanishState = 30;
+    int maxPlusOneEffectState = 60;
     for(int r=0;r<boardSize;r++){
       GLuint texture = piecenumToTexture[pieces[r][0]];
       drawTexture(real(curCoord[r][0]),imag(curCoord[r][0]),cellSize,cellSize, texture,255,255,255,255);
@@ -652,6 +653,8 @@ enum {
       texture = piecenumToTexture[pieces[boardSize-1][c]];
       drawTexture(real(curCoord[boardSize-1][c]),imag(curCoord[boardSize-1][c]),cellSize,cellSize, texture,255,255,255,255);
     }
+    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_BLEND);
     complex<float> dv = polar(curVel,(float)M_PI_2*directionToInt(pushedDir));
     for(int r = 1; r < boardSize-1; r++) {
       for (int c = 1; c < boardSize-1; c++) {
@@ -666,6 +669,7 @@ enum {
             if(correctEffect[r][c]){
               [correctSound setCurrentTime:0.0f];
               [correctSound play];
+              plusOneEffects.push_back(PlusOneEffectState(0,curCoord[r][c],colorToInt(prevPieces[r][c].color)));
             }
             if([self isHoleCoord:curCoord[r][c]])vanishBalls.push_back(VanishState(0,curCoord[r][c],prevPieces[r][c]));
           }
@@ -680,8 +684,18 @@ enum {
                   255, 255, 255, 255.0-255.0*vanishBalls[i].num/maxVanishState);
       vanishBalls[i].num++;
     }
+    int plusOneEffectsSize = plusOneEffects.size();
+    for(int i=0;i<plusOneEffectsSize;i++){
+      PlusOneEffectState &ps=plusOneEffects[i];
+      drawTexture(real(ps.p), imag(ps.p), cellSize/2,cellSize/2,plusOneTexture[ps.colornum],
+                  255, 255, 255, 255);
+      ps.p+=complex<float>(0,0.2);
+      ps.num++;
+    }
     while(!vanishBalls.empty() && vanishBalls.front().num==maxVanishState) vanishBalls.pop_front();
     if(!vanishBalls.empty()) endflag = false;
+    while(!plusOneEffects.empty() && plusOneEffects.front().num==maxPlusOneEffectState) plusOneEffects.pop_front();
+    if(!plusOneEffects.empty()) endflag = false;
     usedDebugballMoveFlag = false;
     if(endflag) {
       ballMoveFlag = false;
@@ -700,7 +714,6 @@ enum {
       }
     }
   }
-  glEnable(GL_BLEND);
 }
 
 - (BOOL)compileShader:(GLuint *)shader type:(GLenum)type file:(NSString *)file

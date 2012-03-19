@@ -51,6 +51,7 @@
   std::complex<float> curCoord[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2];
   bool correctEffect[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2];
   std::deque<VanishState> vanishBalls;
+  std::deque<PlusOneEffectState> plusOneEffects;
   
   Direction pushedDir;
   float curVel;
@@ -67,6 +68,7 @@
   
   std::map<PieceData, GLuint> piecenumToTexture;
   GLuint boardTexture,bgTexture[4];
+  GLuint plusOneTexture[4];
   bool useAcc;
   
   AVAudioPlayer *correctSound;
