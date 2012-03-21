@@ -241,6 +241,11 @@ enum {
   return complex<float>(boardLeftLowerX + c*cellSize+cellSize/2,
                         boardLeftLowerY+boardSizePx-(r+1)*cellSize+cellSize/2);
 }
+-(pair<int,int>)getRCCoord:(complex<float>)p{
+  int r = (int)((real(p)-boardLeftLowerX-cellSize/2)/cellSize);
+  int c = (int)(-(imag(p)-boardLeftLowerY-boardSizePx-cellSize/2)/cellSize)-1;
+  return pair<int,int>(r,c);
+}
 
 - (void)updateScore:(int)nscore {
   score = nscore;
@@ -281,6 +286,17 @@ enum {
   [self disableAcc];
 }
 
+-(void)checkFixPiece{
+  for(int r=0;r<boardSize;r++){
+    for(int c=0;c<boardSize;c++){
+      if(prevPieces[r][c].piece != EMPTY){
+        GLuint texture = piecenumToTexture[prevPieces[r][c]];
+        complex<float> p = [self getCoordRC:r C:c];
+        if(curCoord[r][c] == targetCoord[r][c]) fixPieces.push_back(BasicImageData(p,texture) );
+      }
+    }
+  }
+}
 - (IBAction)downButton {
   if (ballMoveFlag || pushedDir == DOWN) return;
   dScore = 0;
@@ -290,7 +306,9 @@ enum {
   pushedDir = DOWN;
   curVel = 0.0;
   times++;
+  fixPieces.clear();
   [self updateStateDownButton];
+  [self checkFixPiece];
 }
 
 - (IBAction)leftButton {
@@ -302,7 +320,9 @@ enum {
   pushedDir = LEFT;
   curVel = 0.0;
   times++;
+  fixPieces.clear();
   [self updateStateLeftButton];
+  [self checkFixPiece];
 }
 
 - (IBAction)upButton {
@@ -314,7 +334,9 @@ enum {
   pushedDir = UP;
   curVel = 0.0;
   times++;
+  fixPieces.clear();
   [self updateStateUpButton];
+  [self checkFixPiece];
 }
 
 - (IBAction)rightButton {
@@ -327,7 +349,9 @@ enum {
   pushedDir = RIGHT;
   curVel = 0.0;
   times++;
+  fixPieces.clear();
   [self updateStateRightButton];
+  [self checkFixPiece];
 }
 
 - (IBAction)quitButton {
@@ -638,27 +662,19 @@ enum {
 {
   //drawTexture(0,0 ,boardSizePx, boardSizePx, boardTexture, 255,255,255,255);
   //drawTexture(0,0 ,320.0, 480.0,bgTexture[difficultyToInt(difficulty)],255,255,255,255);
-  
+  glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+  glEnable(GL_BLEND);
   if(ballMoveFlag){
     int cnt = 0;
     bool endflag = true;
     curVel +=0.2f;
     //int maxVanishState = 30;
     int maxPlusOneEffectState = 60;
-    for(int r=0;r<boardSize;r++){
-      GLuint texture = piecenumToTexture[pieces[r][0]];
-      drawTexture(real(curCoord[r][0]),imag(curCoord[r][0]),cellSize,cellSize, texture,255,255,255,255);
-      texture = piecenumToTexture[pieces[r][boardSize-1]];
-      drawTexture(real(curCoord[r][boardSize-1]),imag(curCoord[r][boardSize-1]),cellSize,cellSize, texture,255,255,255,255);
+    int fixPiecesSize = fixPieces.size();
+    for(int i=0;i<fixPiecesSize;i++){
+      BasicImageData &bi = fixPieces[i];
+      drawTexture(real(bi.p),imag(bi.p),cellSize,cellSize,bi.texture,255,255,255,255);
     }
-    for(int c=0;c<boardSize;c++){
-      GLuint texture = piecenumToTexture[pieces[0][c]];
-      drawTexture(real(curCoord[0][c]),imag(curCoord[0][c]),cellSize,cellSize, texture,255,255,255,255);
-      texture = piecenumToTexture[pieces[boardSize-1][c]];
-      drawTexture(real(curCoord[boardSize-1][c]),imag(curCoord[boardSize-1][c]),cellSize,cellSize, texture,255,255,255,255);
-    }
-    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-    glEnable(GL_BLEND);
     complex<float> dv = polar(curVel,(float)M_PI_2*directionToInt(pushedDir));
     for(int r = 1; r < boardSize-1; r++) {
       for (int c = 1; c < boardSize-1; c++) {
@@ -676,10 +692,13 @@ enum {
               plusOneEffects.push_back(PlusOneEffectState(0,curCoord[r][c],colorToInt(prevPieces[r][c].color)));
             }
             //if([self isHoleCoord:curCoord[r][c]])vanishBalls.push_back(VanishState(0,curCoord[r][c],prevPieces[r][c]));
+            if(![self isHoleCoord:curCoord[r][c]]) {
+              pair<int,int> rc = [self getRCCoord:curCoord[r][c]];
+              fixPieces.push_back(BasicImageData([self getCoordRC:rc.first C:rc.second],piecenumToTexture[prevPieces[r][c]]));
+            }
           }
         }
         if(curCoord[r][c] != targetCoord[r][c])drawTexture(real(curCoord[r][c]),imag(curCoord[r][c]),cellSize,cellSize, texture,255,255,255,255);
-        else if(pieces[r][c].piece == WALL || pieces[r][c].piece == HOLE)drawTexture(real(curCoord[r][c]),imag(curCoord[r][c]),cellSize,cellSize, texture,255,255,255,255);
       }
     }
     /*int vanishBallSize = vanishBalls.size();
@@ -718,6 +737,7 @@ enum {
       }
     }
   }
+  glEnable(GL_BLEND);
 }
 
 - (BOOL)compileShader:(GLuint *)shader type:(GLenum)type file:(NSString *)file

@@ -47,6 +47,7 @@
   std::complex<float> targetCoord[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2];
   std::complex<float> curCoord[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2];
   bool correctEffect[MAX_BOARD_WIDTH+2][MAX_BOARD_WIDTH+2];
+  std::vector<BasicImageData> fixPieces;
   std::deque<VanishState> vanishBalls;
   std::deque<PlusOneEffectState> plusOneEffects;
   
@@ -110,7 +111,9 @@
 - (void)updateStateRightButton;
 - (void)updateStateLeftButton;
 - (void)endBallMove;
+- (void)checkFixPiece;
 - (std::complex<float>)getCoordRC:(int)r C:(int)c;
+- (std::pair<int,int>)getRCCoord:(std::complex<float>)p;
 - (void)boardInit:(Difficulty)d probNum:(int)p;
 
 - (void)enableAcc;

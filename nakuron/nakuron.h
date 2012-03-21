@@ -117,6 +117,14 @@ struct PieceData {
     else return colorToInt(color)<colorToInt(pd.color);
   }
 };
+struct BasicImageData{
+  std::complex<float> p;
+  GLuint texture;
+  BasicImageData(std::complex<float> _p,GLuint _texture){
+    p = _p;
+    texture = _texture;
+  }
+};
 struct VanishState{
   int num;
   std::complex<float> p;
