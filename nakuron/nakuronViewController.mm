@@ -12,6 +12,7 @@
 #import "EAGLView.h"
 #import "graphicUtil.h"
 #include "HistoryModel.h"
+#include "UserDefaultsModel.h"
 #include <iostream>
 #include <time.h>
 
@@ -113,12 +114,14 @@ enum {
   //最初はballは移動してないので
   ballMoveFlag = false;
 
-  // 加速度センサー有効
+  // 加速度センサーはデフォルト無効
   canUseAcc = true;
   [self disableAcc];
 
-  //効果音ON
-  [self enableSE];
+  //効果音ON/OFFは UserDefaults から読んでくる
+  string se = UserDefaultsModel::get("SE");
+  if (se == "0") [self disableSE];
+  else [self enableSE];
 
   //最初の盤面を作成
   [self boardInit:EASY probNum:randomProbNum()];
@@ -922,12 +925,14 @@ enum {
   NSLog(@"enable SE");
   useSE = true;
   [useSEButtonLabel setImage:[UIImage imageNamed:@"onnpu.png"] forState:UIControlStateNormal];
+  UserDefaultsModel::set("SE", "1");
 }
 
 - (void)disableSE {
   NSLog(@"disable SE");
   useSE = false;
   [useSEButtonLabel setImage:[UIImage imageNamed:@"onnpu2.png"] forState:UIControlStateNormal];
+  UserDefaultsModel::set("SE", "0");
 }
 
 -(void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration{
