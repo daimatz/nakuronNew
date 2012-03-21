@@ -81,6 +81,7 @@
 @property (retain, nonatomic) IBOutlet UILabel *restLabel;
 @property (retain, nonatomic) IBOutlet UILabel *timesLabel;
 @property (retain, nonatomic) IBOutlet UIButton *useAccButtonLabel;
+@property (retain, nonatomic) IBOutlet UIButton *useSEButtonLabel;
 
 - (IBAction)rightButton;
 - (IBAction)downButton;
@@ -88,6 +89,7 @@
 - (IBAction)upButton;
 - (IBAction)menuButton;
 - (IBAction)useAccButton;
+- (IBAction)useSEButton;
 - (IBAction)quitButton;
 
 - (void)startAnimation;

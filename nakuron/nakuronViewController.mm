@@ -45,6 +45,7 @@ enum {
 @synthesize restLabel;
 @synthesize timesLabel;
 @synthesize useAccButtonLabel;
+@synthesize useSEButtonLabel;
 
 @synthesize animating, context, displayLink;
 
@@ -164,6 +165,7 @@ enum {
   [restLabel release];
   [timesLabel release];
     [useAccButtonLabel release];
+  [useSEButtonLabel release];
   [super dealloc];
 }
 
@@ -195,6 +197,7 @@ enum {
   [self setRestLabel:nil];
   [self setTimesLabel:nil];
     [self setUseAccButtonLabel:nil];
+  [self setUseSEButtonLabel:nil];
   [super viewDidUnload];
 
   if (program) {
@@ -610,6 +613,11 @@ enum {
   }
 }
 
+- (IBAction)useSEButton {
+  if (useSE) [self disableSE];
+  else [self enableSE];
+}
+
 - (void)startAnimation
 {
   if (!animating) {
@@ -907,11 +915,15 @@ enum {
 }
 
 - (void)enableSE {
+  NSLog(@"enable SE");
   useSE = true;
+  [useSEButtonLabel setImage:[UIImage imageNamed:@"onnpu.png"] forState:UIControlStateNormal];
 }
 
 - (void)disableSE {
+  NSLog(@"disable SE");
   useSE = false;
+  [useSEButtonLabel setImage:[UIImage imageNamed:@"onnpu2.png"] forState:UIControlStateNormal];
 }
 
 -(void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration{
