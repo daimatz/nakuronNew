@@ -114,7 +114,9 @@ enum {
   ballMoveFlag = false;
 
   // 加速度センサー有効
-  //[self enableAcc];
+  canUseAcc = true;
+  [self disableAcc];
+
   //効果音ON
   [self enableSE];
 
@@ -164,7 +166,7 @@ enum {
   [scoreLabel release];
   [restLabel release];
   [timesLabel release];
-    [useAccButtonLabel release];
+  [useAccButtonLabel release];
   [useSEButtonLabel release];
   [super dealloc];
 }
@@ -196,7 +198,7 @@ enum {
   [self setScoreLabel:nil];
   [self setRestLabel:nil];
   [self setTimesLabel:nil];
-    [self setUseAccButtonLabel:nil];
+  [self setUseAccButtonLabel:nil];
   [self setUseSEButtonLabel:nil];
   [super viewDidUnload];
 
@@ -286,7 +288,7 @@ enum {
   finishVC = [[finishViewController alloc] initWithNibName:@"finishViewController" bundle:nil];
   [finishVC setParameters:self];
   [self.view addSubview:finishVC.view];
-  [self disableAcc];
+  canUseAcc = false;
 }
 
 -(void)checkFixPiece{
@@ -600,17 +602,12 @@ enum {
   menuView = [[menuViewController alloc] initWithNibName:@"menuViewController" bundle:nil];
   [self.view addSubview:menuView.view];
   [menuView setParameters:self difficulty:difficulty probNum:probNum];
-  [self disableAcc];
+  canUseAcc = false;
 }
 
 - (IBAction)useAccButton {
-  if (useAcc) {
-    useAcc = false;
-    [useAccButtonLabel setBackgroundImage:[UIImage imageNamed:@"star_outline_64.png"] forState:UIControlStateNormal];
-  } else {
-    useAcc = true;
-    [useAccButtonLabel setBackgroundImage:[UIImage imageNamed:@"star_64.png"] forState:UIControlStateNormal];
-  }
+  if (useAcc) [self disableAcc];
+  else [self enableAcc];
 }
 
 - (IBAction)useSEButton {
@@ -904,12 +901,19 @@ enum {
 }
 
 - (void)enableAcc {
+  NSLog(@"enable Acc");
+  useAcc = true;
+  [useAccButtonLabel setBackgroundImage:[UIImage imageNamed:@"star_64.png"] forState:UIControlStateNormal];
   UIAccelerometer *acc = [UIAccelerometer sharedAccelerometer];  
   acc.delegate = self;
   acc.updateInterval = 0.3f;
 }
 
 - (void)disableAcc {
+  NSLog(@"disable Acc");
+  useAcc = false;
+  [useAccButtonLabel setBackgroundImage:[UIImage imageNamed:@"star_outline_64.png"] forState:UIControlStateNormal];
+  useAcc = false;
   UIAccelerometer *acc = [UIAccelerometer sharedAccelerometer];  
   acc.delegate = nil;
 }
@@ -930,7 +934,7 @@ enum {
   float angle;
   UIAccelerationValue x = acceleration.x, y = acceleration.y, z = acceleration.z;
 
-  if (useAcc) {
+  if (canUseAcc && useAcc) {
     if(fabs(x) > fabs(y)) {
       angle = atan2(x,z) * (180.0f/M_PI);
       if (fabs(angle) > 180.0f - ANGLE_NUTRAL) {
@@ -961,7 +965,7 @@ enum {
 
 
 - (void)backFromSubview {
-  [self enableAcc];
+  canUseAcc = true;
 }
 - (void)backFromFinish {
   [self backFromSubview];

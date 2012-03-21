@@ -67,7 +67,9 @@
   std::map<PieceData, GLuint> piecenumToTexture;
   GLuint boardTexture,bgTexture[4];
   GLuint plusOneTexture[4];
-  bool useAcc;
+
+  bool canUseAcc; // 加速度センサーを使える状態にあるか (SubView が上に乗ってたりすると使えない)
+  bool useAcc; // 実際に加速度センサーを有効にしているか
   bool useSE;
   
   AVAudioPlayer *correctSound;
