@@ -67,6 +67,7 @@
   GLuint boardTexture,bgTexture[4];
   GLuint plusOneTexture[4];
   bool useAcc;
+  bool useSE;
   
   AVAudioPlayer *correctSound;
   AVAudioPlayer *pushSound;

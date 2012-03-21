@@ -113,7 +113,9 @@ enum {
   ballMoveFlag = false;
 
   // 加速度センサー有効
-  [self enableAcc];
+  //[self enableAcc];
+  //効果音ON
+  [self enableSE];
 
   //最初の盤面を作成
   [self boardInit:EASY probNum:randomProbNum()];
@@ -668,7 +670,7 @@ enum {
           curCoord[r][c] += dv;
           if([self isOverTarget:(int)r C:(int)c]){
             curCoord[r][c] = targetCoord[r][c];
-            if(correctEffect[r][c]){
+            if(correctEffect[r][c] && useSE){
               [correctSound setCurrentTime:0.0f];
               [correctSound play];
               plusOneEffects.push_back(PlusOneEffectState(0,curCoord[r][c],colorToInt(prevPieces[r][c].color)));
@@ -677,7 +679,7 @@ enum {
           }
         }
         if(curCoord[r][c] != targetCoord[r][c])drawTexture(real(curCoord[r][c]),imag(curCoord[r][c]),cellSize,cellSize, texture,255,255,255,255);
-        //else drawTexture(real(curCoord[r][c]),imag(curCoord[r][c]),cellSize,cellSize, texture,255,255,255,255);
+        else if(pieces[r][c].piece == WALL || pieces[r][c].piece == HOLE)drawTexture(real(curCoord[r][c]),imag(curCoord[r][c]),cellSize,cellSize, texture,255,255,255,255);
       }
     }
     /*int vanishBallSize = vanishBalls.size();
@@ -885,11 +887,11 @@ enum {
 }
 
 - (void)enableSE {
-  NSLog(@"enable SE");
+  useSE = true;
 }
 
 - (void)disableSE {
-  NSLog(@"disable SE");
+  useSE = false;
 }
 
 -(void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration{
