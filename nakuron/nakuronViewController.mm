@@ -694,9 +694,11 @@ enum {
           curCoord[r][c] += dv;
           if([self isOverTarget:(int)r C:(int)c]){
             curCoord[r][c] = targetCoord[r][c];
-            if(correctEffect[r][c] && useSE){
-              [correctSound setCurrentTime:0.0f];
-              [correctSound play];
+            if(correctEffect[r][c]){
+              if(useSE){
+                [correctSound setCurrentTime:0.0f];
+                [correctSound play];
+              }
               plusOneEffects.push_back(PlusOneEffectState(0,curCoord[r][c],colorToInt(prevPieces[r][c].color)));
             }
             //if([self isHoleCoord:curCoord[r][c]])vanishBalls.push_back(VanishState(0,curCoord[r][c],prevPieces[r][c]));
