@@ -250,8 +250,8 @@ enum {
                         boardLeftLowerY+boardSizePx-(r+1)*cellSize+cellSize/2);
 }
 -(pair<int,int>)getRCCoord:(complex<float>)p{
-  int r = (int)((real(p)-boardLeftLowerX-cellSize/2)/cellSize);
-  int c = (int)(-(imag(p)-boardLeftLowerY-boardSizePx-cellSize/2)/cellSize)-1;
+  int c = (int)((real(p)-boardLeftLowerX-cellSize/2)/cellSize);
+  int r = (int)(-(imag(p)-boardLeftLowerY-boardSizePx-cellSize/2)/cellSize)-1;
   return pair<int,int>(r,c);
 }
 
@@ -708,7 +708,9 @@ enum {
             }
           }
         }
-        if(curCoord[r][c] != targetCoord[r][c])drawTexture(real(curCoord[r][c]),imag(curCoord[r][c]),cellSize,cellSize, texture,255,255,255,255);
+        if(curCoord[r][c] != targetCoord[r][c]){ 
+          drawTexture(real(curCoord[r][c]),imag(curCoord[r][c]),cellSize,cellSize, texture,255,255,255,255);
+        }
       }
     }
     /*int vanishBallSize = vanishBalls.size();
