@@ -16,6 +16,7 @@
 
 - (void)setParameters:(nakuronViewController*)n;
 - (IBAction)newGameButton:(id)sender;
+- (IBAction)retryButton:(id)sender;
 
 @property (retain, nonatomic) IBOutlet UILabel *difficultyLabel;
 @property (retain, nonatomic) IBOutlet UILabel *probNumLabel;

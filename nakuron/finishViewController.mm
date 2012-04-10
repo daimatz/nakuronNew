@@ -79,6 +79,14 @@ using namespace std;
   [self release];
 }
 
+- (IBAction)retryButton:(id)sender {
+  NSLog(@"Retry");
+  [superVC boardInit:difficulty probNum:probNum];
+  [self.view removeFromSuperview];
+  [superVC backFromFinish];
+  [self release];
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
   // Return YES for supported orientations
